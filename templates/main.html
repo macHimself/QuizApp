@@ -13,6 +13,9 @@
           <small>📌 Otázek celkem: {{ topic.total }} &nbsp; ✅ Hotových: {{ topic.done }}</small><br><br>
           <a href="{{ url_for('quiz', topic=topic.name) }}">🎯 Začít test</a> |
           <a href="{{ url_for('add_questions', topic=topic.name) }}">➕ Přidat otázky</a> |
+          <a href="{{ url_for('export.export_topic_json', topic=topic['name']) }}" download>
+            💾 Export JSON
+          </a> |
           <form method="post" action="{{ url_for('reset_topic') }}" style="display:inline;" onsubmit="return confirm('Resetovat otázky v okruhu {{ topic.name }}?');">
             <input type="hidden" name="topic" value="{{ topic.name }}">
             <button type="submit" style="background:none; border:none; color:#0066cc; cursor:pointer;" title="Reset okruhu">

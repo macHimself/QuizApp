@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, flash
+from flask import Flask, render_template, request, redirect, url_for, flash, Blueprint, jsonify
 import json, random, os
 from datetime import datetime
 from collections import Counter
@@ -348,7 +348,23 @@ def clear_history_topic():
     flash(f"🧹 Historie pro okruh '{topic}' byla vymazána.")
     return redirect(url_for("stats"))
 
+export_bp = Blueprint("export", __name__)
 
+@export_bp.route("/export/json/<topic>", methods=["GET"])
+def export_topic_json(topic):
+    path = get_question_file(topic)
+    if not os.path.exists(path):
+        return jsonify([])
+
+    with open(path, "r", encoding="utf-8") as file:
+        questions = json.load(file)
+
+    export_data = [{"question": q["question"], "answer": q["answer"]}
+                   for q in questions if "question" in q and "answer" in q]
+    return jsonify(export_data)
+
+app.register_blueprint(export_bp)
+ 
 if __name__ == "__main__":
     ensure_data_dir()
     app.run(debug=True)
