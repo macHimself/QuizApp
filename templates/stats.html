@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block title %}📊 Statistiky po okruzích{% endblock %}
+
+{% block content %}
+  <h2>📈 Statistiky odpovědí podle okruhů</h2>
+  <p>Průměrné hodnocení: <strong>{{ average }}</strong></p>
+
+  {% if entries %}
+    {% set grouped = {} %}
+    {% for entry in entries %}
+      {% set t = entry.topic or "Neznámý" %}
+      {% if t not in grouped %}
+        {% set _ = grouped.update({t: []}) %}
+      {% endif %}
+      {% set _ = grouped[t].append(entry) %}
+    {% endfor %}
+
+    {% for topic, group in grouped.items() %}
+    <h3>
+      🗂️ {{ topic }}
+        <form method="post" action="{{ url_for('clear_history_topic') }}" style="display:inline;"
+            onsubmit="return confirm('Opravdu smazat historii okruhu {{ topic }}?');">
+          <input type="hidden" name="topic" value="{{ topic }}">
+          <button type="submit" style="font-size:0.8em; margin-left: 1em;">🧹 Smazat historii</button>
+        </form>
+      </h3>
+      <h3>🗂️ {{ topic }}</h3>
+      <table border="1" cellpadding="5" cellspacing="0" style="margin: 0 auto 2em auto; text-align: left;">
+        <thead>
+          <tr>
+            <th>🕒 Čas</th>
+            <th>🧠 Otázka</th>
+            <th>🎯 Hodnocení</th>
+            <th>🎯🎯🎯 Prúměr</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for entry in group %}
+            {% if entry.type == "reset" %}
+              <tr>
+                <td colspan="3" style="background:#eee; font-weight:bold; text-align:center;">
+                  {{ entry.timestamp }} – {{ entry.message }}
+                </td>
+              </tr>
+            {% else %}
+              <tr>
+                <td>{{ entry.timestamp }}</td>
+                <td>{{ entry.question }}</td>
+                <td>{{ entry.rating }}</td>
+                <td>{{ entry.average_rating }} </td>
+              </tr>
+            {% endif %}
+          {% endfor %}
+        </tbody>
+      </table>
+    {% endfor %}
+  {% else %}
+    <p>Žádné záznamy zatím nejsou.</p>
+  {% endif %}
+
+  <p><a href="{{ url_for('home') }}">⬅️ Zpět na hlavní stránku</a></p>
+{% endblock %}

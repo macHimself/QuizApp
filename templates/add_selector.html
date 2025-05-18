@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block title %}➕ Vyber okruh pro přidání otázek{% endblock %}
+
+{% block content %}
+  <h2>➕ Přidání otázek do zvoleného okruhu</h2>
+
+  <form method="get" action="{{ url_for('add_questions', topic='__placeholder__') }}"
+        onsubmit="event.preventDefault(); location.href=this.action.replace('__placeholder__', this.topic.value);">
+    <label for="topic">Vyber okruh:</label>
+    <select name="topic" id="topic" required>
+      {% for t in all_topics %}
+        <option value="{{ t }}">{{ t }}</option>
+      {% endfor %}
+    </select>
+    <button type="submit">➡️ Pokračovat</button>
+  </form>
+
+  <p style="margin-top: 2em;"><a href="{{ url_for('home') }}">🏠 Zpět na hlavní stránku</a></p>
+{% endblock %}

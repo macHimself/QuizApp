@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h2 class="question">🧠 Otázka:</h2>
+  <p>{{ question }}</p>
+
+  {% if answer %}
+    <div id="reveal-button">
+      <button onclick="showAnswer()">👁️ Zobrazit odpověď</button>
+    </div>
+    <div id="answer-block" style="display: none;">
+      <h3 style="color: green;">✅ Odpověď:</h3>
+      <div class="answer">{{ answer }}</div>
+    </div>
+  {% endif %}
+
+  <div>
+    <label for="rating">🧠 Jak jsi to věděl? Vyber číslo:</label>
+    <form method="post">
+      <input type="hidden" name="index" value="{{ index }}">
+      <div class="score-buttons">
+          <button name="rating" value="-1" style="background:#f8d7da; color:#721c24;">-1</button>
+          {% for i in range(11) %}
+            <button name="rating" value="{{ i }}">{{ i }}</button>
+          {% endfor %}
+      </div>
+    </form>
+  </div>
+
+  <div class="footer">
+    <p>📚 Otázek celkem: <strong>{{ total }}</strong></p>
+    <p>✅ Dokončeno (hodnoceno 10): <strong>{{ done }}</strong></p>
+    <p>📊 Průměrné skóre: 
+      {% if avg_score is not none %}
+        <strong>{{ avg_score }}</strong>
+      {% else %}
+        <em>zatím žádné odpovědi</em>
+      {% endif %}
+    </p>
+    <p style="color: {% if pending_count > 0 %}#d9534f{% else %}#28a745{% endif %};">
+      ❓ Nezodpovězené: <strong>{{ pending_count }}</strong>
+    </p>
+    <p>🚫 Vyřazeno (hodnoceno -1): {{ excluded_count }}</p>
+    <div class="progress-bar" style="display: flex; width: 100%; height: 12px; border-radius: 8px; overflow: hidden; background: #eee;">
+      {% for segment in progress_segments %}
+        <div style="width: {{ segment.width }}%; background: {{ segment.color }};"
+             title="Hodnota {{ segment.value }}: {{ segment.count }} otázek">
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+{% endblock %}

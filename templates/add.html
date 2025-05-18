@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block title %}➕ Přidání otázek do okruhu {{ topic }}{% endblock %}
+
+{% block content %}
+  <h2>➕ Přidat nové otázky</h2>
+
+  <form method="get" action="{{ url_for('add_questions', topic='__placeholder__') }}" onsubmit="event.preventDefault(); location.href=this.action.replace('__placeholder__', this.topic.value);">
+    <label for="topic">Vyber okruh:</label>
+    <select name="topic" id="topic">
+      {% for t in all_topics %}
+        <option value="{{ t }}" {% if t == topic %}selected{% endif %}>{{ t }}</option>
+      {% endfor %}
+    </select>
+    <button type="submit">🔁 Přepnout</button>
+  </form>
+
+  <hr>
+
+  <p><strong>Aktuální okruh:</strong> {{ topic }}</p>
+
+  {% if message %}
+    <p style="color: {% if '✅' in message %}green{% else %}red{% endif %};">{{ message }}</p>
+  {% endif %}
+
+  <h3>📝 Hromadné přidání (JSON)</h3>
+  <form method="post">
+    <textarea name="questions_json" rows="10" cols="80" placeholder='[{"question": "...", "answer": "..."}, ...]'></textarea><br>
+    <button type="submit">💾 Přidat hromadně</button>
+  </form>
+
+  <hr>
+
+  <h3>➕ Přidání jedné otázky</h3>
+  <form method="post">
+    <label>Otázka:</label><br>
+    <input type="text" name="single_question" size="80"><br><br>
+    <label>Odpověď:</label><br>
+    <input type="text" name="single_answer" size="80"><br><br>
+    <button type="submit">✅ Přidat otázku</button>
+  </form>
+
+  <p>
+    <a href="{{ url_for('quiz', topic=topic) }}">⬅️ Zpět na testování</a> |
+    <a href="{{ url_for('home') }}">🏠 Hlavní stránka</a>
+  </p>
+{% endblock %}
