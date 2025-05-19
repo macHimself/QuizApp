@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, flash, Blueprint, jsonify
+from flask import Flask, render_template, request, redirect, url_for, flash, Blueprint, jsonify, Response
 import json, random, os
 from datetime import datetime
 from collections import Counter
@@ -354,14 +354,18 @@ export_bp = Blueprint("export", __name__)
 def export_topic_json(topic):
     path = get_question_file(topic)
     if not os.path.exists(path):
-        return jsonify([])
+        return Response("[]", mimetype="application/json; charset=utf-8")
 
     with open(path, "r", encoding="utf-8") as file:
         questions = json.load(file)
 
-    export_data = [{"question": q["question"], "answer": q["answer"]}
-                   for q in questions if "question" in q and "answer" in q]
-    return jsonify(export_data)
+    export_data = [
+        {"question": q["question"], "answer": q["answer"]}
+        for q in questions if "question" in q and "answer" in q
+    ]
+
+    json_data = json.dumps(export_data, ensure_ascii=False, indent=2)
+    return Response(json_data, mimetype="application/json; charset=utf-8")
 
 app.register_blueprint(export_bp)
  
