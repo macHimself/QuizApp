@@ -183,8 +183,10 @@ def quiz(topic):
             "count": count
         })
 
+    previous_rating = q.get("value", 0) if q.get("value", 0) > 0 else None
     return render_template(
         "index.html",
+        previous_rating=previous_rating,
         question=q["question"],
         answer=q["answer"],
         index=idx,
