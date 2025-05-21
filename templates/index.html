@@ -15,6 +15,9 @@
   {% endif %}
 
   <div>
+    {% if previous_rating %}
+  <p class="text-muted">🧠 Minule jsi hodnotil tuto otázku: <strong>{{ previous_rating }}/10</strong></p>
+    {% endif %}
     <label for="rating">🧠 Jak jsi to věděl? Vyber číslo:</label>
     <form method="post">
       <input type="hidden" name="index" value="{{ index }}">
