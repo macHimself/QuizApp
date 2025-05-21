@@ -134,16 +134,25 @@ def quiz(topic):
         save_history(history)
         return redirect(url_for("quiz", topic=topic))
 
-    # 🧠 Výběr otázky: nejprve ty bez hodnoty (0), pak s nejnižší hodnotou
-    unrated = [i for i, q in enumerate(questions) if q.get("value", 0) == 0]
-    if unrated:
-        idx = unrated[0]
-    else:
-        rated = [(i, q["value"]) for i, q in enumerate(questions) if q.get("value", -1) >= 0]
-        if not rated:
-            flash(f"🎉 Hotovo! Všechny otázky v okruhu '{topic}' mají skóre.")
-            return redirect(url_for("home"))
-        idx = min(rated, key=lambda pair: pair[1])[0]
+    idx = weighted_choice(questions)
+    if idx is None:
+        flash(f"🎉 Hotovo! Všechny otázky v okruhu '{topic}' mají skóre nebo jsou vyřazené.")
+        return redirect(url_for("home"))
+    q = questions[idx]
+#    # 🧠 Výběr otázky: nejprve ty bez hodnoty (0), pak s nejnižší hodnotou
+#    unrated = [i for i, q in enumerate(questions) if q.get("value", 0) == 0]
+#    if unrated:
+#        #idx = unrated[0]
+#        #idx = random.choise(unrated)
+#        idx = weighted_choice(questions)
+#        #if idx is None:
+
+#    else:
+#        rated = [(i, q["value"]) for i, q in enumerate(questions) if q.get("value", -1) >= 0]
+#        #if not rated:
+#        #    flash(f"🎉 Hotovo! Všechny otázky v okruhu '{topic}' mají skóre.")
+#        #    return redirect(url_for("home"))
+#        idx = min(rated, key=lambda pair: pair[1])[0]
 
     q = questions[idx]
     total_questions = len(questions)
