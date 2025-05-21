@@ -16,9 +16,9 @@
 
   <div>
     {% if previous_rating %}
-  <p class="text-muted">🧠 Minule jsi hodnotil tuto otázku: <strong>{{ previous_rating }}/10</strong></p>
+  <p class="text-muted">🧠 Minule jsi svou znalost ohodnotil: <strong>{{ previous_rating }}/10</strong></p>
     {% endif %}
-    <label for="rating">🧠 Jak jsi to věděl? Vyber číslo:</label>
+    <label for="rating">🧠 Jak se ohodnotš: Vyber číslo:</label>
     <form method="post">
       <input type="hidden" name="index" value="{{ index }}">
       <div class="score-buttons">
@@ -31,7 +31,7 @@
   </div>
 
   <div class="footer">
-    <p>📚 Otázek celkem: <strong>{{ total }}</strong></p>
+    <p>📚 Celkem otázek: <strong>{{ total }}</strong></p>
     <p>✅ Dokončeno (hodnoceno 10): <strong>{{ done }}</strong></p>
     <p>📊 Průměrné skóre: 
       {% if avg_score is not none %}
@@ -43,7 +43,7 @@
     <p style="color: {% if pending_count > 0 %}#d9534f{% else %}#28a745{% endif %};">
       ❓ Nezodpovězené: <strong>{{ pending_count }}</strong>
     </p>
-    <p>🚫 Vyřazeno (hodnoceno -1): {{ excluded_count }}</p>
+    <p>🚫 Vyřazené otázky (hodnoceno -1): {{ excluded_count }}</p>
     <div class="progress-bar" style="display: flex; width: 100%; height: 12px; border-radius: 8px; overflow: hidden; background: #eee;">
       {% for segment in progress_segments %}
         <div style="width: {{ segment.width }}%; background: {{ segment.color }};"
