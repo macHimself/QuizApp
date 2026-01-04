@@ -241,9 +241,58 @@ def add_questions(topic):
     with open(TOPICS_FILE, "r", encoding="utf-8") as f:
         all_topics = json.load(f)
 
+    return render_template(
+        "add.html",
+        message=message,
+        topic=topic,
+        all_topics=all_topics,
+        questions=questions  # ✅ TOTO je ten chybějící kus
+    )
+
+
     return render_template("add.html", message=message, topic=topic, all_topics=all_topics)
 
     return render_template("add.html", message=message, topic=topic)
+
+
+
+@app.route("/edit/<topic>/<int:idx>", methods=["POST"])
+def edit_question(topic, idx):
+    """Editace existující otázky a odpovědi v rámci topicu.
+
+    Zachová hodnotící metadata (value/history/avg), upravuje jen texty.
+    """
+    questions = load_questions(topic)
+    if idx < 0 or idx >= len(questions):
+        flash("❌ Neplatný index otázky.")
+        return redirect(url_for("add_questions", topic=topic))
+
+    new_q = request.form.get("question", "").strip()
+    new_a = request.form.get("answer", "").strip()
+
+    if not new_q or not new_a:
+        flash("❌ Otázka i odpověď musí být vyplněné.")
+        return redirect(url_for("add_questions", topic=topic))
+
+    questions[idx]["question"] = new_q
+    questions[idx]["answer"] = new_a
+    save_questions(topic, questions)
+    flash("✅ Otázka byla upravena.")
+    return redirect(url_for("add_questions", topic=topic))
+
+
+@app.route("/delete_question/<topic>/<int:idx>", methods=["POST"])
+def delete_question(topic, idx):
+    """Smazání otázky. (Volitelné tlačítko v UI – hodí se na čištění databáze.)"""
+    questions = load_questions(topic)
+    if idx < 0 or idx >= len(questions):
+        flash("❌ Neplatný index otázky.")
+        return redirect(url_for("add_questions", topic=topic))
+
+    removed = questions.pop(idx)
+    save_questions(topic, questions)
+    flash(f"🗑️ Smazáno: {removed.get('question', 'otázka')}")
+    return redirect(url_for("add_questions", topic=topic))
 
 
 @app.route("/stats")

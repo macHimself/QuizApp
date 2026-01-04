@@ -44,4 +44,65 @@
     <a href="{{ url_for('quiz', topic=topic) }}">⬅️ Zpět na testování</a> |
     <a href="{{ url_for('home') }}">🏠 Hlavní stránka</a>
   </p>
+
+
+  <hr>
+
+<div class="q-list">
+  <h3>🗂️ Existující otázky (editace)</h3>
+  <div class="q-tools">
+    <input id="qSearch" class="q-search" type="text"
+           placeholder="Hledej v otázkách/odpovědích… (např. entropie, dropout, PCA)">
+    <span class="q-meta">Celkem: {{ questions|length }}</span>
+  </div>
+
+  {% if questions|length == 0 %}
+    <p class="q-meta">V tomhle okruhu zatím nejsou žádné otázky.</p>
+  {% else %}
+    {% for q in questions %}
+      <details class="q-item" data-search="{{ (q.question ~ ' ' ~ q.answer)|lower|e }}">
+        <summary>
+          <span class="q-preview">#{{ loop.index0 }} — {{ q.question }}</span>
+          <span class="q-meta">&nbsp;| value: {{ q.value if q.value is defined else 0 }}</span>
+        </summary>
+
+        <form method="post" action="{{ url_for('edit_question', topic=topic, idx=loop.index0) }}" style="margin-top: .8em;">
+          <label><strong>Otázka</strong></label>
+          <input type="text" name="question" value="{{ q.question }}">
+
+          <label style="display:block; margin-top:.6em;"><strong>Odpověď</strong></label>
+          <textarea name="answer">{{ q.answer }}</textarea>
+
+          <div class="q-actions">
+            <button class="btn btn-save" type="submit">💾 Uložit změny</button>
+          </div>
+        </form>
+
+        <form method="post" action="{{ url_for('delete_question', topic=topic, idx=loop.index0) }}"
+              onsubmit="return confirm('Opravdu smazat tuto otázku?');" style="margin-top:.6em;">
+          <button class="btn btn-del" type="submit">🗑️ Smazat otázku</button>
+        </form>
+      </details>
+    {% endfor %}
+  {% endif %}
+</div>
+
+<script>
+  (function () {
+    const input = document.getElementById('qSearch');
+    if (!input) return;
+    const items = Array.from(document.querySelectorAll('.q-item'));
+
+    function applyFilter() {
+      const q = (input.value || '').trim().toLowerCase();
+      for (const el of items) {
+        const hay = el.getAttribute('data-search') || '';
+        const show = q === '' || hay.includes(q);
+        el.style.display = show ? '' : 'none';
+      }
+    }
+
+    input.addEventListener('input', applyFilter);
+  })();
+</script>
 {% endblock %}
