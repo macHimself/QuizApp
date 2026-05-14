@@ -1,55 +1,364 @@
 {% extends "base.html" %}
 
 {% block content %}
-  <h2 class="question">🧠 Otázka:</h2>
+
+  <h2 class="question">Otázka:</h2>
   <p>{{ question }}</p>
+
+  <p id="countdown" style="display: none;"></p>
 
   {% if answer %}
     <div id="reveal-button">
-      <button onclick="showAnswer()">👁️ Zobrazit odpověď</button>
+      <button onclick="revealAnswer()">Zobrazit odpověď</button>
     </div>
+
     <div id="answer-block" style="display: none;">
-      <h3 style="color: green;">✅ Odpověď:</h3>
+      <h3 style="color: green;">Odpověď:</h3>
       <div class="answer">{{ answer }}</div>
     </div>
   {% endif %}
 
   <div>
     {% if previous_rating %}
-  <p class="text-muted">🧠 Minule jsi svou znalost ohodnotil: <strong>{{ previous_rating }}/10</strong></p>
+      <p class="text-muted">
+        Minule jsi svou znalost ohodnotil:
+        <strong>{{ previous_rating }}/10</strong>
+      </p>
     {% endif %}
-    <label for="rating">🧠 Jak se ohodnotíš: Vyber číslo:</label>
+
+    <label for="rating">Jak se ohodnotíš: Vyber číslo:</label>
+
     <form method="post">
       <input type="hidden" name="index" value="{{ index }}">
+
       <div class="score-buttons">
-          <button name="rating" value="-1" style="background:#f8d7da; color:#721c24;">-1</button>
-          {% for i in range(11) %}
-            <button name="rating" value="{{ i }}">{{ i }}</button>
-          {% endfor %}
+        <button name="rating" value="-1" style="background:#f8d7da; color:#721c24;">-1</button>
+
+        {% for i in range(11) %}
+          <button name="rating" value="{{ i }}">{{ i }}</button>
+        {% endfor %}
       </div>
     </form>
   </div>
+  <button id="timer-toggle-button" type="button">
+    Časový režim: VYPNUTO
+  </button>
 
   <div class="footer">
-    <p>📚 Celkem otázek: <strong>{{ total }}</strong></p>
-    <p>✅ Dokončeno (hodnoceno 10): <strong>{{ done }}</strong></p>
-    <p>📊 Průměrné skóre: 
+    <p>Celkem otázek: <strong>{{ total }}</strong></p>
+    <p>Dokončeno (hodnoceno 10): <strong>{{ done }}</strong></p>
+
+    <p>Průměrné skóre:
       {% if avg_score is not none %}
         <strong>{{ avg_score }}</strong>
       {% else %}
         <em>zatím žádné odpovědi</em>
       {% endif %}
     </p>
+
     <p style="color: {% if pending_count > 0 %}#d9534f{% else %}#28a745{% endif %};">
-      ❓ Nezodpovězené: <strong>{{ pending_count }}</strong>
+      Nezodpovězené: <strong>{{ pending_count }}</strong>
     </p>
-    <p>🚫 Vyřazené otázky (hodnoceno -1): {{ excluded_count }}</p>
-    <div class="progress-bar" style="display: flex; width: 100%; height: 12px; border-radius: 8px; overflow: hidden; background: #eee;">
-      {% for segment in progress_segments %}
-        <div style="width: {{ segment.width }}%; background: {{ segment.color }};"
-             title="Hodnota {{ segment.value }}: {{ segment.count }} otázek">
-        </div>
-      {% endfor %}
+
+    <p>Vyřazené otázky (hodnoceno -1): {{ excluded_count }}</p>
+
+    <div class="progress-wrapper">
+      <div class="progress-bar">
+        {% for segment in progress_segments %}
+          <div
+            class="progress-segment"
+            style="width: {{ segment.width }}%; background: {{ segment.color }};"
+            title="Hodnota {{ segment.value }}: {{ segment.count }} otázek"
+          >
+            {% if segment.width > 6 %}
+              <span>{{ segment.value }}</span>
+            {% endif %}
+          </div>
+        {% endfor %}
+      </div>
     </div>
+    <p><small>Klávesy: 'space' = odpověď, 'c' = časovač, '0'–'9' = skóre, '=' = 10, '-'' = vyřadit</small></p>
   </div>
+
+<script>
+  const PREVIOUS_RATING = {{ previous_rating|default(1, true)|tojson }};
+
+  let timerRunning = false;
+  let countdownInterval = null;
+
+  let secondsLeft = 10;
+  let submitSecondsLeft = 15;
+  let answerVisible = false;
+
+  let timerEnabled = localStorage.getItem("timerEnabled") === "true";
+
+function revealAnswer() {
+    const answerBlock = document.getElementById("answer-block");
+    const revealButtonWrapper = document.getElementById("reveal-button");
+
+    if (!answerBlock) {
+        return;
+    }
+
+    // odpověď JE vidět → schovej ji
+    if (answerVisible) {
+        answerBlock.style.display = "none";
+
+        if (revealButtonWrapper) {
+            revealButtonWrapper.style.display = "block";
+        }
+
+        answerVisible = false;
+
+        clearInterval(countdownInterval);
+
+        const countdown = document.getElementById("countdown");
+        if (countdown && timerEnabled) {
+            countdown.textContent = "Odpověď skryta";
+        }
+
+        return;
+    }
+
+    // odpověď NENÍ vidět → ukaž ji
+    answerBlock.style.display = "block";
+
+    if (revealButtonWrapper) {
+        revealButtonWrapper.style.display = "none";
+    }
+
+    answerVisible = true;
+
+    if (timerEnabled) {
+        startSubmitTimer();
+    }
+}
+
+  function submitAutoRating() {
+      let rating = PREVIOUS_RATING;
+
+      if (rating === null || rating === undefined || rating === false) {
+          rating = 1;
+      }
+
+      document.querySelector(
+          `.score-buttons button[name="rating"][value="${rating}"]`
+      )?.click();
+  }
+
+  function startSubmitTimer() {
+      clearInterval(countdownInterval);
+
+      timerRunning = true;
+      submitSecondsLeft = 15;
+
+      const countdown = document.getElementById("countdown");
+
+      if (countdown) {
+          countdown.style.display = "block";
+          countdown.textContent = `Automatické hodnocení za ${submitSecondsLeft} s`;
+      }
+
+      countdownInterval = setInterval(() => {
+          submitSecondsLeft--;
+
+          if (countdown) {
+              countdown.textContent = `Automatické hodnocení za ${submitSecondsLeft} s`;
+          }
+
+          if (submitSecondsLeft <= 0) {
+              clearInterval(countdownInterval);
+              timerRunning = false;
+              submitAutoRating();
+          }
+      }, 1000);
+  }
+
+  function resumeSubmitTimer() {
+      clearInterval(countdownInterval);
+
+      timerRunning = true;
+
+      const countdown = document.getElementById("countdown");
+
+      if (countdown) {
+          countdown.style.display = "block";
+          countdown.textContent = `Automatické hodnocení za ${submitSecondsLeft} s`;
+      }
+
+      countdownInterval = setInterval(() => {
+          submitSecondsLeft--;
+
+          if (countdown) {
+              countdown.textContent = `Automatické hodnocení za ${submitSecondsLeft} s`;
+          }
+
+          if (submitSecondsLeft <= 0) {
+              clearInterval(countdownInterval);
+              timerRunning = false;
+              submitAutoRating();
+          }
+      }, 1000);
+  }
+
+  function startTimer() {
+      clearInterval(countdownInterval);
+
+      timerRunning = true;
+      secondsLeft = 10;
+
+      const countdown = document.getElementById("countdown");
+
+      if (countdown) {
+          countdown.style.display = "block";
+          countdown.textContent = `Odpověď se zobrazí za ${secondsLeft} s`;
+      }
+
+      countdownInterval = setInterval(() => {
+          secondsLeft--;
+
+          if (countdown) {
+              countdown.textContent = `Odpověď se zobrazí za ${secondsLeft} s`;
+          }
+
+          if (secondsLeft <= 0) {
+              clearInterval(countdownInterval);
+              timerRunning = false;
+              revealAnswer();
+          }
+      }, 1000);
+  }
+
+  function resumeRevealTimer() {
+      clearInterval(countdownInterval);
+
+      timerRunning = true;
+
+      const countdown = document.getElementById("countdown");
+
+      if (countdown) {
+          countdown.style.display = "block";
+          countdown.textContent = `Odpověď se zobrazí za ${secondsLeft} s`;
+      }
+
+      countdownInterval = setInterval(() => {
+          secondsLeft--;
+
+          if (countdown) {
+              countdown.textContent = `Odpověď se zobrazí za ${secondsLeft} s`;
+          }
+
+          if (secondsLeft <= 0) {
+              clearInterval(countdownInterval);
+              timerRunning = false;
+              revealAnswer();
+          }
+      }, 1000);
+  }
+
+  function stopTimer(showPaused = true) {
+      clearInterval(countdownInterval);
+      countdownInterval = null;
+      timerRunning = false;
+
+      const countdown = document.getElementById("countdown");
+
+      if (countdown && showPaused) {
+          countdown.style.display = "block";
+          countdown.textContent = "Časovač pozastaven";
+      }
+  }
+
+  function updateTimerButton() {
+    const button = document.getElementById("timer-toggle-button");
+
+    if (!button) {
+        return;
+    }
+
+    if (timerEnabled) {
+        button.textContent = "TimeTrial: ON";
+    } else {
+        button.textContent = "TimeTrial: OFF";
+    }
+}
+
+function toggleTimer() {
+    if (timerRunning) {
+        stopTimer(true);
+
+        timerEnabled = false;
+        localStorage.setItem("timerEnabled", "false");
+
+        updateTimerButton();
+        return;
+    }
+
+    timerEnabled = true;
+    localStorage.setItem("timerEnabled", "true");
+
+    updateTimerButton();
+
+    if (answerVisible) {
+        resumeSubmitTimer();
+    } else {
+        resumeRevealTimer();
+    }
+}
+
+
+  if (timerEnabled) {
+      timerEnabled = true;
+      localStorage.setItem("timerEnabled", "true");
+
+      if (answerVisible) {
+          startSubmitTimer();
+      } else {
+          startTimer();
+      }
+  }
+
+  document.addEventListener("keydown", function(event) {
+      const tag = document.activeElement.tagName.toLowerCase();
+
+      if (tag === "input" || tag === "textarea") {
+          return;
+      }
+
+      if (event.key.toLowerCase() === "c") {
+          event.preventDefault();
+          toggleTimer();
+      }
+
+      if (event.code === "Space") {
+          event.preventDefault();
+          revealAnswer();
+      }
+
+      if (/^[0-9]$/.test(event.key)) {
+          document.querySelector(
+              `.score-buttons button[name="rating"][value="${event.key}"]`
+          )?.click();
+      }
+
+      if (event.key === "=") {
+          document.querySelector(
+              `.score-buttons button[name="rating"][value="10"]`
+          )?.click();
+      }
+
+      if (event.key === "-") {
+          document.querySelector(
+              `.score-buttons button[name="rating"][value="-1"]`
+          )?.click();
+      }
+  });
+
+  updateTimerButton();
+
+document.getElementById("timer-toggle-button")?.addEventListener("click", function() {
+    toggleTimer();
+});
+</script>
+
 {% endblock %}
