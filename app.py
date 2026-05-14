@@ -269,12 +269,57 @@ def quiz(topic):
     )
 
 
+@app.route("/edit_question/<topic>/<int:idx>", methods=["POST"])
+def edit_question(topic, idx):
+    questions = load_questions(topic)
+
+    if idx < 0 or idx >= len(questions):
+        flash("❌ Otázka nenalezena.")
+        return redirect(url_for("add_questions", topic=topic))
+
+    question = request.form.get("question", "").strip()
+    answer = request.form.get("answer", "").strip()
+
+    if not question or not answer:
+        flash("❌ Otázka i odpověď musí být vyplněny.")
+        return redirect(url_for("add_questions", topic=topic))
+
+    questions[idx]["question"] = question
+    questions[idx]["answer"] = answer
+
+    save_questions(topic, questions)
+
+    flash("✅ Otázka byla upravena.")
+    return redirect(url_for("add_questions", topic=topic))
+
+
+@app.route("/delete_question/<topic>/<int:idx>", methods=["POST"])
+def delete_question(topic, idx):
+    questions = load_questions(topic)
+
+    if idx < 0 or idx >= len(questions):
+        flash("❌ Otázka nenalezena.")
+        return redirect(url_for("add_questions", topic=topic))
+
+    questions.pop(idx)
+    save_questions(topic, questions)
+
+    flash("🗑️ Otázka byla smazána.")
+    return redirect(url_for("add_questions", topic=topic))
+    
+
 @app.route("/add", methods=["GET"])
 def add_selector():
     with open(TOPICS_FILE, "r", encoding="utf-8") as f:
         all_topics = json.load(f)
 
     return render_template("add_selector.html", all_topics=all_topics)
+
+
+@app.route("/switch_add_topic", methods=["POST"])
+def switch_add_topic():
+    topic = request.form.get("topic", "").strip()
+    return redirect(url_for("add_questions", topic=topic))
 
 
 @app.route("/add/<topic>", methods=["GET", "POST"])
@@ -328,7 +373,8 @@ def add_questions(topic):
         "add.html",
         message=message,
         topic=topic,
-        all_topics=all_topics
+        all_topics=all_topics,
+        questions=questions
     )
 
 
