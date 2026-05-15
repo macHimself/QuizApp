@@ -2,7 +2,7 @@
 <html lang="cs">
 <head>
     <meta charset="utf-8">
-    <title>{% block title %}🧠 Otázky a odpovědi{% endblock %}</title>
+    <title>{% block title %}Otázky a odpovědi{% endblock %}</title>
     <style>
         body {
             font-family: system-ui, sans-serif;
@@ -92,6 +92,74 @@
             height: 100%;
             background: #4caf50;
         }
+
+        .answer-textarea {
+            width: 100%;
+            min-width: 300px;
+            max-width: 900px;
+
+            min-height: 120px;
+            max-height: 240px;
+
+            resize: vertical;     /* jen nahoru/dolů */
+            padding: 0.5em;
+            font-family: inherit;
+            font-size: 0.95rem;
+            line-height: 1.4;
+          }
+          
+          .progress-wrapper {
+            margin-top: 1.2em;
+          }
+
+          .progress-bar {
+            display: flex;
+            width: 100%;
+            height: 28px;                /* ← zásadní rozdíl */
+            border-radius: 14px;
+            overflow: hidden;
+            background: #e9ecef;
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.15);
+          }
+
+          .progress-segment {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: rgba(0,0,0,0.7);
+            border-right: 1px solid rgba(255,255,255,0.5);
+            transition: opacity 0.2s ease;
+          }
+
+          .progress-segment:last-child {
+            border-right: none;
+          }
+
+          .progress-segment:hover {
+            opacity: 0.85;
+          }
+
+          .question-progress-bar {
+            display: flex;
+            width: 100%;
+            height: 22px;
+            border-radius: 12px;
+            overflow: hidden;
+            background: #e9ecef;
+            margin-top: 0.5em;
+        }
+
+        .question-progress-segment {
+            flex: 1;
+            min-width: 2px;
+            border-right: 1px solid rgba(255,255,255,0.45);
+        }
+
+        .question-progress-segment:last-child {
+            border-right: none;
+        }
     </style>
     <script>
       function showAnswer() {
@@ -105,11 +173,11 @@
     <div class="container">
       <div class="actions">
         <form method="post" action="{{ url_for('reset') }}" style="display:inline;">
-          <button type="submit">🔁 Reset všeho</button>
+          <button type="submit">Reset všeho</button>
         </form>
-        <a href="{{ url_for('home') }}">🏠 Okruhy</a>
-        <a href="/stats">📊 Statistiky</a>
-        <a href="/add">➕ Přidat nové otázky</a>
+        <a href="{{ url_for('home') }}">Okruhy</a>
+        <a href="/stats">Statistiky</a>
+        <a href="/add">Přidat nové otázky</a>
       </div>
   
       {% with messages = get_flashed_messages() %}
