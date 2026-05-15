@@ -60,6 +60,33 @@ def weighted_choice(questions):
 
     return random.choice(weighted) if weighted else None
 
+def color_for_value(v):
+    if v == -1:
+        return "#111111"
+    elif v == 0:
+        return "#bfc5cc"
+    elif v == 1:
+        return "#c62828"
+    elif v == 2:
+        return "#e53935"
+    elif v == 3:
+        return "#ef5350"
+    elif v == 4:
+        return "#fb8c00"
+    elif v == 5:
+        return "#ffb300"
+    elif v == 6:
+        return "#fdd835"
+    elif v == 7:
+        return "#9ccc65"
+    elif v == 8:
+        return "#66bb6a"
+    elif v == 9:
+        return "#2e7d32"
+    elif v == 10:
+        return "#1b5e20"
+    return "#bfc5cc"
+
 
 @app.context_processor
 def inject_now():
@@ -199,55 +226,72 @@ def quiz(topic):
     counter = Counter(q.get("value", 0) for q in questions)
     segments = []
 
+
+    # for v in range(-1, 11):
+    #     count = counter.get(v, 0)
+
+    #     if count == 0:
+    #         continue
+    #     width = round((count / total_questions) * 100, 2)
+    #     if v == -1:
+    #         color = "#111111"   # černá
+    #     elif v == 0:
+    #         color = "#bfc5cc"   # šedá
+    #     elif v == 1:
+    #         color = "#c62828"   # tmavá červená
+    #     elif v == 2:
+    #         color = "#e53935"   # červená
+    #     elif v == 3:
+    #         color = "#ef5350"   # světle červená
+    #     elif v == 4:
+    #         color = "#fb8c00"   # oranžová
+    #     elif v == 5:
+    #         color = "#ffb300"   # jantarová
+    #     elif v == 6:
+    #         color = "#fdd835"   # žlutá
+    #     elif v == 7:
+    #         color = "#9ccc65"   # světle zelená
+    #     elif v == 8:
+    #         color = "#66bb6a"   # zelená
+    #     elif v == 9:
+    #         color = "#2e7d32"   # tmavě zelená
+    #     elif v == 10:
+    #         color = "#1b5e20"   # velmi tmavě zelená
+    #     segments.append({
+    #         "width": width,
+    #         "color": color,
+    #         "value": v,
+    #         "count": count
+    #     })
+
+    # 1) Agregovaný progress bar podle hodnot
+    counter = Counter(q.get("value", 0) for q in questions)
+    segments = []
+
     for v in range(-1, 11):
         count = counter.get(v, 0)
-
         if count == 0:
             continue
 
         width = round((count / total_questions) * 100, 2)
 
-        if v == -1:
-            color = "#111111"   # černá
-
-        elif v == 0:
-            color = "#bfc5cc"   # šedá
-
-        elif v == 1:
-            color = "#c62828"   # tmavá červená
-
-        elif v == 2:
-            color = "#e53935"   # červená
-
-        elif v == 3:
-            color = "#ef5350"   # světle červená
-
-        elif v == 4:
-            color = "#fb8c00"   # oranžová
-
-        elif v == 5:
-            color = "#ffb300"   # jantarová
-
-        elif v == 6:
-            color = "#fdd835"   # žlutá
-
-        elif v == 7:
-            color = "#9ccc65"   # světle zelená
-
-        elif v == 8:
-            color = "#66bb6a"   # zelená
-
-        elif v == 9:
-            color = "#2e7d32"   # tmavě zelená
-
-        elif v == 10:
-            color = "#1b5e20"   # velmi tmavě zelená
-
         segments.append({
             "width": width,
-            "color": color,
+            "color": color_for_value(v),
             "value": v,
             "count": count
+        })
+
+    # 2) Progress mapa podle pořadí otázek
+    question_progress = []
+
+    for i, q_item in enumerate(questions):
+        value = q_item.get("value", 0)
+        question_progress.append({
+            "index": i + 1,
+            "value": value,
+            "color": color_for_value(value),
+            "question": q_item.get("question", "")
         })
 
     previous_rating = q.get("value", 0) if q.get("value", 0) > 0 else None
@@ -265,6 +309,7 @@ def quiz(topic):
         avg_score=avg_score,
         topic=topic,
         progress_segments=segments,
+        question_progress=question_progress,
         automode=session.get("auto_mode", False)
     )
 

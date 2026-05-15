@@ -77,6 +77,19 @@
         {% endfor %}
       </div>
     </div>
+    <p><small>Mapa otázek podle pořadí:</small></p>
+
+<div class="progress-wrapper">
+  <div class="question-progress-bar">
+    {% for item in question_progress %}
+      <div
+        class="question-progress-segment"
+        style="background: {{ item.color }};"
+        title="Otázka {{ item.index }}: hodnota {{ item.value }} — {{ item.question }}"
+      ></div>
+    {% endfor %}
+  </div>
+</div>
     <p><small>Klávesy: 'space' = odpověď, 'c' = časovač, '0'–'9' = skóre, '=' = 10, '-'' = vyřadit</small></p>
   </div>
 
