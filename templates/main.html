@@ -1,44 +1,44 @@
 {% extends "base.html" %}
 
-{% block title %}🧠 Správa okruhů{% endblock %}
+{% block title %}Správa okruhů{% endblock %}
 
 {% block content %}
-  <h2>🧠 Tematické okruhy</h2>
+  <h2>Tematické okruhy</h2>
 
   {% if topics %}
     <ul style="list-style-type: none; padding: 0;">
       {% for topic in topics %}
         <li style="margin: 1em 0; border: 1px solid #ddd; border-radius: 8px; padding: 1em; background: #fefefe; text-align: left;">
           <strong style="font-size: 1.2em;">{{ topic.name }}</strong><br>
-          <small>📌 Otázek celkem: {{ topic.total }} &nbsp; ✅ Hotových: {{ topic.done }}</small><br><br>
-          <a href="{{ url_for('quiz', topic=topic.name) }}">🎯 Začít test</a> |
+          <small>Otázek celkem: {{ topic.total }} &nbsp; Hotových: {{ topic.done }} &nbsp; Průměr: {{ topic.average }}</small><br><br>
+          <a href="{{ url_for('quiz', topic=topic.name) }}">Začít test</a> |
           <a href="{{ url_for('add_questions', topic=topic.name) }}">➕ Přidat otázky</a> |
           <a href="{{ url_for('export.export_topic_json', topic=topic['name']) }}" download>
-            💾 Export JSON
+            Export JSON
           </a> |
           <form method="post" action="{{ url_for('reset_topic') }}" style="display:inline;" onsubmit="return confirm('Resetovat otázky v okruhu {{ topic.name }}?');">
             <input type="hidden" name="topic" value="{{ topic.name }}">
             <button type="submit" style="background:none; border:none; color:#0066cc; cursor:pointer;" title="Reset okruhu">
-              🔄 Reset
+              Reset
             </button>
           </form>
 
           <form method="post" action="{{ url_for('delete_topic') }}" style="display:inline;" onsubmit="return confirm('Opravdu smazat okruh \'{{ topic.name }}\'?');">
             <input type="hidden" name="topic" value="{{ topic.name }}">
-            <button type="submit" title="Smazat" style="background:none; border:none; color:#d00; cursor:pointer;">🗑️</button>
+            <button type="submit" title="Smazat" style="background:none; border:none; color:#d00; cursor:pointer;">Smazat</button>
           </form>
         </li>
       {% endfor %}
     </ul>
   {% else %}
-    <p>⚠️ Zatím nejsou vytvořeny žádné okruhy.</p>
+    <p>Zatím nejsou vytvořeny žádné okruhy.</p>
   {% endif %}
 
   <hr>
-  <h3>➕ Vytvořit nový okruh</h3>
+  <h3>Vytvořit nový okruh</h3>
   <form method="post" action="{{ url_for('create_topic') }}">
-    <input type="text" name="topic" placeholder="Např. XSS, TLS, WEP..." required>
-    <button type="submit">📁 Vytvořit</button>
+    <input type="text" name="topic" placeholder="Např. Anglická slovíčka" required>
+    <button type="submit">Vytvořit</button>
   </form>
 
   {% with messages = get_flashed_messages() %}
