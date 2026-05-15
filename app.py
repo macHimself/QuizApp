@@ -106,10 +106,21 @@ def home():
         questions = load_questions(topic)
         total = len(questions)
         done = sum(1 for q in questions if q.get("value") == 10)
+        answered = [
+            q for q in questions
+            if 0 <= q.get("value", -1) <= 10
+        ]
+
+        if answered:
+            average = round(sum(q.get("value", 0) for q in answered) / len(answered), 2)
+        else:
+            average = None
+
         topic_summaries.append({
             "name": topic,
             "total": total,
-            "done": done
+            "done": done,
+            "average": average
         })
 
     return render_template("main.html", topics=topic_summaries)
