@@ -1,0 +1,248 @@
+[
+  {
+    "user": "adam",
+    "question": "A",
+    "answer": "a",
+    "rating": 4,
+    "average_rating": 4.0,
+    "topic": "STATNICE",
+    "timestamp": "2026-05-17T18:19:27"
+  },
+  {
+    "user": "adam",
+    "question": "A",
+    "answer": "a",
+    "rating": 6,
+    "average_rating": 5.0,
+    "topic": "STATNICE",
+    "timestamp": "2026-05-17T18:19:29"
+  },
+  {
+    "user": "adam",
+    "question": "A",
+    "answer": "a",
+    "rating": 3,
+    "average_rating": 4.33,
+    "topic": "STATNICE",
+    "timestamp": "2026-05-17T18:19:30"
+  },
+  {
+    "user": "adam",
+    "question": "A",
+    "answer": "a",
+    "rating": 1,
+    "average_rating": 3.5,
+    "topic": "STATNICE",
+    "timestamp": "2026-05-17T18:19:31"
+  },
+  {
+    "user": "adam",
+    "question": "A",
+    "answer": "a",
+    "rating": 10,
+    "average_rating": 4.8,
+    "topic": "STATNICE",
+    "timestamp": "2026-05-17T18:19:42"
+  },
+  {
+    "user": "adam",
+    "question": "A",
+    "answer": "a",
+    "rating": -1,
+    "average_rating": 3.83,
+    "topic": "STATNICE",
+    "timestamp": "2026-05-17T18:19:43"
+  },
+  {
+    "type": "reset",
+    "user": "adam",
+    "topic": "STATNICE",
+    "timestamp": "2026-05-17T18:22:24",
+    "message": "🔄 Reset uživatelských výsledků v okruhu STATNICE"
+  },
+  {
+    "user": "adam",
+    "question": "A",
+    "answer": "a",
+    "rating": 6,
+    "average_rating": 6.0,
+    "topic": "STATNICE",
+    "timestamp": "2026-05-17T18:22:28"
+  },
+  {
+    "user": "adam",
+    "question": "A",
+    "answer": "a",
+    "rating": 3,
+    "average_rating": 4.5,
+    "topic": "STATNICE",
+    "timestamp": "2026-05-17T18:22:29"
+  },
+  {
+    "user": "adam",
+    "question": "A",
+    "answer": "a",
+    "rating": 1,
+    "average_rating": 3.33,
+    "topic": "STATNICE",
+    "timestamp": "2026-05-17T18:22:30"
+  },
+  {
+    "user": "adam",
+    "question": "A",
+    "answer": "a",
+    "rating": 0,
+    "average_rating": 2.5,
+    "topic": "STATNICE",
+    "timestamp": "2026-05-17T18:22:30"
+  },
+  {
+    "user": "adam",
+    "question": "A",
+    "answer": "a",
+    "rating": 8,
+    "average_rating": 3.6,
+    "topic": "STATNICE",
+    "timestamp": "2026-05-17T18:22:32"
+  },
+  {
+    "user": "adam",
+    "question": "A",
+    "answer": "a",
+    "rating": 9,
+    "average_rating": 4.5,
+    "topic": "STATNICE",
+    "timestamp": "2026-05-17T18:22:33"
+  },
+  {
+    "user": "adam",
+    "question": "A",
+    "answer": "a",
+    "rating": 10,
+    "average_rating": 5.29,
+    "topic": "STATNICE",
+    "timestamp": "2026-05-17T18:22:33"
+  },
+  {
+    "user": "adam",
+    "question": "A",
+    "answer": "a",
+    "rating": 4,
+    "average_rating": 5.12,
+    "topic": "STATNICE",
+    "timestamp": "2026-05-17T18:22:35"
+  },
+  {
+    "user": "adam",
+    "question": "A",
+    "answer": "a",
+    "rating": 3,
+    "average_rating": 4.89,
+    "topic": "STATNICE",
+    "timestamp": "2026-05-17T18:22:36"
+  },
+  {
+    "user": "adam",
+    "question": "A",
+    "answer": "a",
+    "rating": 2,
+    "average_rating": 4.6,
+    "topic": "STATNICE",
+    "timestamp": "2026-05-17T18:22:37"
+  },
+  {
+    "user": "adam",
+    "question": "A",
+    "answer": "a",
+    "rating": 4,
+    "average_rating": 4.55,
+    "topic": "STATNICE",
+    "timestamp": "2026-05-17T18:22:37"
+  },
+  {
+    "user": "adam",
+    "question": "A",
+    "answer": "a",
+    "rating": 10,
+    "average_rating": 5.0,
+    "topic": "STATNICE",
+    "timestamp": "2026-05-17T18:22:46"
+  },
+  {
+    "user": "adam",
+    "question": "A",
+    "answer": "a",
+    "rating": 9,
+    "average_rating": 5.31,
+    "topic": "STATNICE",
+    "timestamp": "2026-05-17T18:22:48"
+  },
+  {
+    "user": "adam",
+    "question": "A",
+    "answer": "a",
+    "rating": 8,
+    "average_rating": 5.5,
+    "topic": "STATNICE",
+    "timestamp": "2026-05-17T18:22:49"
+  },
+  {
+    "user": "adam",
+    "question": "A",
+    "answer": "a",
+    "rating": 7,
+    "average_rating": 5.6,
+    "topic": "STATNICE",
+    "timestamp": "2026-05-17T18:22:50"
+  },
+  {
+    "user": "adam",
+    "question": "A",
+    "answer": "a",
+    "rating": -1,
+    "average_rating": 5.19,
+    "topic": "STATNICE",
+    "timestamp": "2026-05-17T18:22:52"
+  },
+  {
+    "type": "reset",
+    "user": "adam2",
+    "topic": "ALL",
+    "timestamp": "2026-05-17T18:28:14",
+    "message": "🔁 Globální reset uživatelských výsledků"
+  },
+  {
+    "user": "jan",
+    "question": "A",
+    "answer": "a",
+    "rating": 3,
+    "average_rating": 3.0,
+    "topic": "STATNICE",
+    "timestamp": "2026-05-17T18:28:40"
+  },
+  {
+    "user": "jan",
+    "question": "A",
+    "answer": "a",
+    "rating": 7,
+    "average_rating": 5.0,
+    "topic": "STATNICE",
+    "timestamp": "2026-05-17T18:28:41"
+  },
+  {
+    "user": "adam2",
+    "question": "A",
+    "answer": "a",
+    "rating": 6,
+    "average_rating": 6.0,
+    "topic": "STATNICE",
+    "timestamp": "2026-05-17T18:29:01"
+  },
+  {
+    "type": "reset",
+    "user": "adam2",
+    "topic": "ALL",
+    "timestamp": "2026-05-17T18:29:04",
+    "message": "🔁 Globální reset uživatelských výsledků"
+  }
+]

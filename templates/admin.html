@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block title %}Admin panel{% endblock %}
+
+{% block content %}
+  <h2>Admin panel</h2>
+
+  <p>
+    <a href="{{ url_for('home') }}">Zpět na okruhy</a>
+  </p>
+
+  <h3>Uživatelé</h3>
+
+  <table style="width:100%; border-collapse: collapse;">
+    <tr>
+      <th style="text-align:left; border-bottom:1px solid #ccc;">Uživatel</th>
+      <th style="text-align:left; border-bottom:1px solid #ccc;">Role</th>
+      <th style="text-align:left; border-bottom:1px solid #ccc;">Změna hesla</th>
+      <th style="text-align:left; border-bottom:1px solid #ccc;">Smazat</th>
+    </tr>
+
+    {% for user in users %}
+      <tr>
+        <td>{{ user.username }}</td>
+        <td>{{ user.role }}</td>
+        <td>
+          <form method="post" action="{{ url_for('admin_change_user_password') }}">
+            <input type="hidden" name="username" value="{{ user.username }}">
+            <input type="password" name="new_password" placeholder="Nové heslo" required>
+            <button type="submit">Změnit</button>
+          </form>
+        </td>
+        <td>
+  {% if user.username != session.username %}
+    <form method="post"
+          action="{{ url_for('admin_delete_user') }}"
+          onsubmit="return confirm('Opravdu smazat uživatele {{ user.username }}?');">
+      <input type="hidden" name="username" value="{{ user.username }}">
+      <button type="submit" style="color:#d00;">Smazat</button>
+    </form>
+  {% else %}
+    <em>aktuální admin</em>
+  {% endif %}
+</td>
+      </tr>
+    {% endfor %}
+  </table>
+
+  <h3>Všechny topicy</h3>
+
+  <ul>
+    {% for topic in topics %}
+      <li>{{ topic }}</li>
+    {% endfor %}
+  </ul>
+{% endblock %}

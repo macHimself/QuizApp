@@ -5,6 +5,18 @@
 {% block content %}
   <h2>Tematické okruhy</h2>
 
+    <div style="margin-bottom: 20px;">
+      Přihlášen:
+      <strong>{{ session.username }}</strong>
+        {% if session.role == "admin" %}
+          <a href="{{ url_for('admin_panel') }}">Admin</a>
+|
+        {% endif %}
+|
+      <a href="{{ url_for('change_password') }}">Změnit heslo</a>
+|
+      <a href="{{ url_for('logout') }}">Odhlásit</a>
+    </div>
   {% if topics %}
     <ul style="list-style-type: none; padding: 0;">
       {% for topic in topics %}

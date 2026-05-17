@@ -1,0 +1,6 @@
+{
+  "adam2": {
+    "password_hash": "scrypt:32768:8:1$mB5Iar3vA9UCayjp$601117e096b2725069469b972daac17b0b3d61b00bc1eb1bc13e6e5124909d3767c836a10d5bd086045fd0bf1e3fd3d1c3b4f456757cc0d35ec3c3e7946c40b0",
+    "role": "admin"
+  }
+}
