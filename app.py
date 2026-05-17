@@ -13,12 +13,16 @@ TOPICS_FILE = os.path.join(DATA_DIR, "topics.json")
 HISTORY_FILE = os.path.join(DATA_DIR, "history.json")
 USERS_FILE = os.path.join(DATA_DIR, "users.json")
 
+DEFAULT_OWNER_FOR_OLD_TOPICS = "macHimself"
+
 
 def ensure_data_dir():
     os.makedirs(DATA_DIR, exist_ok=True)
+
     if not os.path.exists(TOPICS_FILE):
         with open(TOPICS_FILE, "w", encoding="utf-8") as f:
             json.dump([], f)
+
     if not os.path.exists(USERS_FILE):
         with open(USERS_FILE, "w", encoding="utf-8") as f:
             json.dump({}, f)
@@ -66,8 +70,40 @@ def save_users(users):
         json.dump(users, f, indent=2, ensure_ascii=False)
 
 
+def normalize_topic_item(topic_item):
+    if isinstance(topic_item, str):
+        return {
+            "name": topic_item,
+            "owner": DEFAULT_OWNER_FOR_OLD_TOPICS
+        }
+    return topic_item
+
+
+def load_topics():
+    ensure_data_dir()
+    with open(TOPICS_FILE, "r", encoding="utf-8") as f:
+        raw_topics = json.load(f)
+
+    return [normalize_topic_item(t) for t in raw_topics]
+
+
+def save_topics(topics):
+    with open(TOPICS_FILE, "w", encoding="utf-8") as f:
+        json.dump(topics, f, indent=2, ensure_ascii=False)
+
+
+def topic_names():
+    return [t["name"] for t in load_topics()]
+
+
 def current_user():
     return session.get("username")
+
+
+def current_role():
+    users = load_users()
+    username = current_user()
+    return users.get(username, {}).get("role", "user")
 
 
 def login_required(fn):
@@ -77,6 +113,31 @@ def login_required(fn):
             return redirect(url_for("login"))
         return fn(*args, **kwargs)
     return wrapper
+
+
+def admin_required(fn):
+    @wraps(fn)
+    def wrapper(*args, **kwargs):
+        if "username" not in session:
+            return redirect(url_for("login"))
+
+        if current_role() != "admin":
+            flash("❌ Nemáš oprávnění administrátora.")
+            return redirect(url_for("home"))
+
+        return fn(*args, **kwargs)
+    return wrapper
+
+
+def can_edit_topic(topic_name):
+    if current_role() == "admin":
+        return True
+
+    for topic in load_topics():
+        if topic["name"] == topic_name:
+            return topic.get("owner") == current_user()
+
+    return False
 
 
 def get_user_result(question, username):
@@ -162,26 +223,6 @@ def color_for_value(v):
 @app.context_processor
 def inject_now():
     return {"now": datetime.now()}
-
-
-def current_role():
-    users = load_users()
-    username = current_user()
-    return users.get(username, {}).get("role", "user")
-
-
-def admin_required(fn):
-    @wraps(fn)
-    def wrapper(*args, **kwargs):
-        if "username" not in session:
-            return redirect(url_for("login"))
-
-        if current_role() != "admin":
-            flash("❌ Nemáš oprávnění administrátora.")
-            return redirect(url_for("home"))
-
-        return fn(*args, **kwargs)
-    return wrapper
 
 
 @app.route("/login", methods=["GET", "POST"])
@@ -276,11 +317,7 @@ def change_password():
 def admin_panel():
     users = load_users()
 
-    with open(TOPICS_FILE, "r", encoding="utf-8") as f:
-        topics = json.load(f)
-
     user_list = []
-
     for username, data in users.items():
         user_list.append({
             "username": username,
@@ -290,7 +327,7 @@ def admin_panel():
     return render_template(
         "admin.html",
         users=user_list,
-        topics=topics
+        topics=topic_names()
     )
 
 
@@ -321,13 +358,12 @@ def admin_change_user_password():
 @admin_required
 def admin_delete_user():
     username_to_delete = request.form.get("username", "").strip()
-    current = current_user()
 
     if not username_to_delete:
         flash("❌ Uživatel nebyl zadán.")
         return redirect(url_for("admin_panel"))
 
-    if username_to_delete == current:
+    if username_to_delete == current_user():
         flash("❌ Nemůžeš smazat sám sebe.")
         return redirect(url_for("admin_panel"))
 
@@ -353,20 +389,16 @@ def admin_delete_topic():
         flash("❌ Okruh nebyl zadán.")
         return redirect(url_for("admin_panel"))
 
-    with open(TOPICS_FILE, "r", encoding="utf-8") as f:
-        topics = json.load(f)
+    topics = load_topics()
 
-    if topic not in topics:
+    if not any(t["name"] == topic for t in topics):
         flash("❌ Okruh neexistuje.")
         return redirect(url_for("admin_panel"))
 
-    topics.remove(topic)
-
-    with open(TOPICS_FILE, "w", encoding="utf-8") as f:
-        json.dump(topics, f, indent=2, ensure_ascii=False)
+    topics = [t for t in topics if t["name"] != topic]
+    save_topics(topics)
 
     q_path = get_question_file(topic)
-
     if os.path.exists(q_path):
         os.remove(q_path)
 
@@ -390,8 +422,7 @@ def admin_reset_user_stats():
         flash("❌ Uživatel neexistuje.")
         return redirect(url_for("admin_panel"))
 
-    with open(TOPICS_FILE, "r", encoding="utf-8") as f:
-        topics = json.load(f)
+    topics = topic_names()
 
     if selected_topic == "ALL":
         target_topics = topics
@@ -431,12 +462,11 @@ def home():
     ensure_data_dir()
     username = current_user()
 
-    with open(TOPICS_FILE, "r", encoding="utf-8") as f:
-        topics = json.load(f)
-
+    topics = load_topics()
     topic_summaries = []
 
-    for topic in topics:
+    for topic_item in topics:
+        topic = topic_item["name"]
         questions = load_questions(topic)
         total = len(questions)
 
@@ -455,6 +485,8 @@ def home():
 
         topic_summaries.append({
             "name": topic,
+            "owner": topic_item.get("owner"),
+            "can_edit": current_role() == "admin" or topic_item.get("owner") == username,
             "total": total,
             "done": done,
             "average": average
@@ -472,20 +504,18 @@ def create_topic():
         flash("❌ Název okruhu nesmí být prázdný.")
         return redirect(url_for("home"))
 
-    ensure_data_dir()
+    topics = load_topics()
 
-    with open(TOPICS_FILE, "r", encoding="utf-8") as f:
-        topics = json.load(f)
-
-    if topic in topics:
+    if any(t["name"] == topic for t in topics):
         flash("⚠️ Tento okruh již existuje.")
         return redirect(url_for("home"))
 
-    topics.append(topic)
+    topics.append({
+        "name": topic,
+        "owner": current_user()
+    })
 
-    with open(TOPICS_FILE, "w", encoding="utf-8") as f:
-        json.dump(topics, f, indent=2, ensure_ascii=False)
-
+    save_topics(topics)
     save_questions(topic, [])
 
     flash(f"✅ Okruh '{topic}' byl vytvořen.")
@@ -617,6 +647,10 @@ def quiz(topic):
 @app.route("/edit_question/<topic>/<int:idx>", methods=["POST"])
 @login_required
 def edit_question(topic, idx):
+    if not can_edit_topic(topic):
+        flash("❌ Tento okruh nemůžeš upravovat.")
+        return redirect(url_for("home"))
+
     questions = load_questions(topic)
 
     if idx < 0 or idx >= len(questions):
@@ -642,6 +676,10 @@ def edit_question(topic, idx):
 @app.route("/delete_question/<topic>/<int:idx>", methods=["POST"])
 @login_required
 def delete_question(topic, idx):
+    if not can_edit_topic(topic):
+        flash("❌ Tento okruh nemůžeš upravovat.")
+        return redirect(url_for("home"))
+
     questions = load_questions(topic)
 
     if idx < 0 or idx >= len(questions):
@@ -658,9 +696,7 @@ def delete_question(topic, idx):
 @app.route("/add", methods=["GET"])
 @login_required
 def add_selector():
-    with open(TOPICS_FILE, "r", encoding="utf-8") as f:
-        all_topics = json.load(f)
-
+    all_topics = topic_names()
     return render_template("add_selector.html", all_topics=all_topics)
 
 
@@ -674,6 +710,10 @@ def switch_add_topic():
 @app.route("/add/<topic>", methods=["GET", "POST"])
 @login_required
 def add_questions(topic):
+    if not can_edit_topic(topic):
+        flash("❌ Tento okruh nemůžeš upravovat.")
+        return redirect(url_for("home"))
+
     message = None
     questions = load_questions(topic)
 
@@ -716,14 +756,11 @@ def add_questions(topic):
             else:
                 message = "❌ Obě pole musí být vyplněna."
 
-    with open(TOPICS_FILE, "r", encoding="utf-8") as f:
-        all_topics = json.load(f)
-
     return render_template(
         "add.html",
         message=message,
         topic=topic,
-        all_topics=all_topics,
+        all_topics=topic_names(),
         questions=questions
     )
 
@@ -740,25 +777,20 @@ def stats():
         if "rating" in entry and entry.get("user") == username
     ]
 
-    if valid_entries:
-        average = round(
-            sum(entry["rating"] for entry in valid_entries) / len(valid_entries),
-            2
-        )
-    else:
-        average = 0.0
+    average = round(
+        sum(entry["rating"] for entry in valid_entries) / len(valid_entries),
+        2
+    ) if valid_entries else 0.0
 
     users = load_users()
-
-    with open(TOPICS_FILE, "r", encoding="utf-8") as f:
-        topics = json.load(f)
+    topics = topic_names()
 
     user_topic_stats = []
 
     for user_name in users.keys():
         if is_admin:
             display_name = user_name
-        elif user_name == current_user():
+        elif user_name == username:
             display_name = f"{user_name} (ty)"
         else:
             display_name = f"Spolužák {len(user_topic_stats) + 1}"
@@ -778,10 +810,7 @@ def stats():
                 if 0 <= get_user_result(q, user_name).get("value", -1) <= 10
             ]
 
-            if values:
-                avg = round(sum(values) / len(values), 2)
-            else:
-                avg = None
+            avg = round(sum(values) / len(values), 2) if values else None
 
             row["topics"].append({
                 "name": topic,
@@ -808,26 +837,25 @@ def delete_topic():
         flash("❌ Název okruhu chybí.")
         return redirect(url_for("home"))
 
-    ensure_data_dir()
+    if not can_edit_topic(topic):
+        flash("❌ Tento okruh nemůžeš smazat.")
+        return redirect(url_for("home"))
 
-    with open(TOPICS_FILE, "r", encoding="utf-8") as f:
-        topics = json.load(f)
+    topics = load_topics()
 
-    if topic in topics:
-        topics.remove(topic)
-
-        with open(TOPICS_FILE, "w", encoding="utf-8") as f:
-            json.dump(topics, f, indent=2, ensure_ascii=False)
-
-        q_path = get_question_file(topic)
-
-        if os.path.exists(q_path):
-            os.remove(q_path)
-
-        flash(f"Okruh '{topic}' byl smazán.")
-    else:
+    if not any(t["name"] == topic for t in topics):
         flash("Okruh nenalezen.")
+        return redirect(url_for("home"))
 
+    topics = [t for t in topics if t["name"] != topic]
+    save_topics(topics)
+
+    q_path = get_question_file(topic)
+
+    if os.path.exists(q_path):
+        os.remove(q_path)
+
+    flash(f"Okruh '{topic}' byl smazán.")
     return redirect(url_for("home"))
 
 
@@ -836,10 +864,7 @@ def delete_topic():
 def reset():
     username = current_user()
 
-    with open(TOPICS_FILE, "r", encoding="utf-8") as f:
-        topics = json.load(f)
-
-    for topic in topics:
+    for topic in topic_names():
         questions = load_questions(topic)
 
         for q in questions:
