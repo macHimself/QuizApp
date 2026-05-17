@@ -344,6 +344,87 @@ def admin_delete_user():
     return redirect(url_for("admin_panel"))
 
 
+@app.route("/admin/delete_topic", methods=["POST"])
+@admin_required
+def admin_delete_topic():
+    topic = request.form.get("topic", "").strip()
+
+    if not topic:
+        flash("❌ Okruh nebyl zadán.")
+        return redirect(url_for("admin_panel"))
+
+    with open(TOPICS_FILE, "r", encoding="utf-8") as f:
+        topics = json.load(f)
+
+    if topic not in topics:
+        flash("❌ Okruh neexistuje.")
+        return redirect(url_for("admin_panel"))
+
+    topics.remove(topic)
+
+    with open(TOPICS_FILE, "w", encoding="utf-8") as f:
+        json.dump(topics, f, indent=2, ensure_ascii=False)
+
+    q_path = get_question_file(topic)
+
+    if os.path.exists(q_path):
+        os.remove(q_path)
+
+    flash(f"🗑️ Okruh '{topic}' byl smazán adminem.")
+    return redirect(url_for("admin_panel"))
+
+
+@app.route("/admin/reset_user_stats", methods=["POST"])
+@admin_required
+def admin_reset_user_stats():
+    username = request.form.get("username", "").strip()
+    selected_topic = request.form.get("topic", "").strip()
+
+    if not username:
+        flash("❌ Uživatel nebyl zadán.")
+        return redirect(url_for("admin_panel"))
+
+    users = load_users()
+
+    if username not in users:
+        flash("❌ Uživatel neexistuje.")
+        return redirect(url_for("admin_panel"))
+
+    with open(TOPICS_FILE, "r", encoding="utf-8") as f:
+        topics = json.load(f)
+
+    if selected_topic == "ALL":
+        target_topics = topics
+    else:
+        target_topics = [selected_topic]
+
+    for topic in target_topics:
+        questions = load_questions(topic)
+
+        for q in questions:
+            reset_user_result(q, username)
+
+        save_questions(topic, questions)
+
+    history = load_history()
+    history.append({
+        "type": "admin_reset_user_stats",
+        "admin": current_user(),
+        "user": username,
+        "topic": selected_topic,
+        "timestamp": datetime.now().isoformat(timespec="seconds"),
+        "message": f"Admin resetoval statistiky uživatele {username}"
+    })
+    save_history(history)
+
+    if selected_topic == "ALL":
+        flash(f"🔄 Resetovány všechny statistiky uživatele {username}.")
+    else:
+        flash(f"🔄 Resetovány statistiky uživatele {username} pro okruh {selected_topic}.")
+
+    return redirect(url_for("admin_panel"))
+
+
 @app.route("/")
 @login_required
 def home():

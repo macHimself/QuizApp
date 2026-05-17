@@ -46,11 +46,57 @@
     {% endfor %}
   </table>
 
-  <h3>Všechny topicy</h3>
+<h3>Reset statistik uživatele</h3>
 
-  <ul>
-    {% for topic in topics %}
-      <li>{{ topic }}</li>
+<form method="post"
+      action="{{ url_for('admin_reset_user_stats') }}"
+      onsubmit="return confirm('Opravdu resetovat statistiky?');">
+
+  <label>Uživatel:</label>
+  <select name="username" required>
+    {% for user in users %}
+      <option value="{{ user.username }}">
+        {{ user.username }} ({{ user.role }})
+      </option>
     {% endfor %}
-  </ul>
+  </select>
+
+  <br><br>
+
+  <label>Okruh:</label>
+  <select name="topic" required>
+    <option value="ALL">Všechny okruhy</option>
+
+    {% for topic in topics %}
+      <option value="{{ topic }}">{{ topic }}</option>
+    {% endfor %}
+  </select>
+
+  <br><br>
+
+  <button type="submit">
+    Resetovat statistiky
+  </button>
+</form>
+
+
+
+
+<h3>Všechny okruhy</h3>
+
+<ul>
+  {% for topic in topics %}
+    <li>
+      {{ topic }}
+
+      <form method="post"
+            action="{{ url_for('admin_delete_topic') }}"
+            style="display:inline;"
+            onsubmit="return confirm('Opravdu smazat okruh {{ topic }}?');">
+        <input type="hidden" name="topic" value="{{ topic }}">
+        <button type="submit" style="color:#d00;">Smazat</button>
+      </form>
+    </li>
+  {% endfor %}
+</ul>
 {% endblock %}
