@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}📊 Statistiky po okruzích{% endblock %}
+{% block title %}Statistiky po okruzích{% endblock %}
 
 {% block content %}
 
@@ -48,7 +48,7 @@
   </tbody>
 </table>
 
-  <h2>📈 Statistiky odpovědí podle okruhů</h2>
+  <h2>Statistiky odpovědí podle okruhů</h2>
   <p>Průměrné hodnocení: <strong>{{ average }}</strong></p>
 
   {% if entries %}
@@ -62,7 +62,7 @@
     {% endfor %}
 
     {% for topic, group in grouped.items() %}
-      <h3>🗂️ {{ topic }}</h3>
+      <h3> {{ topic }}</h3>
           <form method="post" action="{{ url_for('clear_history_topic') }}" style="display:inline;"
             onsubmit="return confirm('Opravdu smazat historii okruhu {{ topic }}?');">
           <input type="hidden" name="topic" value="{{ topic }}">
