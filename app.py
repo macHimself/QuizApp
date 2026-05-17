@@ -732,6 +732,7 @@ def add_questions(topic):
 @login_required
 def stats():
     username = current_user()
+    is_admin = current_role() == "admin"
 
     history = load_history()
     valid_entries = [
@@ -739,18 +740,62 @@ def stats():
         if "rating" in entry and entry.get("user") == username
     ]
 
-    if not valid_entries:
-        return render_template("stats.html", entries=[], average=0.0)
+    if valid_entries:
+        average = round(
+            sum(entry["rating"] for entry in valid_entries) / len(valid_entries),
+            2
+        )
+    else:
+        average = 0.0
 
-    average = round(
-        sum(entry["rating"] for entry in valid_entries) / len(valid_entries),
-        2
-    )
+    users = load_users()
+
+    with open(TOPICS_FILE, "r", encoding="utf-8") as f:
+        topics = json.load(f)
+
+    user_topic_stats = []
+
+    for user_name in users.keys():
+        if is_admin:
+            display_name = user_name
+        elif user_name == current_user():
+            display_name = f"{user_name} (ty)"
+        else:
+            display_name = f"Spolužák {len(user_topic_stats) + 1}"
+
+        row = {
+            "username": display_name,
+            "real_username": user_name,
+            "topics": []
+        }
+
+        for topic in topics:
+            questions = load_questions(topic)
+
+            values = [
+                get_user_result(q, user_name).get("value", 0)
+                for q in questions
+                if 0 <= get_user_result(q, user_name).get("value", -1) <= 10
+            ]
+
+            if values:
+                avg = round(sum(values) / len(values), 2)
+            else:
+                avg = None
+
+            row["topics"].append({
+                "name": topic,
+                "average": avg
+            })
+
+        user_topic_stats.append(row)
 
     return render_template(
         "stats.html",
         entries=reversed(valid_entries),
-        average=average
+        average=average,
+        user_topic_stats=user_topic_stats,
+        topics=topics
     )
 
 

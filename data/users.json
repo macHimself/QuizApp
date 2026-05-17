@@ -2,5 +2,9 @@
   "adam2": {
     "password_hash": "scrypt:32768:8:1$mB5Iar3vA9UCayjp$601117e096b2725069469b972daac17b0b3d61b00bc1eb1bc13e6e5124909d3767c836a10d5bd086045fd0bf1e3fd3d1c3b4f456757cc0d35ec3c3e7946c40b0",
     "role": "admin"
+  },
+  "alef": {
+    "password_hash": "scrypt:32768:8:1$gFWIsLf9YDiY2UYP$a06e7f60c3dc72101e4cc7f748bf123a136f14f19aedfe808302b91c1f34c9be510584eb4e9e2806833f9675f26f980df928b49667c2a40f51d505373e039ccd",
+    "role": "user"
   }
 }
