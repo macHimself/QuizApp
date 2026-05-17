@@ -1,4 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for, flash, Blueprint, Response, session
+from werkzeug.security import generate_password_hash, check_password_hash
+from functools import wraps
 import json, random, os
 from datetime import datetime
 from collections import Counter
@@ -9,13 +11,21 @@ app.secret_key = "tajneheslo"
 DATA_DIR = "data"
 TOPICS_FILE = os.path.join(DATA_DIR, "topics.json")
 HISTORY_FILE = os.path.join(DATA_DIR, "history.json")
+USERS_FILE = os.path.join(DATA_DIR, "users.json")
+
+DEFAULT_OWNER_FOR_OLD_TOPICS = "macHimself"
 
 
 def ensure_data_dir():
     os.makedirs(DATA_DIR, exist_ok=True)
+
     if not os.path.exists(TOPICS_FILE):
         with open(TOPICS_FILE, "w", encoding="utf-8") as f:
             json.dump([], f)
+
+    if not os.path.exists(USERS_FILE):
+        with open(USERS_FILE, "w", encoding="utf-8") as f:
+            json.dump({}, f)
 
 
 def get_question_file(topic):
@@ -48,17 +58,139 @@ def save_history(history):
         json.dump(history, f, indent=2, ensure_ascii=False)
 
 
-def weighted_choice(questions):
+def load_users():
+    ensure_data_dir()
+    with open(USERS_FILE, "r", encoding="utf-8") as f:
+        return json.load(f)
+
+
+def save_users(users):
+    ensure_data_dir()
+    with open(USERS_FILE, "w", encoding="utf-8") as f:
+        json.dump(users, f, indent=2, ensure_ascii=False)
+
+
+def normalize_topic_item(topic_item):
+    if isinstance(topic_item, str):
+        return {
+            "name": topic_item,
+            "owner": DEFAULT_OWNER_FOR_OLD_TOPICS
+        }
+    return topic_item
+
+
+def load_topics():
+    ensure_data_dir()
+    with open(TOPICS_FILE, "r", encoding="utf-8") as f:
+        raw_topics = json.load(f)
+
+    return [normalize_topic_item(t) for t in raw_topics]
+
+
+def save_topics(topics):
+    with open(TOPICS_FILE, "w", encoding="utf-8") as f:
+        json.dump(topics, f, indent=2, ensure_ascii=False)
+
+
+def topic_names():
+    return [t["name"] for t in load_topics()]
+
+
+def current_user():
+    return session.get("username")
+
+
+def current_role():
+    users = load_users()
+    username = current_user()
+    return users.get(username, {}).get("role", "user")
+
+
+def login_required(fn):
+    @wraps(fn)
+    def wrapper(*args, **kwargs):
+        if "username" not in session:
+            return redirect(url_for("login"))
+        return fn(*args, **kwargs)
+    return wrapper
+
+
+def admin_required(fn):
+    @wraps(fn)
+    def wrapper(*args, **kwargs):
+        if "username" not in session:
+            return redirect(url_for("login"))
+
+        if current_role() != "admin":
+            flash("❌ Nemáš oprávnění administrátora.")
+            return redirect(url_for("home"))
+
+        return fn(*args, **kwargs)
+    return wrapper
+
+
+def can_edit_topic(topic_name):
+    if current_role() == "admin":
+        return True
+
+    for topic in load_topics():
+        if topic["name"] == topic_name:
+            return topic.get("owner") == current_user()
+
+    return False
+
+
+def get_user_result(question, username):
+    return question.get("results", {}).get(username, {
+        "value": 0,
+        "history": [],
+        "avg": 0
+    })
+
+
+def set_user_result(question, username, rating):
+    if "results" not in question:
+        question["results"] = {}
+
+    result = question["results"].get(username, {
+        "value": 0,
+        "history": [],
+        "avg": 0
+    })
+
+    result["value"] = rating
+    result.setdefault("history", []).append(rating)
+    result["avg"] = round(sum(result["history"]) / len(result["history"]), 2)
+
+    question["results"][username] = result
+    return result
+
+
+def reset_user_result(question, username):
+    if "results" not in question:
+        question["results"] = {}
+
+    question["results"][username] = {
+        "value": 0,
+        "history": [],
+        "avg": 0
+    }
+
+
+def weighted_choice(questions, username):
     weighted = []
 
     for i, q in enumerate(questions):
-        if q.get("value") == -1:
+        value = get_user_result(q, username).get("value", 0)
+
+        if value == -1:
             continue
 
-        weight = max(1, 11 - q.get("value", 0))
+        weight = max(1, 11 - value)
         weighted.extend([i] * weight)
 
     return random.choice(weighted) if weighted else None
+
 
 def color_for_value(v):
     if v == -1:
@@ -93,31 +225,268 @@ def inject_now():
     return {"now": datetime.now()}
 
 
+@app.route("/login", methods=["GET", "POST"])
+def login():
+    ensure_data_dir()
+    users = load_users()
+
+    if request.method == "POST":
+        action = request.form.get("action")
+        username = request.form.get("username", "").strip()
+        password = request.form.get("password", "")
+
+        if not username or not password:
+            flash("❌ Vyplň jméno i heslo.")
+            return redirect(url_for("login"))
+
+        if action == "register":
+            if username in users:
+                flash("⚠️ Uživatel už existuje.")
+                return redirect(url_for("login"))
+
+            users[username] = {
+                "password_hash": generate_password_hash(password),
+                "role": "user"
+            }
+            save_users(users)
+
+            session["username"] = username
+            session["role"] = "user"
+            return redirect(url_for("home"))
+
+        if action == "login":
+            user = users.get(username)
+
+            if not user or not check_password_hash(user["password_hash"], password):
+                flash("❌ Špatné jméno nebo heslo.")
+                return redirect(url_for("login"))
+
+            session["username"] = username
+            session["role"] = user.get("role", "user")
+            return redirect(url_for("home"))
+
+    return render_template("login.html")
+
+
+@app.route("/logout")
+def logout():
+    session.clear()
+    return redirect(url_for("login"))
+
+
+@app.route("/change_password", methods=["GET", "POST"])
+@login_required
+def change_password():
+    username = current_user()
+    users = load_users()
+
+    if request.method == "POST":
+        old_password = request.form.get("old_password", "")
+        new_password = request.form.get("new_password", "")
+        new_password_confirm = request.form.get("new_password_confirm", "")
+
+        user = users.get(username)
+
+        if not user:
+            flash("❌ Uživatel neexistuje.")
+            return redirect(url_for("logout"))
+
+        if not check_password_hash(user["password_hash"], old_password):
+            flash("❌ Původní heslo nesedí.")
+            return redirect(url_for("change_password"))
+
+        if not new_password:
+            flash("❌ Nové heslo nesmí být prázdné.")
+            return redirect(url_for("change_password"))
+
+        if new_password != new_password_confirm:
+            flash("❌ Nová hesla se neshodují.")
+            return redirect(url_for("change_password"))
+
+        users[username]["password_hash"] = generate_password_hash(new_password)
+        save_users(users)
+
+        flash("✅ Heslo bylo změněno.")
+        return redirect(url_for("home"))
+
+    return render_template("change_password.html")
+
+
+@app.route("/admin")
+@admin_required
+def admin_panel():
+    users = load_users()
+
+    user_list = []
+    for username, data in users.items():
+        user_list.append({
+            "username": username,
+            "role": data.get("role", "user")
+        })
+
+    return render_template(
+        "admin.html",
+        users=user_list,
+        topics=topic_names()
+    )
+
+
+@app.route("/admin/change_user_password", methods=["POST"])
+@admin_required
+def admin_change_user_password():
+    username = request.form.get("username", "").strip()
+    new_password = request.form.get("new_password", "")
+
+    users = load_users()
+
+    if username not in users:
+        flash("❌ Uživatel neexistuje.")
+        return redirect(url_for("admin_panel"))
+
+    if not new_password:
+        flash("❌ Nové heslo nesmí být prázdné.")
+        return redirect(url_for("admin_panel"))
+
+    users[username]["password_hash"] = generate_password_hash(new_password)
+    save_users(users)
+
+    flash(f"✅ Heslo uživatele {username} bylo změněno.")
+    return redirect(url_for("admin_panel"))
+
+
+@app.route("/admin/delete_user", methods=["POST"])
+@admin_required
+def admin_delete_user():
+    username_to_delete = request.form.get("username", "").strip()
+
+    if not username_to_delete:
+        flash("❌ Uživatel nebyl zadán.")
+        return redirect(url_for("admin_panel"))
+
+    if username_to_delete == current_user():
+        flash("❌ Nemůžeš smazat sám sebe.")
+        return redirect(url_for("admin_panel"))
+
+    users = load_users()
+
+    if username_to_delete not in users:
+        flash("❌ Uživatel neexistuje.")
+        return redirect(url_for("admin_panel"))
+
+    del users[username_to_delete]
+    save_users(users)
+
+    flash(f"🗑️ Uživatel {username_to_delete} byl smazán.")
+    return redirect(url_for("admin_panel"))
+
+
+@app.route("/admin/delete_topic", methods=["POST"])
+@admin_required
+def admin_delete_topic():
+    topic = request.form.get("topic", "").strip()
+
+    if not topic:
+        flash("❌ Okruh nebyl zadán.")
+        return redirect(url_for("admin_panel"))
+
+    topics = load_topics()
+
+    if not any(t["name"] == topic for t in topics):
+        flash("❌ Okruh neexistuje.")
+        return redirect(url_for("admin_panel"))
+
+    topics = [t for t in topics if t["name"] != topic]
+    save_topics(topics)
+
+    q_path = get_question_file(topic)
+    if os.path.exists(q_path):
+        os.remove(q_path)
+
+    flash(f"🗑️ Okruh '{topic}' byl smazán adminem.")
+    return redirect(url_for("admin_panel"))
+
+
+@app.route("/admin/reset_user_stats", methods=["POST"])
+@admin_required
+def admin_reset_user_stats():
+    username = request.form.get("username", "").strip()
+    selected_topic = request.form.get("topic", "").strip()
+
+    if not username:
+        flash("❌ Uživatel nebyl zadán.")
+        return redirect(url_for("admin_panel"))
+
+    users = load_users()
+
+    if username not in users:
+        flash("❌ Uživatel neexistuje.")
+        return redirect(url_for("admin_panel"))
+
+    topics = topic_names()
+
+    if selected_topic == "ALL":
+        target_topics = topics
+    else:
+        target_topics = [selected_topic]
+
+    for topic in target_topics:
+        questions = load_questions(topic)
+
+        for q in questions:
+            reset_user_result(q, username)
+
+        save_questions(topic, questions)
+
+    history = load_history()
+    history.append({
+        "type": "admin_reset_user_stats",
+        "admin": current_user(),
+        "user": username,
+        "topic": selected_topic,
+        "timestamp": datetime.now().isoformat(timespec="seconds"),
+        "message": f"Admin resetoval statistiky uživatele {username}"
+    })
+    save_history(history)
+
+    if selected_topic == "ALL":
+        flash(f"🔄 Resetovány všechny statistiky uživatele {username}.")
+    else:
+        flash(f"🔄 Resetovány statistiky uživatele {username} pro okruh {selected_topic}.")
+
+    return redirect(url_for("admin_panel"))
+
+
 @app.route("/")
+@login_required
 def home():
     ensure_data_dir()
+    username = current_user()
 
-    with open(TOPICS_FILE, "r", encoding="utf-8") as f:
-        topics = json.load(f)
-
+    topics = load_topics()
     topic_summaries = []
 
-    for topic in topics:
+    for topic_item in topics:
+        topic = topic_item["name"]
         questions = load_questions(topic)
         total = len(questions)
-        done = sum(1 for q in questions if q.get("value") == 10)
-        answered = [
-            q for q in questions
-            if 0 <= q.get("value", -1) <= 10
+
+        done = sum(
+            1 for q in questions
+            if get_user_result(q, username).get("value", 0) == 10
+        )
+
+        answered_values = [
+            get_user_result(q, username).get("value", 0)
+            for q in questions
+            if 0 <= get_user_result(q, username).get("value", -1) <= 10
         ]
 
-        if answered:
-            average = round(sum(q.get("value", 0) for q in answered) / len(answered), 2)
-        else:
-            average = None
+        average = round(sum(answered_values) / len(answered_values), 2) if answered_values else None
 
         topic_summaries.append({
             "name": topic,
+            "owner": topic_item.get("owner"),
+            "can_edit": current_role() == "admin" or topic_item.get("owner") == username,
             "total": total,
             "done": done,
             "average": average
@@ -127,6 +496,7 @@ def home():
 
 
 @app.route("/create_topic", methods=["POST"])
+@login_required
 def create_topic():
     topic = request.form.get("topic", "").strip()
 
@@ -134,64 +504,42 @@ def create_topic():
         flash("❌ Název okruhu nesmí být prázdný.")
         return redirect(url_for("home"))
 
-    ensure_data_dir()
+    topics = load_topics()
 
-    with open(TOPICS_FILE, "r", encoding="utf-8") as f:
-        topics = json.load(f)
-
-    if topic in topics:
+    if any(t["name"] == topic for t in topics):
         flash("⚠️ Tento okruh již existuje.")
         return redirect(url_for("home"))
 
-    topics.append(topic)
+    topics.append({
+        "name": topic,
+        "owner": current_user()
+    })
 
-    with open(TOPICS_FILE, "w", encoding="utf-8") as f:
-        json.dump(topics, f, indent=2, ensure_ascii=False)
-
+    save_topics(topics)
     save_questions(topic, [])
 
     flash(f"✅ Okruh '{topic}' byl vytvořen.")
     return redirect(url_for("home"))
 
 
-@app.route("/toggle_auto_mode/<topic>", methods=["POST"])
-def toggle_auto_mode(topic):
-    session["auto_mode"] = not session.get("auto_mode", False)
-
-    index = request.form.get("index")
-
-    if index is not None:
-        return redirect(url_for("quiz", topic=topic, index=index))
-
-    return redirect(url_for("quiz", topic=topic))
-
-
 @app.route("/quiz/<topic>", methods=["GET", "POST"])
+@login_required
 def quiz(topic):
-    if "auto_mode" not in session:
-        session["auto_mode"] = False
-
     questions = load_questions(topic)
+    username = current_user()
 
     if request.method == "POST":
         idx = int(request.form["index"])
         rating = int(request.form["rating"])
 
-        questions[idx]["value"] = rating
+        result = set_user_result(questions[idx], username, rating)
+        avg = result["avg"]
 
-        if "history" not in questions[idx]:
-            questions[idx]["history"] = []
-
-        questions[idx]["history"].append(rating)
-
-        q_history = questions[idx]["history"]
-        avg = round(sum(q_history) / len(q_history), 2) if q_history else 0
-
-        questions[idx]["avg"] = avg
         save_questions(topic, questions)
 
         history = load_history()
         history.append({
+            "user": username,
             "question": questions[idx]["question"],
             "answer": questions[idx]["answer"],
             "rating": rating,
@@ -207,76 +555,46 @@ def quiz(topic):
 
     if index_from_url is not None:
         idx = int(index_from_url)
-
         if idx < 0 or idx >= len(questions):
-            idx = weighted_choice(questions)
+            idx = weighted_choice(questions, username)
     else:
-        idx = weighted_choice(questions)
+        idx = weighted_choice(questions, username)
 
     if idx is None:
-        flash(f"🎉 Hotovo! Všechny otázky v okruhu '{topic}' mají skóre nebo jsou vyřazené.")
+        flash(f"Hotovo! Všechny otázky v okruhu '{topic}' mají skóre nebo jsou vyřazené.")
         return redirect(url_for("home"))
 
     q = questions[idx]
-
     total_questions = len(questions)
-    completed = sum(1 for q in questions if q.get("value", 0) == 10)
-    excluded_count = sum(1 for q in questions if q.get("value") == -1)
-    pending_count = sum(1 for q in questions if q.get("value", 0) == 0)
 
-    answered = [
-        q for q in questions
-        if 0 <= q.get("value", -1) <= 10
+    completed = sum(
+        1 for q_item in questions
+        if get_user_result(q_item, username).get("value", 0) == 10
+    )
+
+    excluded_count = sum(
+        1 for q_item in questions
+        if get_user_result(q_item, username).get("value", 0) == -1
+    )
+
+    pending_count = sum(
+        1 for q_item in questions
+        if get_user_result(q_item, username).get("value", 0) == 0
+    )
+
+    answered_values = [
+        get_user_result(q_item, username).get("value", 0)
+        for q_item in questions
+        if 0 <= get_user_result(q_item, username).get("value", -1) <= 10
     ]
 
-    if answered:
-        avg_score = round(sum(q["value"] for q in answered) / len(answered), 2)
-    else:
-        avg_score = None
+    avg_score = round(sum(answered_values) / len(answered_values), 2) if answered_values else None
 
-    counter = Counter(q.get("value", 0) for q in questions)
-    segments = []
+    counter = Counter(
+        get_user_result(q_item, username).get("value", 0)
+        for q_item in questions
+    )
 
-
-    # for v in range(-1, 11):
-    #     count = counter.get(v, 0)
-
-    #     if count == 0:
-    #         continue
-    #     width = round((count / total_questions) * 100, 2)
-    #     if v == -1:
-    #         color = "#111111"   # černá
-    #     elif v == 0:
-    #         color = "#bfc5cc"   # šedá
-    #     elif v == 1:
-    #         color = "#c62828"   # tmavá červená
-    #     elif v == 2:
-    #         color = "#e53935"   # červená
-    #     elif v == 3:
-    #         color = "#ef5350"   # světle červená
-    #     elif v == 4:
-    #         color = "#fb8c00"   # oranžová
-    #     elif v == 5:
-    #         color = "#ffb300"   # jantarová
-    #     elif v == 6:
-    #         color = "#fdd835"   # žlutá
-    #     elif v == 7:
-    #         color = "#9ccc65"   # světle zelená
-    #     elif v == 8:
-    #         color = "#66bb6a"   # zelená
-    #     elif v == 9:
-    #         color = "#2e7d32"   # tmavě zelená
-    #     elif v == 10:
-    #         color = "#1b5e20"   # velmi tmavě zelená
-    #     segments.append({
-    #         "width": width,
-    #         "color": color,
-    #         "value": v,
-    #         "count": count
-    #     })
-
-    # 1) Agregovaný progress bar podle hodnot
-    counter = Counter(q.get("value", 0) for q in questions)
     segments = []
 
     for v in range(-1, 11):
@@ -293,11 +611,11 @@ def quiz(topic):
             "count": count
         })
 
-    # 2) Progress mapa podle pořadí otázek
     question_progress = []
 
     for i, q_item in enumerate(questions):
-        value = q_item.get("value", 0)
+        value = get_user_result(q_item, username).get("value", 0)
+
         question_progress.append({
             "index": i + 1,
             "value": value,
@@ -305,7 +623,8 @@ def quiz(topic):
             "question": q_item.get("question", "")
         })
 
-    previous_rating = q.get("value", 0) if q.get("value", 0) > 0 else None
+    current_result = get_user_result(q, username)
+    previous_rating = current_result.get("value", 0) if current_result.get("value", 0) > 0 else None
 
     return render_template(
         "index.html",
@@ -321,12 +640,17 @@ def quiz(topic):
         topic=topic,
         progress_segments=segments,
         question_progress=question_progress,
-        automode=session.get("auto_mode", False)
+        username=username
     )
 
 
 @app.route("/edit_question/<topic>/<int:idx>", methods=["POST"])
+@login_required
 def edit_question(topic, idx):
+    if not can_edit_topic(topic):
+        flash("❌ Tento okruh nemůžeš upravovat.")
+        return redirect(url_for("home"))
+
     questions = load_questions(topic)
 
     if idx < 0 or idx >= len(questions):
@@ -350,7 +674,12 @@ def edit_question(topic, idx):
 
 
 @app.route("/delete_question/<topic>/<int:idx>", methods=["POST"])
+@login_required
 def delete_question(topic, idx):
+    if not can_edit_topic(topic):
+        flash("❌ Tento okruh nemůžeš upravovat.")
+        return redirect(url_for("home"))
+
     questions = load_questions(topic)
 
     if idx < 0 or idx >= len(questions):
@@ -362,24 +691,29 @@ def delete_question(topic, idx):
 
     flash("🗑️ Otázka byla smazána.")
     return redirect(url_for("add_questions", topic=topic))
-    
+
 
 @app.route("/add", methods=["GET"])
+@login_required
 def add_selector():
-    with open(TOPICS_FILE, "r", encoding="utf-8") as f:
-        all_topics = json.load(f)
-
+    all_topics = topic_names()
     return render_template("add_selector.html", all_topics=all_topics)
 
 
 @app.route("/switch_add_topic", methods=["POST"])
+@login_required
 def switch_add_topic():
     topic = request.form.get("topic", "").strip()
     return redirect(url_for("add_questions", topic=topic))
 
 
 @app.route("/add/<topic>", methods=["GET", "POST"])
+@login_required
 def add_questions(topic):
+    if not can_edit_topic(topic):
+        flash("❌ Tento okruh nemůžeš upravovat.")
+        return redirect(url_for("home"))
+
     message = None
     questions = load_questions(topic)
 
@@ -422,39 +756,80 @@ def add_questions(topic):
             else:
                 message = "❌ Obě pole musí být vyplněna."
 
-    with open(TOPICS_FILE, "r", encoding="utf-8") as f:
-        all_topics = json.load(f)
-
     return render_template(
         "add.html",
         message=message,
         topic=topic,
-        all_topics=all_topics,
+        all_topics=topic_names(),
         questions=questions
     )
 
 
 @app.route("/stats")
+@login_required
 def stats():
-    history = load_history()
-    valid_entries = [entry for entry in history if "rating" in entry]
+    username = current_user()
+    is_admin = current_role() == "admin"
 
-    if not valid_entries:
-        return render_template("stats.html", entries=[], average=0.0)
+    history = load_history()
+    valid_entries = [
+        entry for entry in history
+        if "rating" in entry and entry.get("user") == username
+    ]
 
     average = round(
         sum(entry["rating"] for entry in valid_entries) / len(valid_entries),
         2
-    )
+    ) if valid_entries else 0.0
+
+    users = load_users()
+    topics = topic_names()
+
+    user_topic_stats = []
+
+    for user_name in users.keys():
+        if is_admin:
+            display_name = user_name
+        elif user_name == username:
+            display_name = f"{user_name} (ty)"
+        else:
+            display_name = f"Spolužák {len(user_topic_stats) + 1}"
+
+        row = {
+            "username": display_name,
+            "real_username": user_name,
+            "topics": []
+        }
+
+        for topic in topics:
+            questions = load_questions(topic)
+
+            values = [
+                get_user_result(q, user_name).get("value", 0)
+                for q in questions
+                if 0 <= get_user_result(q, user_name).get("value", -1) <= 10
+            ]
+
+            avg = round(sum(values) / len(values), 2) if values else None
+
+            row["topics"].append({
+                "name": topic,
+                "average": avg
+            })
+
+        user_topic_stats.append(row)
 
     return render_template(
         "stats.html",
         entries=reversed(valid_entries),
-        average=average
+        average=average,
+        user_topic_stats=user_topic_stats,
+        topics=topics
     )
 
 
 @app.route("/delete_topic", methods=["POST"])
+@login_required
 def delete_topic():
     topic = request.form.get("topic", "").strip()
 
@@ -462,52 +837,50 @@ def delete_topic():
         flash("❌ Název okruhu chybí.")
         return redirect(url_for("home"))
 
-    ensure_data_dir()
+    if not can_edit_topic(topic):
+        flash("❌ Tento okruh nemůžeš smazat.")
+        return redirect(url_for("home"))
 
-    with open(TOPICS_FILE, "r", encoding="utf-8") as f:
-        topics = json.load(f)
+    topics = load_topics()
 
-    if topic in topics:
-        topics.remove(topic)
+    if not any(t["name"] == topic for t in topics):
+        flash("Okruh nenalezen.")
+        return redirect(url_for("home"))
 
-        with open(TOPICS_FILE, "w", encoding="utf-8") as f:
-            json.dump(topics, f, indent=2, ensure_ascii=False)
+    topics = [t for t in topics if t["name"] != topic]
+    save_topics(topics)
 
-        q_path = get_question_file(topic)
+    q_path = get_question_file(topic)
 
-        if os.path.exists(q_path):
-            os.remove(q_path)
+    if os.path.exists(q_path):
+        os.remove(q_path)
 
-        flash(f"🗑️ Okruh '{topic}' byl smazán.")
-    else:
-        flash("⚠️ Okruh nenalezen.")
-
+    flash(f"Okruh '{topic}' byl smazán.")
     return redirect(url_for("home"))
 
 
 @app.route("/reset", methods=["POST"])
+@login_required
 def reset():
-    with open(TOPICS_FILE, "r", encoding="utf-8") as f:
-        topics = json.load(f)
+    username = current_user()
 
-    for topic in topics:
+    for topic in topic_names():
         questions = load_questions(topic)
 
         for q in questions:
-            q["value"] = 0
-            q["history"] = []
-            q["avg"] = 0
+            reset_user_result(q, username)
 
         save_questions(topic, questions)
 
-    flash("🔁 Všechny okruhy byly resetovány.")
+    flash("🔁 Všechny tvoje výsledky byly resetovány.")
 
     history = load_history()
     history.append({
         "type": "reset",
+        "user": username,
         "topic": "ALL",
         "timestamp": datetime.now().isoformat(timespec="seconds"),
-        "message": "🔁 Globální reset všech okruhů"
+        "message": "🔁 Globální reset uživatelských výsledků"
     })
     save_history(history)
 
@@ -515,25 +888,27 @@ def reset():
 
 
 @app.route("/reset_topic", methods=["POST"])
+@login_required
 def reset_topic():
+    username = current_user()
     topic = request.form.get("topic", "").strip()
+
     questions = load_questions(topic)
 
     for q in questions:
-        q["value"] = 0
-        q["history"] = []
-        q["avg"] = 0
+        reset_user_result(q, username)
 
     save_questions(topic, questions)
 
-    flash(f"🔄 Okruh '{topic}' byl resetován.")
+    flash(f"🔄 Tvoje výsledky v okruhu '{topic}' byly resetovány.")
 
     history = load_history()
     history.append({
         "type": "reset",
+        "user": username,
         "topic": topic,
         "timestamp": datetime.now().isoformat(timespec="seconds"),
-        "message": f"🔄 Reset okruhu {topic}"
+        "message": f"🔄 Reset uživatelských výsledků v okruhu {topic}"
     })
     save_history(history)
 
@@ -541,7 +916,9 @@ def reset_topic():
 
 
 @app.route("/clear_history_topic", methods=["POST"])
+@login_required
 def clear_history_topic():
+    username = current_user()
     topic = request.form.get("topic", "").strip()
 
     if not topic:
@@ -549,10 +926,13 @@ def clear_history_topic():
         return redirect(url_for("stats"))
 
     history = load_history()
-    filtered = [h for h in history if h.get("topic") != topic]
+    filtered = [
+        h for h in history
+        if not (h.get("topic") == topic and h.get("user") == username)
+    ]
     save_history(filtered)
 
-    flash(f"🧹 Historie pro okruh '{topic}' byla vymazána.")
+    flash(f"🧹 Tvoje historie pro okruh '{topic}' byla vymazána.")
     return redirect(url_for("stats"))
 
 
@@ -560,6 +940,7 @@ export_bp = Blueprint("export", __name__)
 
 
 @export_bp.route("/export/json/<topic>", methods=["GET"])
+@login_required
 def export_topic_json(topic):
     path = get_question_file(topic)
 

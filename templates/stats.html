@@ -1,9 +1,54 @@
 {% extends "base.html" %}
 
-{% block title %}📊 Statistiky po okruzích{% endblock %}
+{% block title %}Statistiky po okruzích{% endblock %}
 
 {% block content %}
-  <h2>📈 Statistiky odpovědí podle okruhů</h2>
+
+<h1>📊 Přehled uživatelů podle okruhů</h3>
+
+<table border="1"
+       cellpadding="5"
+       cellspacing="0"
+       style="margin: 0 auto 2em auto; text-align: center;">
+
+  <thead>
+    <tr>
+      <th>Okruh</th>
+
+      {% for user_row in user_topic_stats %}
+        <th>{{ user_row.username }}</th>
+      {% endfor %}
+    </tr>
+  </thead>
+
+  <tbody>
+    {% for topic in topics %}
+      <tr>
+        <td><strong>{{ topic }}</strong></td>
+
+        {% for user_row in user_topic_stats %}
+          {% set found = namespace(avg=None) %}
+
+          {% for topic_stat in user_row.topics %}
+            {% if topic_stat.name == topic %}
+              {% set found.avg = topic_stat.average %}
+            {% endif %}
+          {% endfor %}
+
+          <td>
+            {% if found.avg is not none %}
+              {{ found.avg }}
+            {% else %}
+              -
+            {% endif %}
+          </td>
+        {% endfor %}
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+  <h2>Statistiky odpovědí podle okruhů</h2>
   <p>Průměrné hodnocení: <strong>{{ average }}</strong></p>
 
   {% if entries %}
@@ -17,15 +62,12 @@
     {% endfor %}
 
     {% for topic, group in grouped.items() %}
-    <h3>
-      🗂️ {{ topic }}
-        <form method="post" action="{{ url_for('clear_history_topic') }}" style="display:inline;"
+      <h3> {{ topic }}</h3>
+          <form method="post" action="{{ url_for('clear_history_topic') }}" style="display:inline;"
             onsubmit="return confirm('Opravdu smazat historii okruhu {{ topic }}?');">
           <input type="hidden" name="topic" value="{{ topic }}">
           <button type="submit" style="font-size:0.8em; margin-left: 1em;">🧹 Smazat historii</button>
         </form>
-      </h3>
-      <h3>🗂️ {{ topic }}</h3>
       <table border="1" cellpadding="5" cellspacing="0" style="margin: 0 auto 2em auto; text-align: left;">
         <thead>
           <tr>

@@ -1,0 +1,44 @@
+[
+  {
+    "question": "A",
+    "answer": "a",
+    "value": 0,
+    "results": {
+      "adam": {
+        "value": -1,
+        "history": [
+          6,
+          3,
+          1,
+          0,
+          8,
+          9,
+          10,
+          4,
+          3,
+          2,
+          4,
+          10,
+          9,
+          8,
+          7,
+          -1
+        ],
+        "avg": 5.19
+      },
+      "adam2": {
+        "value": 0,
+        "history": [],
+        "avg": 0
+      },
+      "jan": {
+        "value": 7,
+        "history": [
+          3,
+          7
+        ],
+        "avg": 5.0
+      }
+    }
+  }
+]

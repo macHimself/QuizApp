@@ -5,14 +5,34 @@
 {% block content %}
   <h2>Tematické okruhy</h2>
 
+    <div style="margin-bottom: 20px;">
+      Přihlášen:
+      <strong>{{ session.username }}</strong>
+        {% if session.role == "admin" %}
+          <a href="{{ url_for('admin_panel') }}">Admin</a>
+|
+        {% endif %}
+|
+      <a href="{{ url_for('change_password') }}">Změnit heslo</a>
+|
+      <a href="{{ url_for('logout') }}">Odhlásit</a>
+    </div>
   {% if topics %}
     <ul style="list-style-type: none; padding: 0;">
       {% for topic in topics %}
         <li style="margin: 1em 0; border: 1px solid #ddd; border-radius: 8px; padding: 1em; background: #fefefe; text-align: left;">
           <strong style="font-size: 1.2em;">{{ topic.name }}</strong><br>
           <small>Otázek celkem: {{ topic.total }} &nbsp; Hotových: {{ topic.done }} &nbsp; Průměr: {{ topic.average }}</small><br><br>
-          <a href="{{ url_for('quiz', topic=topic.name) }}">Začít test</a> |
-          <a href="{{ url_for('add_questions', topic=topic.name) }}">➕ Přidat otázky</a> |
+          <a href="{{ url_for('quiz', topic=topic.name) }}">Začít test</a> 
+            {% if topic.can_edit %}
+|
+              <a href="{{ url_for('add_questions', topic=topic.name) }}">➕ Přidat otázky</a>
+|
+              <form method="post" action="{{ url_for('delete_topic') }}" style="display:inline;">
+                <input type="hidden" name="topic" value="{{ topic.name }}">
+                <button type="submit">Smazat</button>
+              </form>
+            {% endif %}
           <a href="{{ url_for('export.export_topic_json', topic=topic['name']) }}" download>
             Export JSON
           </a> |
