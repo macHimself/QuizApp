@@ -580,6 +580,9 @@ def quiz(topic):
 
         random_mode = session.get("random_mode", True)
 
+        random_mode = session.get("random_mode", True)
+        session[f"last_index_{topic}"] = idx
+
         if random_mode:
             return redirect(url_for("quiz", topic=topic))
 

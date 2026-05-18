@@ -40,26 +40,34 @@
       </div>
     </form>
   </div>
-  <button id="timer-toggle-button" type="button">
-    Časový režim: VYPNUTO
+<div class="mode-toolbar">
+
+  <button id="timer-toggle-button"
+          type="button"
+          class="mode-button mode-off">
+      TimeTrial: OFF
   </button>
 
 <form id="random-mode-form"
       method="post"
       action="{{ url_for('toggle_random_mode', topic=topic) }}"
-      style="margin-top: 10px;">
+      style="margin:0;">
 
-  <input type="hidden" name="current_index" value="{{ index }}">
+    <input type="hidden" name="current_index" value="{{ index }}">
 
-  <button type="submit">
-    🎲 Náhodný režim:
-    {% if random_mode %}
-      ZAPNUTO
-    {% else %}
-      VYPNUTO
-    {% endif %}
-  </button>
-</form>
+    <button type="submit"
+            class="mode-button {% if random_mode %}mode-on{% else %}mode-off{% endif %}">
+      🎲 Náhodný:
+      {% if random_mode %}
+        ON
+      {% else %}
+        OFF
+      {% endif %}
+    </button>
+
+  </form>
+
+</div>
 
   <div class="footer">
     <p>Celkem otázek: <strong>{{ total }}</strong></p>
@@ -99,11 +107,11 @@
 <div class="progress-wrapper">
   <div class="question-progress-bar">
     {% for item in question_progress %}
-      <div
-        class="question-progress-segment"
-        style="background: {{ item.color }};"
-        title="Otázka {{ item.index }}: hodnota {{ item.value }} — {{ item.question }}"
-      ></div>
+<div
+  class="question-progress-segment {% if item.index - 1 == index %}current-question{% endif %}"
+  style="background: {{ item.color }};"
+  title="Otázka {{ item.index }}: hodnota {{ item.value }} — {{ item.question }}"
+></div>
     {% endfor %}
   </div>
 </div>
@@ -299,17 +307,21 @@ function revealAnswer() {
       }
   }
 
-  function updateTimerButton() {
+function updateTimerButton() {
     const button = document.getElementById("timer-toggle-button");
 
     if (!button) {
         return;
     }
 
+    button.classList.remove("mode-on", "mode-off");
+
     if (timerEnabled) {
         button.textContent = "TimeTrial: ON";
+        button.classList.add("mode-on");
     } else {
         button.textContent = "TimeTrial: OFF";
+        button.classList.add("mode-off");
     }
 }
 

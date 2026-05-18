@@ -244,5 +244,1632 @@
     "topic": "ALL",
     "timestamp": "2026-05-17T18:29:04",
     "message": "🔁 Globální reset uživatelských výsledků"
+  },
+  {
+    "user": "alef",
+    "question": "B",
+    "answer": "b",
+    "rating": 5,
+    "average_rating": 5.0,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:23:59"
+  },
+  {
+    "user": "alef",
+    "question": "A",
+    "answer": "a",
+    "rating": 4,
+    "average_rating": 4.0,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:24:02"
+  },
+  {
+    "user": "alef",
+    "question": "C",
+    "answer": "c",
+    "rating": -1,
+    "average_rating": -1.0,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:25:28"
+  },
+  {
+    "user": "alef",
+    "question": "A",
+    "answer": "a",
+    "rating": 5,
+    "average_rating": 4.5,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:25:50"
+  },
+  {
+    "user": "alef",
+    "question": "D",
+    "answer": "d",
+    "rating": 9,
+    "average_rating": 9.0,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:25:53"
+  },
+  {
+    "user": "alef",
+    "question": "B",
+    "answer": "b",
+    "rating": 6,
+    "average_rating": 5.5,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:25:55"
+  },
+  {
+    "user": "alef",
+    "question": "A",
+    "answer": "a",
+    "rating": 7,
+    "average_rating": 5.33,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:25:56"
+  },
+  {
+    "user": "alef",
+    "question": "A",
+    "answer": "a",
+    "rating": 5,
+    "average_rating": 5.25,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:27:08"
+  },
+  {
+    "user": "alef",
+    "question": "A",
+    "answer": "a",
+    "rating": 6,
+    "average_rating": 5.4,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:27:10"
+  },
+  {
+    "user": "alef",
+    "question": "D",
+    "answer": "d",
+    "rating": 7,
+    "average_rating": 8.0,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:27:12"
+  },
+  {
+    "user": "alef",
+    "question": "A",
+    "answer": "a",
+    "rating": 8,
+    "average_rating": 5.83,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:27:13"
+  },
+  {
+    "user": "alef",
+    "question": "A",
+    "answer": "a",
+    "rating": 8,
+    "average_rating": 6.14,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:27:14"
+  },
+  {
+    "user": "alef",
+    "question": "D",
+    "answer": "d",
+    "rating": 8,
+    "average_rating": 8.0,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:27:15"
+  },
+  {
+    "user": "alef",
+    "question": "A",
+    "answer": "a",
+    "rating": 8,
+    "average_rating": 6.38,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:27:15"
+  },
+  {
+    "user": "alef",
+    "question": "A",
+    "answer": "a",
+    "rating": 8,
+    "average_rating": 6.56,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:27:16"
+  },
+  {
+    "user": "alef",
+    "question": "B",
+    "answer": "b",
+    "rating": 8,
+    "average_rating": 6.33,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:27:16"
+  },
+  {
+    "user": "alef",
+    "question": "B",
+    "answer": "b",
+    "rating": 8,
+    "average_rating": 6.75,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:27:17"
+  },
+  {
+    "user": "alef",
+    "question": "B",
+    "answer": "b",
+    "rating": 8,
+    "average_rating": 7.0,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:27:17"
+  },
+  {
+    "user": "alef",
+    "question": "B",
+    "answer": "b",
+    "rating": 8,
+    "average_rating": 7.17,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:27:17"
+  },
+  {
+    "user": "alef",
+    "question": "D",
+    "answer": "d",
+    "rating": 8,
+    "average_rating": 8.0,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:27:17"
+  },
+  {
+    "user": "alef",
+    "question": "D",
+    "answer": "d",
+    "rating": 8,
+    "average_rating": 8.0,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:27:18"
+  },
+  {
+    "user": "alef",
+    "question": "A",
+    "answer": "a",
+    "rating": 8,
+    "average_rating": 6.7,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:27:18"
+  },
+  {
+    "user": "alef",
+    "question": "B",
+    "answer": "b",
+    "rating": 8,
+    "average_rating": 7.29,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:27:18"
+  },
+  {
+    "user": "alef",
+    "question": "D",
+    "answer": "d",
+    "rating": 8,
+    "average_rating": 8.0,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:27:18"
+  },
+  {
+    "user": "alef",
+    "question": "A",
+    "answer": "a",
+    "rating": 8,
+    "average_rating": 6.82,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:27:18"
+  },
+  {
+    "user": "alef",
+    "question": "A",
+    "answer": "a",
+    "rating": 8,
+    "average_rating": 6.92,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:27:19"
+  },
+  {
+    "user": "alef",
+    "question": "A",
+    "answer": "a",
+    "rating": 8,
+    "average_rating": 7.0,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:27:19"
+  },
+  {
+    "user": "alef",
+    "question": "D",
+    "answer": "d",
+    "rating": 10,
+    "average_rating": 8.29,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:27:20"
+  },
+  {
+    "user": "alef",
+    "question": "D",
+    "answer": "d",
+    "rating": 10,
+    "average_rating": 8.5,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:27:20"
+  },
+  {
+    "user": "alef",
+    "question": "B",
+    "answer": "b",
+    "rating": 10,
+    "average_rating": 7.62,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:27:21"
+  },
+  {
+    "user": "alef",
+    "question": "A",
+    "answer": "a",
+    "rating": 10,
+    "average_rating": 7.21,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:27:21"
+  },
+  {
+    "user": "alef",
+    "question": "B",
+    "answer": "b",
+    "rating": 10,
+    "average_rating": 7.89,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:27:22"
+  },
+  {
+    "user": "alef",
+    "question": "A",
+    "answer": "a",
+    "rating": 10,
+    "average_rating": 7.4,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:27:23"
+  },
+  {
+    "user": "alef",
+    "question": "B",
+    "answer": "b",
+    "rating": 2,
+    "average_rating": 7.3,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:27:23"
+  },
+  {
+    "user": "alef",
+    "question": "B",
+    "answer": "b",
+    "rating": 10,
+    "average_rating": 7.55,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:27:24"
+  },
+  {
+    "user": "alef",
+    "question": "D",
+    "answer": "d",
+    "rating": 2,
+    "average_rating": 7.78,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:27:24"
+  },
+  {
+    "user": "alef",
+    "question": "D",
+    "answer": "d",
+    "rating": 10,
+    "average_rating": 8.0,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:27:25"
+  },
+  {
+    "user": "alef",
+    "question": "B",
+    "answer": "b",
+    "rating": 2,
+    "average_rating": 7.08,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:27:25"
+  },
+  {
+    "user": "alef",
+    "question": "B",
+    "answer": "b",
+    "rating": 10,
+    "average_rating": 7.31,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:27:25"
+  },
+  {
+    "user": "alef",
+    "question": "B",
+    "answer": "b",
+    "rating": 2,
+    "average_rating": 6.93,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:27:26"
+  },
+  {
+    "user": "alef",
+    "question": "B",
+    "answer": "b",
+    "rating": 10,
+    "average_rating": 7.13,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:27:26"
+  },
+  {
+    "user": "alef",
+    "question": "A",
+    "answer": "a",
+    "rating": 2,
+    "average_rating": 7.06,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:27:26"
+  },
+  {
+    "user": "alef",
+    "question": "B",
+    "answer": "b",
+    "rating": 10,
+    "average_rating": 7.31,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:27:26"
+  },
+  {
+    "user": "alef",
+    "question": "A",
+    "answer": "a",
+    "rating": 1,
+    "average_rating": 6.71,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:27:33"
+  },
+  {
+    "user": "alef",
+    "question": "A",
+    "answer": "a",
+    "rating": 1,
+    "average_rating": 6.39,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:27:33"
+  },
+  {
+    "user": "alef",
+    "question": "A",
+    "answer": "a",
+    "rating": 1,
+    "average_rating": 6.11,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:27:34"
+  },
+  {
+    "user": "alef",
+    "question": "A",
+    "answer": "a",
+    "rating": 1,
+    "average_rating": 5.85,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:27:34"
+  },
+  {
+    "user": "alef",
+    "question": "A",
+    "answer": "a",
+    "rating": 1,
+    "average_rating": 5.62,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:27:34"
+  },
+  {
+    "user": "alef",
+    "question": "A",
+    "answer": "a",
+    "rating": 1,
+    "average_rating": 5.41,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:27:35"
+  },
+  {
+    "user": "alef",
+    "question": "A",
+    "answer": "a",
+    "rating": 1,
+    "average_rating": 5.22,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:27:35"
+  },
+  {
+    "user": "alef",
+    "question": "A",
+    "answer": "a",
+    "rating": 1,
+    "average_rating": 5.04,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:27:35"
+  },
+  {
+    "user": "alef",
+    "question": "A",
+    "answer": "a",
+    "rating": 1,
+    "average_rating": 4.88,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:27:36"
+  },
+  {
+    "user": "alef",
+    "question": "A",
+    "answer": "a",
+    "rating": 1,
+    "average_rating": 4.73,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:27:36"
+  },
+  {
+    "user": "alef",
+    "question": "A",
+    "answer": "a",
+    "rating": 1,
+    "average_rating": 4.59,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:27:36"
+  },
+  {
+    "user": "alef",
+    "question": "A",
+    "answer": "a",
+    "rating": 1,
+    "average_rating": 4.46,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:27:37"
+  },
+  {
+    "user": "alef",
+    "question": "A",
+    "answer": "a",
+    "rating": 2,
+    "average_rating": 4.38,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:27:38"
+  },
+  {
+    "user": "alef",
+    "question": "A",
+    "answer": "a",
+    "rating": 2,
+    "average_rating": 4.3,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:27:38"
+  },
+  {
+    "user": "alef",
+    "question": "A",
+    "answer": "a",
+    "rating": 2,
+    "average_rating": 4.23,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:27:38"
+  },
+  {
+    "user": "alef",
+    "question": "A",
+    "answer": "a",
+    "rating": 3,
+    "average_rating": 4.19,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:27:39"
+  },
+  {
+    "user": "alef",
+    "question": "A",
+    "answer": "a",
+    "rating": 3,
+    "average_rating": 4.15,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:27:39"
+  },
+  {
+    "user": "alef",
+    "question": "A",
+    "answer": "a",
+    "rating": 4,
+    "average_rating": 4.15,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:27:40"
+  },
+  {
+    "user": "alef",
+    "question": "A",
+    "answer": "a",
+    "rating": 6,
+    "average_rating": 4.2,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:27:42"
+  },
+  {
+    "user": "alef",
+    "question": "A",
+    "answer": "a",
+    "rating": 5,
+    "average_rating": 4.22,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:29:03"
+  },
+  {
+    "user": "alef",
+    "question": "A",
+    "answer": "a",
+    "rating": 6,
+    "average_rating": 4.27,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:29:04"
+  },
+  {
+    "user": "alef",
+    "question": "A",
+    "answer": "a",
+    "rating": 7,
+    "average_rating": 4.34,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:29:04"
+  },
+  {
+    "user": "alef",
+    "question": "A",
+    "answer": "a",
+    "rating": 3,
+    "average_rating": 4.31,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:29:05"
+  },
+  {
+    "user": "alef",
+    "question": "A",
+    "answer": "a",
+    "rating": 2,
+    "average_rating": 4.25,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:29:05"
+  },
+  {
+    "user": "alef",
+    "question": "A",
+    "answer": "a",
+    "rating": 3,
+    "average_rating": 4.22,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:29:05"
+  },
+  {
+    "user": "alef",
+    "question": "A",
+    "answer": "a",
+    "rating": 2,
+    "average_rating": 4.17,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:29:06"
+  },
+  {
+    "user": "alef",
+    "question": "A",
+    "answer": "a",
+    "rating": 5,
+    "average_rating": 4.19,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:29:22"
+  },
+  {
+    "user": "alef",
+    "question": "A",
+    "answer": "a",
+    "rating": 4,
+    "average_rating": 4.18,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:29:22"
+  },
+  {
+    "user": "alef",
+    "question": "A",
+    "answer": "a",
+    "rating": 5,
+    "average_rating": 4.2,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:29:22"
+  },
+  {
+    "user": "alef",
+    "question": "A",
+    "answer": "a",
+    "rating": 3,
+    "average_rating": 4.17,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:29:22"
+  },
+  {
+    "user": "alef",
+    "question": "A",
+    "answer": "a",
+    "rating": 5,
+    "average_rating": 4.19,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:29:22"
+  },
+  {
+    "user": "alef",
+    "question": "A",
+    "answer": "a",
+    "rating": 3,
+    "average_rating": 4.17,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:29:22"
+  },
+  {
+    "user": "alef",
+    "question": "A",
+    "answer": "a",
+    "rating": 5,
+    "average_rating": 4.18,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:29:22"
+  },
+  {
+    "user": "alef",
+    "question": "A",
+    "answer": "a",
+    "rating": 3,
+    "average_rating": 4.16,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:29:22"
+  },
+  {
+    "user": "alef",
+    "question": "A",
+    "answer": "a",
+    "rating": 5,
+    "average_rating": 4.18,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:29:22"
+  },
+  {
+    "user": "alef",
+    "question": "A",
+    "answer": "a",
+    "rating": 9,
+    "average_rating": 4.27,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:29:22"
+  },
+  {
+    "user": "alef",
+    "question": "A",
+    "answer": "a",
+    "rating": 8,
+    "average_rating": 4.34,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:29:23"
+  },
+  {
+    "user": "alef",
+    "question": "A",
+    "answer": "a",
+    "rating": 3,
+    "average_rating": 4.31,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:29:23"
+  },
+  {
+    "user": "alef",
+    "question": "A",
+    "answer": "a",
+    "rating": 5,
+    "average_rating": 4.33,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:29:23"
+  },
+  {
+    "user": "alef",
+    "question": "A",
+    "answer": "a",
+    "rating": 8,
+    "average_rating": 4.39,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:29:23"
+  },
+  {
+    "user": "alef",
+    "question": "A",
+    "answer": "a",
+    "rating": 3,
+    "average_rating": 4.37,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:29:23"
+  },
+  {
+    "user": "alef",
+    "question": "A",
+    "answer": "a",
+    "rating": 9,
+    "average_rating": 4.45,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:29:23"
+  },
+  {
+    "user": "alef",
+    "question": "A",
+    "answer": "a",
+    "rating": 5,
+    "average_rating": 4.46,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:29:23"
+  },
+  {
+    "user": "alef",
+    "question": "A",
+    "answer": "a",
+    "rating": 8,
+    "average_rating": 4.52,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:29:23"
+  },
+  {
+    "user": "alef",
+    "question": "A",
+    "answer": "a",
+    "rating": 9,
+    "average_rating": 4.59,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:29:23"
+  },
+  {
+    "user": "alef",
+    "question": "A",
+    "answer": "a",
+    "rating": 3,
+    "average_rating": 4.56,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:29:24"
+  },
+  {
+    "user": "alef",
+    "question": "A",
+    "answer": "a",
+    "rating": 4,
+    "average_rating": 4.56,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:29:24"
+  },
+  {
+    "user": "alef",
+    "question": "D",
+    "answer": "d",
+    "rating": 2,
+    "average_rating": 7.45,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:29:24"
+  },
+  {
+    "user": "alef",
+    "question": "D",
+    "answer": "d",
+    "rating": 4,
+    "average_rating": 7.17,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:29:24"
+  },
+  {
+    "user": "alef",
+    "question": "A",
+    "answer": "a",
+    "rating": 2,
+    "average_rating": 4.52,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:29:25"
+  },
+  {
+    "user": "alef",
+    "question": "A",
+    "answer": "a",
+    "rating": 4,
+    "average_rating": 4.51,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:29:25"
+  },
+  {
+    "user": "alef",
+    "question": "A",
+    "answer": "a",
+    "rating": 2,
+    "average_rating": 4.47,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:29:25"
+  },
+  {
+    "user": "alef",
+    "question": "D",
+    "answer": "d",
+    "rating": 4,
+    "average_rating": 6.92,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:29:25"
+  },
+  {
+    "user": "alef",
+    "question": "D",
+    "answer": "d",
+    "rating": 2,
+    "average_rating": 6.57,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:29:25"
+  },
+  {
+    "user": "alef",
+    "question": "D",
+    "answer": "d",
+    "rating": 4,
+    "average_rating": 6.4,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:29:25"
+  },
+  {
+    "user": "alef",
+    "question": "A",
+    "answer": "a",
+    "rating": 2,
+    "average_rating": 4.43,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:29:25"
+  },
+  {
+    "user": "alef",
+    "question": "D",
+    "answer": "d",
+    "rating": 4,
+    "average_rating": 6.25,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:29:25"
+  },
+  {
+    "user": "alef",
+    "question": "D",
+    "answer": "d",
+    "rating": 3,
+    "average_rating": 6.06,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:29:25"
+  },
+  {
+    "user": "alef",
+    "question": "B",
+    "answer": "b",
+    "rating": 4,
+    "average_rating": 7.12,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:29:26"
+  },
+  {
+    "user": "alef",
+    "question": "A",
+    "answer": "a",
+    "rating": 3,
+    "average_rating": 4.41,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:29:26"
+  },
+  {
+    "user": "alef",
+    "question": "A",
+    "answer": "a",
+    "rating": 4,
+    "average_rating": 4.41,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:29:26"
+  },
+  {
+    "user": "alef",
+    "question": "A",
+    "answer": "a",
+    "rating": 3,
+    "average_rating": 4.39,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:29:26"
+  },
+  {
+    "user": "alef",
+    "question": "B",
+    "answer": "b",
+    "rating": 3,
+    "average_rating": 6.89,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:29:26"
+  },
+  {
+    "user": "alef",
+    "question": "A",
+    "answer": "a",
+    "rating": 4,
+    "average_rating": 4.38,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:29:26"
+  },
+  {
+    "user": "alef",
+    "question": "D",
+    "answer": "d",
+    "rating": 3,
+    "average_rating": 5.89,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:29:27"
+  },
+  {
+    "user": "alef",
+    "question": "B",
+    "answer": "b",
+    "rating": 2,
+    "average_rating": 6.63,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:29:27"
+  },
+  {
+    "user": "alef",
+    "question": "A",
+    "answer": "a",
+    "rating": 3,
+    "average_rating": 4.36,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:29:27"
+  },
+  {
+    "user": "alef",
+    "question": "D",
+    "answer": "d",
+    "rating": 2,
+    "average_rating": 5.68,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:29:27"
+  },
+  {
+    "user": "alef",
+    "question": "B",
+    "answer": "b",
+    "rating": 1,
+    "average_rating": 6.35,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:29:27"
+  },
+  {
+    "user": "alef",
+    "question": "B",
+    "answer": "b",
+    "rating": 2,
+    "average_rating": 6.14,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:29:27"
+  },
+  {
+    "user": "alef",
+    "question": "B",
+    "answer": "b",
+    "rating": 3,
+    "average_rating": 6.0,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:29:28"
+  },
+  {
+    "user": "alef",
+    "question": "A",
+    "answer": "a",
+    "rating": 1,
+    "average_rating": 4.32,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:29:28"
+  },
+  {
+    "user": "alef",
+    "question": "A",
+    "answer": "a",
+    "rating": 3,
+    "average_rating": 4.3,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:29:28"
+  },
+  {
+    "user": "alef",
+    "question": "D",
+    "answer": "d",
+    "rating": 1,
+    "average_rating": 5.45,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:29:28"
+  },
+  {
+    "user": "alef",
+    "question": "A",
+    "answer": "a",
+    "rating": 9,
+    "average_rating": 4.36,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:29:29"
+  },
+  {
+    "user": "alef",
+    "question": "D",
+    "answer": "d",
+    "rating": 8,
+    "average_rating": 5.57,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:29:29"
+  },
+  {
+    "user": "alef",
+    "question": "B",
+    "answer": "b",
+    "rating": 4,
+    "average_rating": 5.91,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:29:29"
+  },
+  {
+    "user": "alef",
+    "question": "D",
+    "answer": "d",
+    "rating": 9,
+    "average_rating": 5.73,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:29:29"
+  },
+  {
+    "user": "alef",
+    "question": "B",
+    "answer": "b",
+    "rating": 0,
+    "average_rating": 5.67,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:29:29"
+  },
+  {
+    "user": "alef",
+    "question": "B",
+    "answer": "b",
+    "rating": 4,
+    "average_rating": 5.6,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:29:29"
+  },
+  {
+    "user": "alef",
+    "question": "B",
+    "answer": "b",
+    "rating": 9,
+    "average_rating": 5.73,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:29:29"
+  },
+  {
+    "user": "alef",
+    "question": "A",
+    "answer": "a",
+    "rating": 7,
+    "average_rating": 4.39,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:29:29"
+  },
+  {
+    "user": "alef",
+    "question": "B",
+    "answer": "b",
+    "rating": 1,
+    "average_rating": 5.56,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:29:29"
+  },
+  {
+    "user": "alef",
+    "question": "B",
+    "answer": "b",
+    "rating": 9,
+    "average_rating": 5.68,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:29:29"
+  },
+  {
+    "user": "alef",
+    "question": "B",
+    "answer": "b",
+    "rating": 4,
+    "average_rating": 5.62,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:29:29"
+  },
+  {
+    "user": "alef",
+    "question": "A",
+    "answer": "a",
+    "rating": 2,
+    "average_rating": 4.36,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:29:29"
+  },
+  {
+    "user": "alef",
+    "question": "B",
+    "answer": "b",
+    "rating": 4,
+    "average_rating": 5.57,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:29:30"
+  },
+  {
+    "user": "alef",
+    "question": "B",
+    "answer": "b",
+    "rating": 7,
+    "average_rating": 5.61,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:29:30"
+  },
+  {
+    "user": "alef",
+    "question": "A",
+    "answer": "a",
+    "rating": 1,
+    "average_rating": 4.32,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:29:30"
+  },
+  {
+    "user": "alef",
+    "question": "A",
+    "answer": "a",
+    "rating": 9,
+    "average_rating": 4.38,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:29:30"
+  },
+  {
+    "user": "alef",
+    "question": "B",
+    "answer": "b",
+    "rating": 7,
+    "average_rating": 5.66,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:29:30"
+  },
+  {
+    "user": "alef",
+    "question": "B",
+    "answer": "b",
+    "rating": 4,
+    "average_rating": 5.61,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:29:30"
+  },
+  {
+    "user": "alef",
+    "question": "B",
+    "answer": "b",
+    "rating": 1,
+    "average_rating": 5.47,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:29:30"
+  },
+  {
+    "user": "alef",
+    "question": "B",
+    "answer": "b",
+    "rating": 9,
+    "average_rating": 5.57,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:29:30"
+  },
+  {
+    "user": "alef",
+    "question": "D",
+    "answer": "d",
+    "rating": 4,
+    "average_rating": 5.65,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:29:30"
+  },
+  {
+    "user": "alef",
+    "question": "A",
+    "answer": "a",
+    "rating": 1,
+    "average_rating": 4.34,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:29:30"
+  },
+  {
+    "user": "alef",
+    "question": "D",
+    "answer": "d",
+    "rating": 3,
+    "average_rating": 5.54,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:30:53"
+  },
+  {
+    "user": "alef",
+    "question": "A",
+    "answer": "a",
+    "rating": 3,
+    "average_rating": 4.32,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:30:54"
+  },
+  {
+    "user": "alef",
+    "question": "D",
+    "answer": "d",
+    "rating": 3,
+    "average_rating": 5.44,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:30:56"
+  },
+  {
+    "user": "alef",
+    "question": "A",
+    "answer": "a",
+    "rating": 3,
+    "average_rating": 4.3,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:30:56"
+  },
+  {
+    "user": "alef",
+    "question": "B",
+    "answer": "b",
+    "rating": 3,
+    "average_rating": 5.5,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:30:57"
+  },
+  {
+    "user": "alef",
+    "question": "D",
+    "answer": "d",
+    "rating": 3,
+    "average_rating": 5.35,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:30:57"
+  },
+  {
+    "user": "alef",
+    "question": "A",
+    "answer": "a",
+    "rating": 3,
+    "average_rating": 4.29,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:30:57"
+  },
+  {
+    "user": "alef",
+    "question": "B",
+    "answer": "b",
+    "rating": 3,
+    "average_rating": 5.43,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:30:58"
+  },
+  {
+    "user": "alef",
+    "question": "D",
+    "answer": "d",
+    "rating": 3,
+    "average_rating": 5.26,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:30:58"
+  },
+  {
+    "user": "alef",
+    "question": "A",
+    "answer": "a",
+    "rating": 3,
+    "average_rating": 4.27,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:30:58"
+  },
+  {
+    "user": "alef",
+    "question": "B",
+    "answer": "b",
+    "rating": 3,
+    "average_rating": 5.37,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:30:58"
+  },
+  {
+    "user": "alef",
+    "question": "D",
+    "answer": "d",
+    "rating": 2,
+    "average_rating": 5.14,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:30:59"
+  },
+  {
+    "user": "alef",
+    "question": "A",
+    "answer": "a",
+    "rating": 2,
+    "average_rating": 4.25,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:30:59"
+  },
+  {
+    "user": "alef",
+    "question": "B",
+    "answer": "b",
+    "rating": 2,
+    "average_rating": 5.28,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:30:59"
+  },
+  {
+    "user": "alef",
+    "question": "D",
+    "answer": "d",
+    "rating": 2,
+    "average_rating": 5.03,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:30:59"
+  },
+  {
+    "user": "alef",
+    "question": "A",
+    "answer": "a",
+    "rating": 2,
+    "average_rating": 4.22,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:31:00"
+  },
+  {
+    "user": "alef",
+    "question": "B",
+    "answer": "b",
+    "rating": 2,
+    "average_rating": 5.2,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:31:00"
+  },
+  {
+    "user": "alef",
+    "question": "D",
+    "answer": "d",
+    "rating": 2,
+    "average_rating": 4.93,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:31:00"
+  },
+  {
+    "user": "alef",
+    "question": "A",
+    "answer": "a",
+    "rating": 1,
+    "average_rating": 4.18,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:31:00"
+  },
+  {
+    "user": "alef",
+    "question": "B",
+    "answer": "b",
+    "rating": 1,
+    "average_rating": 5.1,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:31:00"
+  },
+  {
+    "user": "alef",
+    "question": "D",
+    "answer": "d",
+    "rating": 1,
+    "average_rating": 4.81,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:31:00"
+  },
+  {
+    "user": "alef",
+    "question": "A",
+    "answer": "a",
+    "rating": 1,
+    "average_rating": 4.15,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:31:01"
+  },
+  {
+    "user": "alef",
+    "question": "B",
+    "answer": "b",
+    "rating": 1,
+    "average_rating": 5.0,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:31:01"
+  },
+  {
+    "user": "alef",
+    "question": "D",
+    "answer": "d",
+    "rating": 1,
+    "average_rating": 4.69,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:31:01"
+  },
+  {
+    "user": "alef",
+    "question": "A",
+    "answer": "a",
+    "rating": 1,
+    "average_rating": 4.11,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:31:01"
+  },
+  {
+    "user": "alef",
+    "question": "B",
+    "answer": "b",
+    "rating": 1,
+    "average_rating": 4.91,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:31:01"
+  },
+  {
+    "user": "alef",
+    "question": "D",
+    "answer": "d",
+    "rating": -1,
+    "average_rating": 4.52,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:31:02"
+  },
+  {
+    "user": "alef",
+    "question": "A",
+    "answer": "a",
+    "rating": -1,
+    "average_rating": 4.06,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:31:02"
+  },
+  {
+    "user": "alef",
+    "question": "B",
+    "answer": "b",
+    "rating": -1,
+    "average_rating": 4.77,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:31:02"
+  },
+  {
+    "type": "reset",
+    "user": "alef",
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:31:06",
+    "message": "🔄 Reset uživatelských výsledků v okruhu YYY"
+  },
+  {
+    "user": "alef",
+    "question": "C",
+    "answer": "c",
+    "rating": 4,
+    "average_rating": 4.0,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:31:11"
+  },
+  {
+    "user": "alef",
+    "question": "D",
+    "answer": "d",
+    "rating": 3,
+    "average_rating": 3.0,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:31:12"
+  },
+  {
+    "user": "alef",
+    "question": "A",
+    "answer": "a",
+    "rating": 3,
+    "average_rating": 3.0,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:31:13"
+  },
+  {
+    "user": "alef",
+    "question": "B",
+    "answer": "b",
+    "rating": 3,
+    "average_rating": 3.0,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:31:14"
+  },
+  {
+    "user": "alef",
+    "question": "C",
+    "answer": "c",
+    "rating": 1,
+    "average_rating": 2.5,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:31:18"
+  },
+  {
+    "user": "alef",
+    "question": "C",
+    "answer": "c",
+    "rating": 2,
+    "average_rating": 2.33,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:31:18"
+  },
+  {
+    "user": "alef",
+    "question": "A",
+    "answer": "a",
+    "rating": 3,
+    "average_rating": 3.0,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:31:19"
+  },
+  {
+    "user": "alef",
+    "question": "D",
+    "answer": "d",
+    "rating": 4,
+    "average_rating": 3.5,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:31:19"
+  },
+  {
+    "user": "alef",
+    "question": "A",
+    "answer": "a",
+    "rating": 5,
+    "average_rating": 3.67,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:31:20"
+  },
+  {
+    "user": "alef",
+    "question": "A",
+    "answer": "a",
+    "rating": 5,
+    "average_rating": 4.0,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:37:54"
+  },
+  {
+    "user": "alef",
+    "question": "B",
+    "answer": "b",
+    "rating": 6,
+    "average_rating": 4.5,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:37:55"
+  },
+  {
+    "user": "alef",
+    "question": "C",
+    "answer": "c",
+    "rating": 2,
+    "average_rating": 2.25,
+    "topic": "YYY",
+    "timestamp": "2026-05-18T22:38:22"
   }
 ]
