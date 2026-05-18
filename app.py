@@ -192,6 +192,22 @@ def weighted_choice(questions, username):
     return random.choice(weighted) if weighted else None
 
 
+def sequential_choice(questions, username, start_after=-1):
+    total = len(questions)
+
+    for offset in range(1, total + 1):
+        i = (start_after + offset) % total
+        value = get_user_result(questions[i], username).get("value", 0)
+
+        if value == -1:
+            continue
+
+        if value < 10:
+            return i
+
+    return None
+
+
 def color_for_value(v):
     if v == -1:
         return "#111111"
@@ -272,6 +288,19 @@ def login():
 def logout():
     session.clear()
     return redirect(url_for("login"))
+
+
+@app.route("/toggle_random_mode/<topic>", methods=["POST"])
+@login_required
+def toggle_random_mode(topic):
+    session["random_mode"] = not session.get("random_mode", True)
+
+    current_index = request.form.get("current_index")
+
+    if current_index is not None:
+        return redirect(url_for("quiz", topic=topic, index=current_index))
+
+    return redirect(url_for("quiz", topic=topic))
 
 
 @app.route("/change_password", methods=["GET", "POST"])
@@ -549,20 +578,47 @@ def quiz(topic):
         })
         save_history(history)
 
-        return redirect(url_for("quiz", topic=topic))
+        random_mode = session.get("random_mode", True)
 
+        if random_mode:
+            return redirect(url_for("quiz", topic=topic))
+
+        next_idx = sequential_choice(questions, username, start_after=idx)
+
+        if next_idx is None:
+            return redirect(url_for("quiz", topic=topic))
+
+        return redirect(url_for("quiz", topic=topic, index=next_idx))
+
+    random_mode = session.get("random_mode", True)
     index_from_url = request.args.get("index")
 
+    idx = None
+
+    # pokud přišel index v URL, zachovej aktuální otázku
     if index_from_url is not None:
         idx = int(index_from_url)
+
         if idx < 0 or idx >= len(questions):
+            idx = None
+
+    # pokud žádný index není, vyber novou otázku podle režimu
+    if idx is None:
+        if random_mode:
             idx = weighted_choice(questions, username)
-    else:
-        idx = weighted_choice(questions, username)
+        else:
+            last_index = session.get(f"last_index_{topic}", -1)
+            idx = sequential_choice(
+                questions,
+                username,
+                start_after=last_index
+            )
 
     if idx is None:
-        flash(f"Hotovo! Všechny otázky v okruhu '{topic}' mají skóre nebo jsou vyřazené.")
+        flash(f"Hotovo! Všechny otázky v okruhu '{topic}' mají skóre 10 nebo jsou vyřazené.")
         return redirect(url_for("home"))
+
+    session[f"last_index_{topic}"] = idx
 
     q = questions[idx]
     total_questions = len(questions)
@@ -640,7 +696,8 @@ def quiz(topic):
         topic=topic,
         progress_segments=segments,
         question_progress=question_progress,
-        username=username
+        username=username,
+        random_mode=random_mode
     )
 
 

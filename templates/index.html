@@ -44,6 +44,23 @@
     Časový režim: VYPNUTO
   </button>
 
+<form id="random-mode-form"
+      method="post"
+      action="{{ url_for('toggle_random_mode', topic=topic) }}"
+      style="margin-top: 10px;">
+
+  <input type="hidden" name="current_index" value="{{ index }}">
+
+  <button type="submit">
+    🎲 Náhodný režim:
+    {% if random_mode %}
+      ZAPNUTO
+    {% else %}
+      VYPNUTO
+    {% endif %}
+  </button>
+</form>
+
   <div class="footer">
     <p>Celkem otázek: <strong>{{ total }}</strong></p>
     <p>Dokončeno (hodnoceno 10): <strong>{{ done }}</strong></p>
@@ -341,6 +358,12 @@ function toggleTimer() {
       if (event.key.toLowerCase() === "c") {
           event.preventDefault();
           toggleTimer();
+      }
+      
+      if (event.key.toLowerCase() === "n") {
+          event.preventDefault();
+
+          document.getElementById("random-mode-form")?.submit();
       }
 
       if (event.code === "Space") {
