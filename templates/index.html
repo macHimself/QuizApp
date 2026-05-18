@@ -102,16 +102,17 @@
         {% endfor %}
       </div>
     </div>
-    <p><small>Mapa otázek podle pořadí:</small></p>
+<p><small>Mapa otázek podle pořadí:</small></p>
 
-<div class="progress-wrapper">
-  <div class="question-progress-bar">
+<div class="question-map-wrapper">
+  <div class="question-progress-grid">
     {% for item in question_progress %}
-<div
-  class="question-progress-segment {% if item.index - 1 == index %}current-question{% endif %}"
-  style="background: {{ item.color }};"
-  title="Otázka {{ item.index }}: hodnota {{ item.value }} — {{ item.question }}"
-></div>
+      <a
+        href="{{ url_for('quiz', topic=topic, index=item.index - 1) }}"
+        class="question-progress-cell {% if item.index - 1 == index %}current-question{% endif %}"
+        style="background: {{ item.color }};"
+        title="Otázka {{ item.index }}: hodnota {{ item.value }} — {{ item.question }}"
+      ></a>
     {% endfor %}
   </div>
 </div>
