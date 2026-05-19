@@ -52,14 +52,14 @@ def load_questions(topic, username=None):
 
             if username:
                 result_rows = db.execute(f"""
-                    SELECT question_id, username, value, avg, history_json
+                    SELECT question_id, username, value, avg
                     FROM results
                     WHERE question_id IN ({placeholders})
                     AND username = ?
                 """, (*question_ids, username)).fetchall()
             else:
                 result_rows = db.execute(f"""
-                    SELECT question_id, username, value, avg, history_json
+                    SELECT question_id, username, value, avg
                     FROM results
                     WHERE question_id IN ({placeholders})
                 """, question_ids).fetchall()
@@ -874,22 +874,49 @@ def quiz(topic):
         idx = int(request.form["index"])
         rating = int(request.form["rating"])
 
-        result = set_user_result(questions[idx], username, rating)
-        avg = result["avg"]
+        question_id = questions[idx]["id"]
 
         with get_db() as db:
+            old = db.execute("""
+                SELECT history_json
+                FROM results
+                WHERE question_id = ?
+                AND username = ?
+            """, (question_id, username)).fetchone()
+
+            history_values = json.loads(old["history_json"] or "[]") if old else []
+            history_values.append(rating)
+
+            avg = round(sum(history_values) / len(history_values), 2)
+
             db.execute("""
                 INSERT OR REPLACE INTO results
                 (question_id, username, value, avg, history_json)
                 VALUES (?, ?, ?, ?, ?)
             """, (
-                questions[idx]["id"],
+                question_id,
                 username,
-                result.get("value", 0),
-                result.get("avg", 0),
-                json.dumps(result.get("history", []))
+                rating,
+                avg,
+                json.dumps(history_values)
             ))
             db.commit()
+        # result = set_user_result(questions[idx], username, rating)
+        # avg = result["avg"]
+
+        # with get_db() as db:
+        #     db.execute("""
+        #         INSERT OR REPLACE INTO results
+        #         (question_id, username, value, avg, history_json)
+        #         VALUES (?, ?, ?, ?, ?)
+        #     """, (
+        #         questions[idx]["id"],
+        #         username,
+        #         result.get("value", 0),
+        #         result.get("avg", 0),
+        #         json.dumps(result.get("history", []))
+        #     ))
+        #     db.commit()
 
         #save_questions(topic, questions)
 
