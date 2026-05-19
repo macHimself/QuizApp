@@ -1934,5 +1934,221 @@
     "average_rating": 4.0,
     "topic": "YYY",
     "timestamp": "2026-05-19T10:28:13"
+  },
+  {
+    "user": "alef",
+    "question": "B",
+    "answer": "b",
+    "rating": 4,
+    "average_rating": 4.0,
+    "topic": "ZZZ",
+    "timestamp": "2026-05-19T10:31:03"
+  },
+  {
+    "user": "alef",
+    "question": "B",
+    "answer": "b",
+    "rating": 6,
+    "average_rating": 5.0,
+    "topic": "ZZZ",
+    "timestamp": "2026-05-19T10:31:05"
+  },
+  {
+    "user": "alef",
+    "question": "C",
+    "answer": "c",
+    "rating": 2,
+    "average_rating": 2.0,
+    "topic": "ZZZ",
+    "timestamp": "2026-05-19T10:31:07"
+  },
+  {
+    "user": "alef",
+    "question": "C",
+    "answer": "c",
+    "rating": 1,
+    "average_rating": 1.5,
+    "topic": "ZZZ",
+    "timestamp": "2026-05-19T10:31:10"
+  },
+  {
+    "user": "alef",
+    "question": "A",
+    "answer": "a",
+    "rating": 1,
+    "average_rating": 1.0,
+    "topic": "ZZZ",
+    "timestamp": "2026-05-19T10:31:12"
+  },
+  {
+    "user": "alef",
+    "question": "B",
+    "answer": "b",
+    "rating": -1,
+    "average_rating": 3.0,
+    "topic": "ZZZ",
+    "timestamp": "2026-05-19T10:31:14"
+  },
+  {
+    "user": "alpha",
+    "question": "A",
+    "answer": "a",
+    "rating": 5,
+    "average_rating": 5.0,
+    "topic": "ZZZ",
+    "timestamp": "2026-05-19T10:31:55"
+  },
+  {
+    "user": "alpha",
+    "question": "C",
+    "answer": "c",
+    "rating": 5,
+    "average_rating": 5.0,
+    "topic": "ZZZ",
+    "timestamp": "2026-05-19T10:31:55"
+  },
+  {
+    "user": "alpha",
+    "question": "B",
+    "answer": "b",
+    "rating": 5,
+    "average_rating": 5.0,
+    "topic": "ZZZ",
+    "timestamp": "2026-05-19T10:31:56"
+  },
+  {
+    "user": "alpha",
+    "question": "C",
+    "answer": "c",
+    "rating": -1,
+    "average_rating": 2.0,
+    "topic": "ZZZ",
+    "timestamp": "2026-05-19T10:31:58"
+  },
+  {
+    "user": "alpha",
+    "question": "A",
+    "answer": "a",
+    "rating": -1,
+    "average_rating": 2.0,
+    "topic": "ZZZ",
+    "timestamp": "2026-05-19T10:31:59"
+  },
+  {
+    "user": "alpha",
+    "question": "B",
+    "answer": "b",
+    "rating": 8,
+    "average_rating": 6.5,
+    "topic": "ZZZ",
+    "timestamp": "2026-05-19T10:32:01"
+  },
+  {
+    "user": "alpha",
+    "question": "B",
+    "answer": "b",
+    "rating": 9,
+    "average_rating": 7.33,
+    "topic": "ZZZ",
+    "timestamp": "2026-05-19T10:32:03"
+  },
+  {
+    "user": "alpha",
+    "question": "B",
+    "answer": "b",
+    "rating": 3,
+    "average_rating": 6.25,
+    "topic": "ZZZ",
+    "timestamp": "2026-05-19T10:32:05"
+  },
+  {
+    "user": "alpha",
+    "question": "Alef",
+    "answer": "nula",
+    "rating": 4,
+    "average_rating": 4.0,
+    "topic": "AAA",
+    "timestamp": "2026-05-19T10:33:29"
+  },
+  {
+    "user": "alpha",
+    "question": "B",
+    "answer": "b",
+    "rating": 10,
+    "average_rating": 10.0,
+    "topic": "AAA",
+    "timestamp": "2026-05-19T10:41:35"
+  },
+  {
+    "user": "alpha",
+    "question": "Alef",
+    "answer": "nula",
+    "rating": 5,
+    "average_rating": 4.5,
+    "topic": "AAA",
+    "timestamp": "2026-05-19T10:41:38"
+  },
+  {
+    "user": "alpha",
+    "question": "Alef",
+    "answer": "nula",
+    "rating": 3,
+    "average_rating": 4.0,
+    "topic": "AAA",
+    "timestamp": "2026-05-19T10:41:39"
+  },
+  {
+    "user": "alpha",
+    "question": "Alef",
+    "answer": "nula",
+    "rating": 1,
+    "average_rating": 3.25,
+    "topic": "AAA",
+    "timestamp": "2026-05-19T10:41:41"
+  },
+  {
+    "user": "alpha",
+    "question": "Alef",
+    "answer": "nula",
+    "rating": 5,
+    "average_rating": 3.6,
+    "topic": "AAA",
+    "timestamp": "2026-05-19T10:41:46"
+  },
+  {
+    "user": "alpha",
+    "question": "Alef",
+    "answer": "nula",
+    "rating": 5,
+    "average_rating": 3.83,
+    "topic": "AAA",
+    "timestamp": "2026-05-19T10:41:47"
+  },
+  {
+    "user": "alpha",
+    "question": "B",
+    "answer": "b",
+    "rating": 6,
+    "average_rating": 8.0,
+    "topic": "AAA",
+    "timestamp": "2026-05-19T10:41:52"
+  },
+  {
+    "user": "alpha",
+    "question": "Alef",
+    "answer": "nula",
+    "rating": 8,
+    "average_rating": 4.43,
+    "topic": "AAA",
+    "timestamp": "2026-05-19T10:41:52"
+  },
+  {
+    "user": "alpha",
+    "question": "B",
+    "answer": "b",
+    "rating": 9,
+    "average_rating": 8.33,
+    "topic": "AAA",
+    "timestamp": "2026-05-19T10:41:53"
   }
 ]

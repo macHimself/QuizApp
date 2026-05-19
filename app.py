@@ -36,17 +36,98 @@ def get_question_file(topic):
 
 
 def load_questions(topic):
-    path = get_question_file(topic)
-    if not os.path.exists(path):
-        return []
-    with open(path, "r", encoding="utf-8") as f:
-        return json.load(f)
+    with get_db() as db:
+        rows = db.execute("""
+            SELECT id, question, answer, position
+            FROM questions
+            WHERE topic = ?
+            ORDER BY position
+        """, (topic,)).fetchall()
+
+        questions = []
+
+        for row in rows:
+            result_rows = db.execute("""
+                SELECT username, value, avg, history_json
+                FROM results
+                WHERE question_id = ?
+            """, (row["id"],)).fetchall()
+
+            results = {}
+            for r in result_rows:
+                results[r["username"]] = {
+                    "value": r["value"],
+                    "avg": r["avg"],
+                    "history": json.loads(r["history_json"])
+                }
+
+            questions.append({
+                "id": row["id"],
+                "question": row["question"],
+                "answer": row["answer"],
+                "value": 0,
+                "results": results
+            })
+
+    return questions
 
 
 def save_questions(topic, questions):
-    path = get_question_file(topic)
-    with open(path, "w", encoding="utf-8") as f:
-        json.dump(questions, f, indent=2, ensure_ascii=False)
+    with get_db() as db:
+        for position, q in enumerate(questions):
+            question_id = q.get("id")
+
+            if question_id:
+                db.execute("""
+                    UPDATE questions
+                    SET question = ?, answer = ?, position = ?
+                    WHERE id = ?
+                """, (
+                    q.get("question", ""),
+                    q.get("answer", ""),
+                    position,
+                    question_id
+                ))
+            else:
+                cursor = db.execute("""
+                    INSERT INTO questions
+                    (topic, question, answer, position)
+                    VALUES (?, ?, ?, ?)
+                """, (
+                    topic,
+                    q.get("question", ""),
+                    q.get("answer", ""),
+                    position
+                ))
+                question_id = cursor.lastrowid
+                q["id"] = question_id
+
+            for username, result in q.get("results", {}).items():
+                db.execute("""
+                    INSERT OR REPLACE INTO results
+                    (question_id, username, value, avg, history_json)
+                    VALUES (?, ?, ?, ?, ?)
+                """, (
+                    question_id,
+                    username,
+                    result.get("value", 0),
+                    result.get("avg", 0),
+                    json.dumps(result.get("history", []))
+                ))
+
+        db.commit()
+# def load_questions(topic):
+#     path = get_question_file(topic)
+#     if not os.path.exists(path):
+#         return []
+#     with open(path, "r", encoding="utf-8") as f:
+#         return json.load(f)
+
+
+# def save_questions(topic, questions):
+#     path = get_question_file(topic)
+#     with open(path, "w", encoding="utf-8") as f:
+#         json.dump(questions, f, indent=2, ensure_ascii=False)
 
 
 def load_history():
