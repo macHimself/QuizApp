@@ -1,6 +1,8 @@
 from flask import Flask, render_template_string
 import subprocess
 import re
+import json
+import urllib.request
 
 app = Flask(__name__)
 
@@ -25,8 +27,32 @@ def extract_cloudflare_url():
         with open(CLOUDFLARED_LOG, "r", encoding="utf-8") as f:
             text = f.read()
 
-        matches = re.findall(r"https://[a-zA-Z0-9.-]+\.trycloudflare\.com", text)
+        matches = re.findall(
+            r"https://[a-zA-Z0-9.-]+\.trycloudflare\.com",
+            text
+        )
         return matches[-1] if matches else None
+    except Exception:
+        return None
+
+
+def extract_ngrok_url():
+    try:
+        with urllib.request.urlopen("http://127.0.0.1:4040/api/tunnels", timeout=2) as response:
+            data = json.loads(response.read().decode())
+
+        tunnels = data.get("tunnels", [])
+
+        for tunnel in tunnels:
+            public_url = tunnel.get("public_url")
+            if public_url and public_url.startswith("https://"):
+                return public_url
+
+        for tunnel in tunnels:
+            public_url = tunnel.get("public_url")
+            if public_url:
+                return public_url
+
     except Exception:
         return None
 
@@ -39,19 +65,49 @@ TEMPLATE = """
     <meta http-equiv="refresh" content="5">
     <title>Moon Monitor</title>
     <style>
-        body { font-family: system-ui; background:#f5f5f5; padding:2em; }
-        .card { background:white; padding:1em; border-radius:10px; margin-bottom:1em; }
-        .bad { color:#c62828; font-weight:bold; }
-        .ok { color:#2e7d32; font-weight:bold; }
-        pre { background:#111; color:#eee; padding:1em; border-radius:8px; overflow:auto; }
-        a { color:#0d6efd; font-weight:600; }
+        body {
+            font-family: system-ui, sans-serif;
+            background: #f5f5f5;
+            padding: 2em;
+        }
+
+        .card {
+            background: white;
+            padding: 1em;
+            border-radius: 10px;
+            margin-bottom: 1em;
+        }
+
+        .bad {
+            color: #c62828;
+            font-weight: bold;
+        }
+
+        .ok {
+            color: #2e7d32;
+            font-weight: bold;
+        }
+
+        pre {
+            background: #111;
+            color: #eee;
+            padding: 1em;
+            border-radius: 8px;
+            overflow: auto;
+        }
+
+        a {
+            color: #0d6efd;
+            font-weight: 600;
+        }
     </style>
 </head>
 <body>
     <h1>Moon Monitor</h1>
 
     <div class="card">
-        <h2>Veřejná adresa</h2>
+        <h2>Veřejné adresy</h2>
+
         {% if cloudflare_url %}
             <p>
                 Cloudflare:
@@ -60,7 +116,18 @@ TEMPLATE = """
                 </a>
             </p>
         {% else %}
-            <p class="bad">Cloudflare URL nenalezena</p>
+            <p>Cloudflare: <span class="bad">URL nenalezena</span></p>
+        {% endif %}
+
+        {% if ngrok_url %}
+            <p>
+                Ngrok:
+                <a href="{{ ngrok_url }}" target="_blank">
+                    {{ ngrok_url }}
+                </a>
+            </p>
+        {% else %}
+            <p>Ngrok: <span class="bad">URL nenalezena</span></p>
         {% endif %}
     </div>
 
@@ -68,16 +135,32 @@ TEMPLATE = """
         <h2>Port {{ port }}</h2>
         <p>Celkem spojení: <strong>{{ total }}</strong></p>
         <p>SYN_SENT:
-            <span class="{{ 'bad' if syn_sent > 20 else 'ok' }}">{{ syn_sent }}</span>
+            <span class="{{ 'bad' if syn_sent > 20 else 'ok' }}">
+                {{ syn_sent }}
+            </span>
         </p>
         <p>LISTEN procesy: <strong>{{ listen }}</strong></p>
     </div>
 
     <div class="card">
         <h2>Procesy</h2>
-        <p>Gunicorn: <span class="{{ 'ok' if gunicorn else 'bad' }}">{{ gunicorn }}</span></p>
-        <p>Cloudflared: <span class="{{ 'ok' if cloudflared else 'bad' }}">{{ cloudflared }}</span></p>
-        <p>Ngrok: <span class="{{ 'bad' if ngrok else 'ok' }}">{{ ngrok }}</span></p>
+        <p>Gunicorn:
+            <span class="{{ 'ok' if gunicorn else 'bad' }}">
+                {{ "běží" if gunicorn else "neběží" }}
+            </span>
+        </p>
+
+        <p>Cloudflared:
+            <span class="{{ 'ok' if cloudflared else 'bad' }}">
+                {{ "běží" if cloudflared else "neběží" }}
+            </span>
+        </p>
+
+        <p>Ngrok:
+            <span class="{{ 'bad' if ngrok else 'ok' }}">
+                {{ "běží" if ngrok else "neběží" }}
+            </span>
+        </p>
     </div>
 
     <div class="card">
@@ -108,11 +191,14 @@ def index():
         listen=listen,
         lsof=lsof,
         cloudflare_url=extract_cloudflare_url(),
-        gunicorn="běží" if "gunicorn" in ps else "neběží",
-        cloudflared="běží" if "cloudflared" in ps else "neběží",
-        ngrok="běží" if "ngrok" in ps else "neběží",
+        ngrok_url=extract_ngrok_url(),
+        gunicorn="gunicorn" in ps,
+        cloudflared="cloudflared" in ps,
+        ngrok="ngrok" in ps,
     )
 
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=6060)
+
+# nohup /opt/homebrew/bin/python3 monitor.py > monitor.log 2>&1 &
