@@ -11,7 +11,7 @@ app.secret_key = "tajneheslo"
 
 DATA_DIR = "data"
 TOPICS_FILE = os.path.join(DATA_DIR, "topics.json")
-HISTORY_FILE = os.path.join(DATA_DIR, "history.json")
+# HISTORY_FILE = os.path.join(DATA_DIR, "history.json")
 USERS_FILE = os.path.join(DATA_DIR, "users.json")
 
 DEFAULT_OWNER_FOR_OLD_TOPICS = "macHimself"
@@ -37,36 +37,43 @@ def get_question_file(topic):
 
 def load_questions(topic):
     with get_db() as db:
-        rows = db.execute("""
+        question_rows = db.execute("""
             SELECT id, question, answer, position
             FROM questions
             WHERE topic = ?
             ORDER BY position
         """, (topic,)).fetchall()
 
-        questions = []
+        question_ids = [row["id"] for row in question_rows]
 
-        for row in rows:
-            result_rows = db.execute("""
-                SELECT username, value, avg, history_json
+        results_by_question = {}
+
+        if question_ids:
+            placeholders = ",".join("?" * len(question_ids))
+
+            result_rows = db.execute(f"""
+                SELECT question_id, username, value, avg, history_json
                 FROM results
-                WHERE question_id = ?
-            """, (row["id"],)).fetchall()
+                WHERE question_id IN ({placeholders})
+            """, question_ids).fetchall()
 
-            results = {}
             for r in result_rows:
-                results[r["username"]] = {
+                results_by_question.setdefault(r["question_id"], {})
+                results_by_question[r["question_id"]][r["username"]] = {
                     "value": r["value"],
                     "avg": r["avg"],
                     "history": json.loads(r["history_json"])
                 }
 
+        questions = []
+
+        for row in question_rows:
             questions.append({
                 "id": row["id"],
                 "question": row["question"],
                 "answer": row["answer"],
                 "value": 0,
-                "results": results
+                "results": results_by_question.get(row["id"], {})
             })
 
     return questions
@@ -102,18 +109,18 @@ def save_questions(topic, questions):
                 question_id = cursor.lastrowid
                 q["id"] = question_id
 
-            for username, result in q.get("results", {}).items():
-                db.execute("""
-                    INSERT OR REPLACE INTO results
-                    (question_id, username, value, avg, history_json)
-                    VALUES (?, ?, ?, ?, ?)
-                """, (
-                    question_id,
-                    username,
-                    result.get("value", 0),
-                    result.get("avg", 0),
-                    json.dumps(result.get("history", []))
-                ))
+            # for username, result in q.get("results", {}).items():
+            #     db.execute("""
+            #         INSERT OR REPLACE INTO results
+            #         (question_id, username, value, avg, history_json)
+            #         VALUES (?, ?, ?, ?, ?)
+            #     """, (
+            #         question_id,
+            #         username,
+            #         result.get("value", 0),
+            #         result.get("avg", 0),
+            #         json.dumps(result.get("history", []))
+            #     ))
 
         db.commit()
 # def load_questions(topic):
@@ -130,16 +137,56 @@ def save_questions(topic, questions):
 #         json.dump(questions, f, indent=2, ensure_ascii=False)
 
 
+# def load_history():
+#     if not os.path.exists(HISTORY_FILE):
+#         return []
+#     with open(HISTORY_FILE, "r", encoding="utf-8") as f:
+#         return json.load(f)
+
+
+# def save_history(history):
+#     with open(HISTORY_FILE, "w", encoding="utf-8") as f:
+#         json.dump(history, f, indent=2, ensure_ascii=False)
+
+def add_history(entry):
+    with get_db() as db:
+        db.execute("""
+            INSERT INTO history
+            (type, username, topic, question, answer, rating, average_rating, message, timestamp)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+        """, (
+            entry.get("type"),
+            entry.get("user"),
+            entry.get("topic"),
+            entry.get("question"),
+            entry.get("answer"),
+            entry.get("rating"),
+            entry.get("average_rating"),
+            entry.get("message"),
+            entry.get("timestamp", datetime.now().isoformat(timespec="seconds"))
+        ))
+        db.commit()
+
+
 def load_history():
-    if not os.path.exists(HISTORY_FILE):
-        return []
-    with open(HISTORY_FILE, "r", encoding="utf-8") as f:
-        return json.load(f)
+    with get_db() as db:
+        rows = db.execute("""
+            SELECT type, username AS user, topic, question, answer, rating, average_rating, message, timestamp
+            FROM history
+            ORDER BY timestamp DESC
+        """).fetchall()
+
+    return [dict(row) for row in rows]
 
 
-def save_history(history):
-    with open(HISTORY_FILE, "w", encoding="utf-8") as f:
-        json.dump(history, f, indent=2, ensure_ascii=False)
+def clear_history_for_user_topic(username, topic):
+    with get_db() as db:
+        db.execute("""
+            DELETE FROM history
+            WHERE username = ?
+            AND topic = ?
+        """, (username, topic))
+        db.commit()
 
 
 def load_users():
@@ -211,11 +258,17 @@ def load_topics():
 
 def save_topics(topics):
     with get_db() as db:
-        db.execute("DELETE FROM topics")
+        existing = db.execute("""
+            SELECT name
+            FROM topics
+        """).fetchall()
+
+        existing_names = {row["name"] for row in existing}
+        incoming_names = {topic["name"] for topic in topics}
 
         for topic in topics:
             db.execute("""
-                INSERT INTO topics
+                INSERT OR REPLACE INTO topics
                 (name, owner)
                 VALUES (?, ?)
             """, (
@@ -223,7 +276,28 @@ def save_topics(topics):
                 topic.get("owner", DEFAULT_OWNER_FOR_OLD_TOPICS)
             ))
 
+        for name in existing_names - incoming_names:
+            db.execute("""
+                DELETE FROM topics
+                WHERE name = ?
+            """, (name,))
+
         db.commit()
+# def save_topics(topics):
+#     with get_db() as db:
+#         db.execute("DELETE FROM topics")
+
+#         for topic in topics:
+#             db.execute("""
+#                 INSERT INTO topics
+#                 (name, owner)
+#                 VALUES (?, ?)
+#             """, (
+#                 topic["name"],
+#                 topic.get("owner", DEFAULT_OWNER_FOR_OLD_TOPICS)
+#             ))
+
+#         db.commit()
 # def load_topics():
 #     ensure_data_dir()
 #     with open(TOPICS_FILE, "r", encoding="utf-8") as f:
@@ -405,14 +479,30 @@ def login():
                 flash("⚠️ Uživatel už existuje.")
                 return redirect(url_for("login"))
 
-            users[username] = {
-                "password_hash": generate_password_hash(password),
-                "role": "user"
-            }
-            save_users(users)
+            # users[username] = {
+            #     "password_hash": generate_password_hash(password),
+            #     "role": "user"
+            # }
+            # save_users(users)
+
+            # session["username"] = username
+            # session["role"] = "user"
+            # return redirect(url_for("home"))
+            with get_db() as db:
+
+                db.execute("""
+                    INSERT INTO users (username, password_hash, role)
+                    VALUES (?, ?, ?)
+                """, (
+                    username,
+                    generate_password_hash(password),
+                    "user"
+                ))
+                db.commit()
 
             session["username"] = username
             session["role"] = "user"
+
             return redirect(url_for("home"))
 
         if action == "login":
@@ -477,8 +567,18 @@ def change_password():
             flash("❌ Nová hesla se neshodují.")
             return redirect(url_for("change_password"))
 
-        users[username]["password_hash"] = generate_password_hash(new_password)
-        save_users(users)
+        # users[username]["password_hash"] = generate_password_hash(new_password)
+        # save_users(users)
+        with get_db() as db:
+            db.execute("""
+                UPDATE users
+                SET password_hash = ?
+                WHERE username = ?
+            """, (
+                generate_password_hash(new_password),
+                username
+            ))
+            db.commit()
 
         flash("✅ Heslo bylo změněno.")
         return redirect(url_for("home"))
@@ -521,8 +621,18 @@ def admin_change_user_password():
         flash("❌ Nové heslo nesmí být prázdné.")
         return redirect(url_for("admin_panel"))
 
-    users[username]["password_hash"] = generate_password_hash(new_password)
-    save_users(users)
+    # users[username]["password_hash"] = generate_password_hash(new_password)
+    # save_users(users)
+    with get_db() as db:
+        db.execute("""
+            UPDATE users
+            SET password_hash = ?
+            WHERE username = ?
+        """, (
+            generate_password_hash(new_password),
+            username
+        ))
+        db.commit()
 
     flash(f"✅ Heslo uživatele {username} bylo změněno.")
     return redirect(url_for("admin_panel"))
@@ -547,8 +657,14 @@ def admin_delete_user():
         flash("❌ Uživatel neexistuje.")
         return redirect(url_for("admin_panel"))
 
-    del users[username_to_delete]
-    save_users(users)
+    # del users[username_to_delete]
+    # save_users(users)
+    with get_db() as db:
+        db.execute("""
+            DELETE FROM users
+            WHERE username = ?
+        """, (username_to_delete,))
+        db.commit()
 
     flash(f"🗑️ Uživatel {username_to_delete} byl smazán.")
     return redirect(url_for("admin_panel"))
@@ -606,21 +722,22 @@ def admin_reset_user_stats():
     for topic in target_topics:
         questions = load_questions(topic)
 
-        for q in questions:
-            reset_user_result(q, username)
+        # for q in questions:
+        #     reset_user_result(q, username)
 
-        save_questions(topic, questions)
-
-    history = load_history()
-    history.append({
-        "type": "admin_reset_user_stats",
-        "admin": current_user(),
-        "user": username,
-        "topic": selected_topic,
-        "timestamp": datetime.now().isoformat(timespec="seconds"),
-        "message": f"Admin resetoval statistiky uživatele {username}"
-    })
-    save_history(history)
+        # save_questions(topic, questions)
+        with get_db() as db:
+            if selected_topic == "ALL":
+                db.execute("DELETE FROM results WHERE username = ?", (username,))
+            else:
+                db.execute("""
+                    DELETE FROM results
+                    WHERE username = ?
+                    AND question_id IN (
+                        SELECT id FROM questions WHERE topic = ?
+                    )
+                """, (username, selected_topic))
+            db.commit()
 
     if selected_topic == "ALL":
         flash(f"🔄 Resetovány všechny statistiky uživatele {username}.")
@@ -709,10 +826,24 @@ def quiz(topic):
         result = set_user_result(questions[idx], username, rating)
         avg = result["avg"]
 
-        save_questions(topic, questions)
+        with get_db() as db:
+            db.execute("""
+                INSERT OR REPLACE INTO results
+                (question_id, username, value, avg, history_json)
+                VALUES (?, ?, ?, ?, ?)
+            """, (
+                questions[idx]["id"],
+                username,
+                result.get("value", 0),
+                result.get("avg", 0),
+                json.dumps(result.get("history", []))
+            ))
+            db.commit()
 
-        history = load_history()
-        history.append({
+        #save_questions(topic, questions)
+
+        add_history({
+            "type": "rating",
             "user": username,
             "question": questions[idx]["question"],
             "answer": questions[idx]["answer"],
@@ -721,7 +852,6 @@ def quiz(topic):
             "topic": topic,
             "timestamp": datetime.now().isoformat(timespec="seconds")
         })
-        save_history(history)
 
         random_mode = session.get("random_mode", True)
 
@@ -992,6 +1122,11 @@ def stats():
 
     user_topic_stats = []
 
+    questions_cache = {
+        topic: load_questions(topic)
+        for topic in topics
+    }
+
     for user_name in users.keys():
         if is_admin:
             display_name = user_name
@@ -1007,8 +1142,9 @@ def stats():
         }
 
         for topic in topics:
-            questions = load_questions(topic)
-
+            #questions = load_questions(topic)
+            questions = questions_cache[topic]
+            
             values = [
                 get_user_result(q, user_name).get("value", 0)
                 for q in questions
@@ -1069,25 +1205,19 @@ def delete_topic():
 def reset():
     username = current_user()
 
-    for topic in topic_names():
-        questions = load_questions(topic)
-
-        for q in questions:
-            reset_user_result(q, username)
-
-        save_questions(topic, questions)
+    with get_db() as db:
+        db.execute("DELETE FROM results WHERE username = ?", (username,))
+        db.commit()
 
     flash("🔁 Všechny tvoje výsledky byly resetovány.")
 
-    history = load_history()
-    history.append({
+    add_history({
         "type": "reset",
         "user": username,
         "topic": "ALL",
         "timestamp": datetime.now().isoformat(timespec="seconds"),
         "message": "🔁 Globální reset uživatelských výsledků"
     })
-    save_history(history)
 
     return redirect(url_for("home"))
 
@@ -1098,24 +1228,25 @@ def reset_topic():
     username = current_user()
     topic = request.form.get("topic", "").strip()
 
-    questions = load_questions(topic)
-
-    for q in questions:
-        reset_user_result(q, username)
-
-    save_questions(topic, questions)
+    with get_db() as db:
+        db.execute("""
+            DELETE FROM results
+            WHERE username = ?
+            AND question_id IN (
+                SELECT id FROM questions WHERE topic = ?
+            )
+        """, (username, topic))
+        db.commit()
 
     flash(f"🔄 Tvoje výsledky v okruhu '{topic}' byly resetovány.")
 
-    history = load_history()
-    history.append({
+    add_history({
         "type": "reset",
         "user": username,
         "topic": topic,
         "timestamp": datetime.now().isoformat(timespec="seconds"),
         "message": f"🔄 Reset uživatelských výsledků v okruhu {topic}"
     })
-    save_history(history)
 
     return redirect(url_for("home"))
 
@@ -1130,12 +1261,14 @@ def clear_history_topic():
         flash("❌ Okruh nebyl specifikován.")
         return redirect(url_for("stats"))
 
-    history = load_history()
-    filtered = [
-        h for h in history
-        if not (h.get("topic") == topic and h.get("user") == username)
-    ]
-    save_history(filtered)
+    clear_history_for_user_topic(username, topic)
+    
+    # history = load_history()
+    # filtered = [
+    #     h for h in history
+    #     if not (h.get("topic") == topic and h.get("user") == username)
+    # ]
+    # save_history(filtered)
 
     flash(f"🧹 Tvoje historie pro okruh '{topic}' byla vymazána.")
     return redirect(url_for("stats"))
@@ -1147,13 +1280,7 @@ export_bp = Blueprint("export", __name__)
 @export_bp.route("/export/json/<topic>", methods=["GET"])
 @login_required
 def export_topic_json(topic):
-    path = get_question_file(topic)
-
-    if not os.path.exists(path):
-        return Response("[]", mimetype="application/json; charset=utf-8")
-
-    with open(path, "r", encoding="utf-8") as file:
-        questions = json.load(file)
+    questions = load_questions(topic)
 
     export_data = [
         {
@@ -1161,7 +1288,6 @@ def export_topic_json(topic):
             "answer": q["answer"]
         }
         for q in questions
-        if "question" in q and "answer" in q
     ]
 
     json_data = json.dumps(export_data, ensure_ascii=False, indent=2)
@@ -1170,11 +1296,37 @@ def export_topic_json(topic):
         json_data,
         mimetype="application/json; charset=utf-8"
     )
+# @export_bp.route("/export/json/<topic>", methods=["GET"])
+# @login_required
+# def export_topic_json(topic):
+#     path = get_question_file(topic)
 
+#     if not os.path.exists(path):
+#         return Response("[]", mimetype="application/json; charset=utf-8")
 
+#     with open(path, "r", encoding="utf-8") as file:
+#         questions = json.load(file)
+
+#     export_data = [
+#         {
+#             "question": q["question"],
+#             "answer": q["answer"]
+#         }
+#         for q in questions
+#         if "question" in q and "answer" in q
+#     ]
+
+#     json_data = json.dumps(export_data, ensure_ascii=False, indent=2)
+
+#     return Response(
+#         json_data,
+#         mimetype="application/json; charset=utf-8"
+#     )
 app.register_blueprint(export_bp)
-
 
 if __name__ == "__main__":
     ensure_data_dir()
-    app.run(host="0.0.0.0", port=5050, debug=True)
+    app.run(host="0.0.0.0", port=5050, debug=False)
+
+# kill 54274
+# nohup /opt/homebrew/bin/python3 -m gunicorn -w 2 --threads 8 -k gthread -b 0.0.0.0:5050 app:app > gunicorn.log 2>&1 &
