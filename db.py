@@ -58,3 +58,23 @@ def init_db():
             timestamp TEXT NOT NULL
         );
         """)
+        db.execute("CREATE INDEX IF NOT EXISTS idx_questions_topic ON questions(topic)")
+        db.execute("CREATE INDEX IF NOT EXISTS idx_results_question_id ON results(question_id)")
+        db.execute("CREATE INDEX IF NOT EXISTS idx_results_username ON results(username)")
+        db.execute("CREATE INDEX IF NOT EXISTS idx_history_username ON history(username)")
+        db.execute("CREATE INDEX IF NOT EXISTS idx_history_topic ON history(topic)")
+        db.execute("CREATE INDEX IF NOT EXISTS idx_history_timestamp ON history(timestamp)")
+
+        db.execute("CREATE INDEX IF NOT EXISTS idx_questions_topic_position ON questions(topic, position);")
+        db.execute("CREATE INDEX IF NOT EXISTS idx_results_question_user ON results(question_id, username);")
+        db.execute("CREATE INDEX IF NOT EXISTS idx_history_username_timestamp ON history(username, timestamp);")
+
+
+        db.execute("CREATE INDEX IF NOT EXISTS idx_questions_topic ON questions(topic);")
+        db.execute("CREATE INDEX IF NOT EXISTS idx_results_question_user ON results(question_id, username);")
+        db.execute("CREATE INDEX IF NOT EXISTS idx_topics_name ON topics(name);")
+
+
+        db.execute("CREATE INDEX IF NOT EXISTS idx_history_username_rating_timestamp ON history(username, rating, timestamp);")
+        db.execute("CREATE INDEX IF NOT EXISTS idx_results_username_question ON results(username, question_id);")
+        db.execute("CREATE INDEX IF NOT EXISTS idx_questions_topic_id ON questions(topic, id);")

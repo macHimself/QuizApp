@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, flash, Blueprint, Response, session
+from flask import Flask, render_template, request, redirect, url_for, flash, Blueprint, Response, session, jsonify
 from werkzeug.security import generate_password_hash, check_password_hash
 from functools import wraps
 import json, random, os
@@ -181,6 +181,19 @@ def load_history():
             FROM history
             ORDER BY timestamp DESC
         """).fetchall()
+
+    return [dict(row) for row in rows]
+
+def load_history_for_user(username, limit=200):
+    with get_db() as db:
+        rows = db.execute("""
+            SELECT type, username AS user, topic, question, answer, rating, average_rating, message, timestamp
+            FROM history
+            WHERE username = ?
+            AND rating IS NOT NULL
+            ORDER BY timestamp DESC
+            LIMIT ?
+        """, (username, limit)).fetchall()
 
     return [dict(row) for row in rows]
 
@@ -862,6 +875,96 @@ def create_topic():
     return redirect(url_for("home"))
 
 
+@app.route("/api/quiz/<topic>/answer", methods=["POST"])
+@login_required
+def api_quiz_answer(topic):
+    username = current_user()
+
+    data = request.get_json()
+    idx = int(data["index"])
+    rating = int(data["rating"])
+
+    questions = load_questions(topic, username=username)
+
+    if idx < 0 or idx >= len(questions):
+        return jsonify({"error": "Neplatný index otázky"}), 400
+
+    question_id = questions[idx]["id"]
+
+    with get_db() as db:
+        old = db.execute("""
+            SELECT history_json
+            FROM results
+            WHERE question_id = ?
+            AND username = ?
+        """, (question_id, username)).fetchone()
+
+        history_values = json.loads(old["history_json"] or "[]") if old else []
+        history_values.append(rating)
+
+        avg = round(sum(history_values) / len(history_values), 2)
+
+        db.execute("""
+            INSERT OR REPLACE INTO results
+            (question_id, username, value, avg, history_json)
+            VALUES (?, ?, ?, ?, ?)
+        """, (
+            question_id,
+            username,
+            rating,
+            avg,
+            json.dumps(history_values)
+        ))
+
+        db.execute("""
+            INSERT INTO history
+            (type, username, topic, question, answer, rating, average_rating, message, timestamp)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+        """, (
+            "rating",
+            username,
+            topic,
+            questions[idx]["question"],
+            questions[idx]["answer"],
+            rating,
+            avg,
+            None,
+            datetime.now().isoformat(timespec="seconds")
+        ))
+
+        db.commit()
+
+    random_mode = session.get("random_mode", True)
+    session[f"last_index_{topic}"] = idx
+
+    if random_mode:
+        next_idx = weighted_choice(load_questions(topic, username=username), username)
+    else:
+        next_idx = sequential_choice(load_questions(topic, username=username), username, start_after=idx)
+
+    if next_idx is None:
+        return jsonify({
+            "done_all": True,
+            "redirect": url_for("home")
+        })
+
+    next_question = load_questions(topic, username=username)[next_idx]
+    next_result = get_user_result(next_question, username)
+
+    return jsonify({
+        "done_all": False,
+        "next_index": next_idx,
+        "question": next_question["question"],
+        "answer": next_question["answer"],
+        "previous_rating": next_result.get("value") if next_result.get("value", 0) > 0 else None,
+        "updated_cell": {
+            "index": idx,
+            "value": rating,
+            "color": color_for_value(rating)
+        }
+    })
+
+
 @app.route("/quiz/<topic>", methods=["GET", "POST"])
 @login_required
 def quiz(topic):
@@ -1031,9 +1134,14 @@ def quiz(topic):
         question_progress.append({
             "index": i + 1,
             "value": value,
-            "color": color_for_value(value),
-            "question": q_item.get("question", "")
+            "color": color_for_value(value)
         })
+        # question_progress.append({
+        #     "index": i + 1,
+        #     "value": value,
+        #     "color": color_for_value(value),
+        #     "question": q_item.get("question", "")
+        # })
 
     current_result = get_user_result(q, username)
     previous_rating = current_result.get("value", 0) if current_result.get("value", 0) > 0 else None
@@ -1184,11 +1292,7 @@ def stats():
     username = current_user()
     is_admin = current_role() == "admin"
 
-    history = load_history()
-    valid_entries = [
-        entry for entry in history
-        if "rating" in entry and entry.get("user") == username
-    ]
+    valid_entries = load_history_for_user(username, limit=200)
 
     average = round(
         sum(entry["rating"] for entry in valid_entries) / len(valid_entries),
@@ -1198,12 +1302,40 @@ def stats():
     users = load_users()
     topics = topic_names()
 
-    user_topic_stats = []
+    with get_db() as db:
+        rows = db.execute("""
+            SELECT
+                u.username AS username,
+                q.topic AS topic,
+                AVG(CASE WHEN r.value BETWEEN 0 AND 10 THEN r.value ELSE NULL END) AS average
+            FROM users u
+            CROSS JOIN topics t
+            LEFT JOIN questions q
+                ON q.topic = t.name
+            LEFT JOIN results r
+                ON r.question_id = q.id
+               AND r.username = u.username
+            GROUP BY u.username, q.topic
+            ORDER BY u.username, q.topic
+        """).fetchall()
 
-    questions_cache = {
-        topic: load_questions(topic)
-        for topic in topics
-    }
+    stats_map = {}
+
+    for row in rows:
+        user_name = row["username"]
+        topic = row["topic"]
+
+        if topic is None:
+            continue
+
+        stats_map.setdefault(user_name, {})
+        stats_map[user_name][topic] = (
+            round(row["average"], 2)
+            if row["average"] is not None
+            else None
+        )
+
+    user_topic_stats = []
 
     for user_name in users.keys():
         if is_admin:
@@ -1220,31 +1352,87 @@ def stats():
         }
 
         for topic in topics:
-            #questions = load_questions(topic)
-            questions = questions_cache[topic]
-            
-            values = [
-                get_user_result(q, user_name).get("value", 0)
-                for q in questions
-                if 0 <= get_user_result(q, user_name).get("value", -1) <= 10
-            ]
-
-            avg = round(sum(values) / len(values), 2) if values else None
-
             row["topics"].append({
                 "name": topic,
-                "average": avg
+                "average": stats_map.get(user_name, {}).get(topic)
             })
 
         user_topic_stats.append(row)
 
     return render_template(
         "stats.html",
-        entries=reversed(valid_entries),
+        entries=valid_entries,
         average=average,
         user_topic_stats=user_topic_stats,
         topics=topics
     )
+# @app.route("/stats")
+# @login_required
+# def stats():
+#     username = current_user()
+#     is_admin = current_role() == "admin"
+
+#     history = load_history()
+#     valid_entries = [
+#         entry for entry in history
+#         if "rating" in entry and entry.get("user") == username
+#     ]
+
+#     average = round(
+#         sum(entry["rating"] for entry in valid_entries) / len(valid_entries),
+#         2
+#     ) if valid_entries else 0.0
+
+#     users = load_users()
+#     topics = topic_names()
+
+#     user_topic_stats = []
+
+#     questions_cache = {
+#         topic: load_questions(topic)
+#         for topic in topics
+#     }
+
+#     for user_name in users.keys():
+#         if is_admin:
+#             display_name = user_name
+#         elif user_name == username:
+#             display_name = f"{user_name} (ty)"
+#         else:
+#             display_name = f"Spolužák {len(user_topic_stats) + 1}"
+
+#         row = {
+#             "username": display_name,
+#             "real_username": user_name,
+#             "topics": []
+#         }
+
+#         for topic in topics:
+#             #questions = load_questions(topic)
+#             questions = questions_cache[topic]
+            
+#             values = [
+#                 get_user_result(q, user_name).get("value", 0)
+#                 for q in questions
+#                 if 0 <= get_user_result(q, user_name).get("value", -1) <= 10
+#             ]
+
+#             avg = round(sum(values) / len(values), 2) if values else None
+
+#             row["topics"].append({
+#                 "name": topic,
+#                 "average": avg
+#             })
+
+#         user_topic_stats.append(row)
+
+#     return render_template(
+#         "stats.html",
+#         entries=reversed(valid_entries),
+#         average=average,
+#         user_topic_stats=user_topic_stats,
+#         topics=topics
+#     )
 
 
 @app.route("/delete_topic", methods=["POST"])
