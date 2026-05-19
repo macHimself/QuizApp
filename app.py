@@ -4,6 +4,7 @@ from functools import wraps
 import json, random, os
 from datetime import datetime
 from collections import Counter
+from db import get_db, init_db
 
 app = Flask(__name__)
 app.secret_key = "tajneheslo"
@@ -17,15 +18,17 @@ DEFAULT_OWNER_FOR_OLD_TOPICS = "macHimself"
 
 
 def ensure_data_dir():
-    os.makedirs(DATA_DIR, exist_ok=True)
+    init_db()
+# def ensure_data_dir():
+#     os.makedirs(DATA_DIR, exist_ok=True)
 
-    if not os.path.exists(TOPICS_FILE):
-        with open(TOPICS_FILE, "w", encoding="utf-8") as f:
-            json.dump([], f)
+#     if not os.path.exists(TOPICS_FILE):
+#         with open(TOPICS_FILE, "w", encoding="utf-8") as f:
+#             json.dump([], f)
 
-    if not os.path.exists(USERS_FILE):
-        with open(USERS_FILE, "w", encoding="utf-8") as f:
-            json.dump({}, f)
+#     if not os.path.exists(USERS_FILE):
+#         with open(USERS_FILE, "w", encoding="utf-8") as f:
+#             json.dump({}, f)
 
 
 def get_question_file(topic):
@@ -59,15 +62,44 @@ def save_history(history):
 
 
 def load_users():
-    ensure_data_dir()
-    with open(USERS_FILE, "r", encoding="utf-8") as f:
-        return json.load(f)
+    with get_db() as db:
+        rows = db.execute("""
+            SELECT username, password_hash, role
+            FROM users
+        """).fetchall()
+
+    return {
+        row["username"]: {
+            "password_hash": row["password_hash"],
+            "role": row["role"]
+        }
+        for row in rows
+    }
 
 
 def save_users(users):
-    ensure_data_dir()
-    with open(USERS_FILE, "w", encoding="utf-8") as f:
-        json.dump(users, f, indent=2, ensure_ascii=False)
+    with get_db() as db:
+        for username, data in users.items():
+            db.execute("""
+                INSERT OR REPLACE INTO users
+                (username, password_hash, role)
+                VALUES (?, ?, ?)
+            """, (
+                username,
+                data.get("password_hash", ""),
+                data.get("role", "user")
+            ))
+        db.commit()
+# def load_users():
+#     ensure_data_dir()
+#     with open(USERS_FILE, "r", encoding="utf-8") as f:
+#         return json.load(f)
+
+
+# def save_users(users):
+#     ensure_data_dir()
+#     with open(USERS_FILE, "w", encoding="utf-8") as f:
+#         json.dump(users, f, indent=2, ensure_ascii=False)
 
 
 def normalize_topic_item(topic_item):
@@ -80,16 +112,48 @@ def normalize_topic_item(topic_item):
 
 
 def load_topics():
-    ensure_data_dir()
-    with open(TOPICS_FILE, "r", encoding="utf-8") as f:
-        raw_topics = json.load(f)
+    with get_db() as db:
+        rows = db.execute("""
+            SELECT name, owner
+            FROM topics
+            ORDER BY name
+        """).fetchall()
 
-    return [normalize_topic_item(t) for t in raw_topics]
+    return [
+        {
+            "name": row["name"],
+            "owner": row["owner"]
+        }
+        for row in rows
+    ]
 
 
 def save_topics(topics):
-    with open(TOPICS_FILE, "w", encoding="utf-8") as f:
-        json.dump(topics, f, indent=2, ensure_ascii=False)
+    with get_db() as db:
+        db.execute("DELETE FROM topics")
+
+        for topic in topics:
+            db.execute("""
+                INSERT INTO topics
+                (name, owner)
+                VALUES (?, ?)
+            """, (
+                topic["name"],
+                topic.get("owner", DEFAULT_OWNER_FOR_OLD_TOPICS)
+            ))
+
+        db.commit()
+# def load_topics():
+#     ensure_data_dir()
+#     with open(TOPICS_FILE, "r", encoding="utf-8") as f:
+#         raw_topics = json.load(f)
+
+#     return [normalize_topic_item(t) for t in raw_topics]
+
+
+# def save_topics(topics):
+#     with open(TOPICS_FILE, "w", encoding="utf-8") as f:
+#         json.dump(topics, f, indent=2, ensure_ascii=False)
 
 
 def topic_names():

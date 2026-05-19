@@ -1907,32 +1907,5 @@
     "average_rating": 6.0,
     "topic": "YYY",
     "timestamp": "2026-05-18T23:02:53"
-  },
-  {
-    "user": "alef",
-    "question": "Proč TCP používá handshake?",
-    "answer": "Kvůli synchronizaci a potvrzení spojení.",
-    "rating": 2,
-    "average_rating": 2.0,
-    "topic": "YYY",
-    "timestamp": "2026-05-19T10:28:12"
-  },
-  {
-    "user": "alef",
-    "question": "Co je bezpečnostní politika?",
-    "answer": "Soubor pravidel pro ochranu systému a sítě.",
-    "rating": 3,
-    "average_rating": 3.0,
-    "topic": "YYY",
-    "timestamp": "2026-05-19T10:28:13"
-  },
-  {
-    "user": "alef",
-    "question": "Jaké frekvenční pásmo používá Wi-Fi?",
-    "answer": "Například 2,4 GHz, 5 GHz nebo 6 GHz.",
-    "rating": 4,
-    "average_rating": 4.0,
-    "topic": "YYY",
-    "timestamp": "2026-05-19T10:28:13"
   }
 ]

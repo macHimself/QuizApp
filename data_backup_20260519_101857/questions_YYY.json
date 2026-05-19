@@ -1,0 +1,3387 @@
+[
+  {
+    "question": "A",
+    "answer": "a",
+    "value": 0,
+    "results": {
+      "alef": {
+        "value": 5,
+        "history": [
+          3,
+          3,
+          5,
+          5
+        ],
+        "avg": 4.0
+      }
+    }
+  },
+  {
+    "question": "B",
+    "answer": "b",
+    "value": 0,
+    "results": {
+      "alef": {
+        "value": 6,
+        "history": [
+          3,
+          6
+        ],
+        "avg": 4.5
+      }
+    }
+  },
+  {
+    "question": "C",
+    "answer": "c",
+    "value": 0,
+    "results": {
+      "alef": {
+        "value": 2,
+        "history": [
+          4,
+          1,
+          2,
+          2
+        ],
+        "avg": 2.25
+      }
+    }
+  },
+  {
+    "question": "D",
+    "answer": "d",
+    "value": 0,
+    "results": {
+      "alef": {
+        "value": 4,
+        "history": [
+          3,
+          4
+        ],
+        "avg": 3.5
+      }
+    }
+  },
+  {
+    "question": "Co je počítačová síť?",
+    "answer": "Systém propojených zařízení umožňující komunikaci a sdílení dat.",
+    "value": 0
+  },
+  {
+    "question": "Jaký je hlavní účel počítačových sítí?",
+    "answer": "Přenos dat a sdílení zdrojů.",
+    "value": 0
+  },
+  {
+    "question": "Co jsou síťové služby?",
+    "answer": "Funkce poskytované sítí nebo síťovými aplikacemi.",
+    "value": 0
+  },
+  {
+    "question": "Jaké síťové služby známe?",
+    "answer": "Web, email, DNS, DHCP nebo sdílení souborů.",
+    "value": 0
+  },
+  {
+    "question": "Co je architektura počítačové sítě?",
+    "answer": "Způsob organizace komunikace a síťových vrstev.",
+    "value": 0,
+    "results": {
+      "alef": {
+        "value": 10,
+        "history": [
+          10
+        ],
+        "avg": 10.0
+      }
+    }
+  },
+  {
+    "question": "Jaké základní síťové architektury existují?",
+    "answer": "Klient-server a peer-to-peer.",
+    "value": 0
+  },
+  {
+    "question": "Co je klient-server architektura?",
+    "answer": "Model, kde server poskytuje služby klientům.",
+    "value": 0
+  },
+  {
+    "question": "Co je peer-to-peer architektura?",
+    "answer": "Model, kde zařízení komunikují přímo mezi sebou.",
+    "value": 0
+  },
+  {
+    "question": "Jaký je rozdíl mezi klient-server a peer-to-peer?",
+    "answer": "Klient-server používá centrální server, peer-to-peer ne.",
+    "value": 0,
+    "results": {
+      "alef": {
+        "value": 5,
+        "history": [
+          5
+        ],
+        "avg": 5.0
+      }
+    }
+  },
+  {
+    "question": "Co je server?",
+    "answer": "Počítač nebo program poskytující služby ostatním.",
+    "value": 0,
+    "results": {
+      "alef": {
+        "value": 10,
+        "history": [
+          10
+        ],
+        "avg": 10.0
+      }
+    }
+  },
+  {
+    "question": "Co je klient?",
+    "answer": "Zařízení nebo program využívající služby serveru.",
+    "value": 0
+  },
+  {
+    "question": "Co je síťový protokol?",
+    "answer": "Soubor pravidel pro komunikaci mezi zařízeními.",
+    "value": 0
+  },
+  {
+    "question": "Proč jsou protokoly důležité?",
+    "answer": "Umožňují kompatibilní komunikaci různých zařízení.",
+    "value": 0
+  },
+  {
+    "question": "Co je referenční model OSI?",
+    "answer": "Sedmivrstvý model síťové komunikace.",
+    "value": 0
+  },
+  {
+    "question": "Jaké vrstvy obsahuje OSI model?",
+    "answer": "Fyzická, linková, síťová, transportní, relační, prezentační a aplikační.",
+    "value": 0
+  },
+  {
+    "question": "Co je fyzická vrstva?",
+    "answer": "Vrstva zajišťující přenos bitů po médiu.",
+    "value": 0
+  },
+  {
+    "question": "Co je linková vrstva?",
+    "answer": "Vrstva zajišťující komunikaci v lokální síti.",
+    "value": 0
+  },
+  {
+    "question": "Co je síťová vrstva?",
+    "answer": "Vrstva zajišťující směrování paketů mezi sítěmi.",
+    "value": 0
+  },
+  {
+    "question": "Co je transportní vrstva?",
+    "answer": "Vrstva zajišťující přenos dat mezi aplikacemi.",
+    "value": 0
+  },
+  {
+    "question": "Co je aplikační vrstva?",
+    "answer": "Vrstva poskytující síťové služby aplikacím.",
+    "value": 0
+  },
+  {
+    "question": "Co je TCP/IP model?",
+    "answer": "Praktický síťový model používaný Internetem.",
+    "value": 0
+  },
+  {
+    "question": "Jaké vrstvy má TCP/IP model?",
+    "answer": "Linkovou, internetovou, transportní a aplikační.",
+    "value": 0
+  },
+  {
+    "question": "Jaký je rozdíl mezi OSI a TCP/IP modelem?",
+    "answer": "TCP/IP je praktičtější a používá méně vrstev.",
+    "value": 0
+  },
+  {
+    "question": "Co je paket?",
+    "answer": "Jednotka dat přenášená sítí.",
+    "value": 0
+  },
+  {
+    "question": "Co je rámec?",
+    "answer": "Datová jednotka linkové vrstvy.",
+    "value": 0
+  },
+  {
+    "question": "Co je segment?",
+    "answer": "Datová jednotka transportní vrstvy.",
+    "value": 0
+  },
+  {
+    "question": "Co je datagram?",
+    "answer": "Paket přenášený bez navázání spojení.",
+    "value": 0
+  },
+  {
+    "question": "Co je LAN?",
+    "answer": "Local Area Network — lokální síť.",
+    "value": 0
+  },
+  {
+    "question": "Co je WAN?",
+    "answer": "Wide Area Network — rozsáhlá síť.",
+    "value": 0
+  },
+  {
+    "question": "Co je Internet?",
+    "answer": "Globální síť propojující mnoho menších sítí.",
+    "value": 0
+  },
+  {
+    "question": "Co je intranet?",
+    "answer": "Privátní síť organizace.",
+    "value": 0
+  },
+  {
+    "question": "Co je extranet?",
+    "answer": "Částečně přístupná privátní síť.",
+    "value": 0
+  },
+  {
+    "question": "Co je topologie sítě?",
+    "answer": "Způsob propojení zařízení v síti.",
+    "value": 0
+  },
+  {
+    "question": "Jaké síťové topologie existují?",
+    "answer": "Sběrnice, hvězda, kruh nebo mesh.",
+    "value": 0
+  },
+  {
+    "question": "Jaká topologie je dnes nejběžnější?",
+    "answer": "Hvězda.",
+    "value": 0
+  },
+  {
+    "question": "Co je switch?",
+    "answer": "Přepínač propojující zařízení v lokální síti.",
+    "value": 0
+  },
+  {
+    "question": "Co je router?",
+    "answer": "Zařízení směrující pakety mezi sítěmi.",
+    "value": 0
+  },
+  {
+    "question": "Jaký je rozdíl mezi switchem a routerem?",
+    "answer": "Switch pracuje hlavně na linkové vrstvě, router na síťové.",
+    "value": 0
+  },
+  {
+    "question": "Co je MAC adresa?",
+    "answer": "Hardwarová adresa síťového zařízení.",
+    "value": 0
+  },
+  {
+    "question": "Co je IP adresa?",
+    "answer": "Logická adresa zařízení v síti.",
+    "value": 0
+  },
+  {
+    "question": "Co je port?",
+    "answer": "Identifikátor aplikace nebo služby.",
+    "value": 0
+  },
+  {
+    "question": "K čemu slouží DNS?",
+    "answer": "Překládá doménová jména na IP adresy.",
+    "value": 0
+  },
+  {
+    "question": "K čemu slouží DHCP?",
+    "answer": "Automaticky přiděluje IP adresy.",
+    "value": 0
+  },
+  {
+    "question": "Co je HTTP?",
+    "answer": "Protokol pro přenos webových stránek.",
+    "value": 0
+  },
+  {
+    "question": "Co je HTTPS?",
+    "answer": "Šifrovaná verze HTTP.",
+    "value": 0
+  },
+  {
+    "question": "Co je FTP?",
+    "answer": "Protokol pro přenos souborů.",
+    "value": 0
+  },
+  {
+    "question": "Co je SMTP?",
+    "answer": "Protokol pro odesílání emailů.",
+    "value": 0
+  },
+  {
+    "question": "Co je IMAP?",
+    "answer": "Protokol pro přístup k emailům na serveru.",
+    "value": 0
+  },
+  {
+    "question": "Co je SSH?",
+    "answer": "Protokol pro bezpečný vzdálený přístup.",
+    "value": 0
+  },
+  {
+    "question": "Co je latence?",
+    "answer": "Zpoždění při přenosu dat.",
+    "value": 0
+  },
+  {
+    "question": "Co je propustnost sítě?",
+    "answer": "Množství dat přenesených za jednotku času.",
+    "value": 0
+  },
+  {
+    "question": "Co je packet loss?",
+    "answer": "Ztráta paketů během přenosu.",
+    "value": 0
+  },
+  {
+    "question": "Co je QoS?",
+    "answer": "Quality of Service — řízení kvality síťového provozu.",
+    "value": 0
+  },
+  {
+    "question": "Co je firewall?",
+    "answer": "Zařízení nebo software filtrující síťovou komunikaci.",
+    "value": 0
+  },
+  {
+    "question": "Co je VPN?",
+    "answer": "Virtual Private Network — šifrované síťové spojení.",
+    "value": 0
+  },
+  {
+    "question": "Co je NAT?",
+    "answer": "Překlad síťových adres.",
+    "value": 0
+  },
+  {
+    "question": "Proč se používá NAT?",
+    "answer": "Kvůli nedostatku IPv4 adres.",
+    "value": 0
+  },
+  {
+    "question": "Co je IPv4?",
+    "answer": "32bitový adresní protokol Internetu.",
+    "value": 0
+  },
+  {
+    "question": "Co je IPv6?",
+    "answer": "Moderní 128bitový adresní protokol.",
+    "value": 0
+  },
+  {
+    "question": "Proč vzniklo IPv6?",
+    "answer": "Kvůli nedostatku IPv4 adres.",
+    "value": 0
+  },
+  {
+    "question": "Co je bezdrátová síť?",
+    "answer": "Síť používající rádiové vlny místo kabelů.",
+    "value": 0
+  },
+  {
+    "question": "Co je Wi-Fi?",
+    "answer": "Technologie bezdrátové lokální sítě.",
+    "value": 0
+  },
+  {
+    "question": "Co je access point?",
+    "answer": "Zařízení poskytující přístup do Wi-Fi sítě.",
+    "value": 0
+  },
+  {
+    "question": "Jak souvisí počítačové sítě s cloudem?",
+    "answer": "Cloudové služby fungují díky síťové komunikaci.",
+    "value": 0
+  },
+  {
+    "question": "Jak souvisí počítačové sítě s AI?",
+    "answer": "AI systémy komunikují přes distribuované sítě.",
+    "value": 0
+  },
+  {
+    "question": "Jak souvisí sítě s kyberbezpečností?",
+    "answer": "Sítě jsou častým cílem útoků a musí být chráněny.",
+    "value": 0
+  },
+  {
+    "question": "Jaký je hlavní princip počítačových sítí?",
+    "answer": "Přenos dat mezi propojenými zařízeními pomocí protokolů.",
+    "value": 0
+  },
+  {
+    "question": "Jaký je hlavní účel síťových architektur?",
+    "answer": "Standardizace a organizace komunikace.",
+    "value": 0
+  },
+  {
+    "question": "Co je Ethernet?",
+    "answer": "Nejpoužívanější technologie lokálních počítačových sítí.",
+    "value": 0
+  },
+  {
+    "question": "Na jaké vrstvě OSI modelu pracuje Ethernet?",
+    "answer": "Na fyzické a linkové vrstvě.",
+    "value": 0
+  },
+  {
+    "question": "K čemu slouží Ethernet?",
+    "answer": "K přenosu dat v lokálních sítích.",
+    "value": 0
+  },
+  {
+    "question": "Jaký je hlavní princip Ethernetu?",
+    "answer": "Přenos rámců mezi zařízeními v síti.",
+    "value": 0
+  },
+  {
+    "question": "Co je ethernetový rámec?",
+    "answer": "Datová jednotka Ethernetu na linkové vrstvě.",
+    "value": 0
+  },
+  {
+    "question": "Jaké části obsahuje ethernetový rámec?",
+    "answer": "MAC adresy, typ, data a kontrolní součet.",
+    "value": 0
+  },
+  {
+    "question": "Co je MAC adresa?",
+    "answer": "Jedinečná hardwarová adresa síťového zařízení.",
+    "value": 0
+  },
+  {
+    "question": "Jakou délku má MAC adresa?",
+    "answer": "48 bitů.",
+    "value": 0
+  },
+  {
+    "question": "Jak se MAC adresa obvykle zapisuje?",
+    "answer": "Hexadecimálně, například 00:1A:2B:3C:4D:5E.",
+    "value": 0
+  },
+  {
+    "question": "K čemu slouží zdrojová MAC adresa?",
+    "answer": "Identifikuje odesílatele rámce.",
+    "value": 0
+  },
+  {
+    "question": "K čemu slouží cílová MAC adresa?",
+    "answer": "Identifikuje příjemce rámce.",
+    "value": 0
+  },
+  {
+    "question": "Co je payload ethernetového rámce?",
+    "answer": "Přenášená uživatelská data.",
+    "value": 0
+  },
+  {
+    "question": "Co je FCS v Ethernetu?",
+    "answer": "Frame Check Sequence — kontrolní součet rámce.",
+    "value": 0
+  },
+  {
+    "question": "K čemu slouží FCS?",
+    "answer": "K detekci chyb při přenosu.",
+    "value": 0
+  },
+  {
+    "question": "Jak Ethernet detekuje chyby?",
+    "answer": "Pomocí CRC kontrolního součtu.",
+    "value": 0
+  },
+  {
+    "question": "Co je CRC?",
+    "answer": "Cyclic Redundancy Check — metoda detekce chyb.",
+    "value": 0
+  },
+  {
+    "question": "Co je MTU v Ethernetu?",
+    "answer": "Maximální velikost přenášených dat.",
+    "value": 0
+  },
+  {
+    "question": "Jaká je běžná hodnota Ethernet MTU?",
+    "answer": "1500 bytů.",
+    "value": 0
+  },
+  {
+    "question": "Co je switch?",
+    "answer": "Síťový přepínač propojující zařízení v LAN.",
+    "value": 0
+  },
+  {
+    "question": "Na jaké vrstvě pracuje switch?",
+    "answer": "Typicky na linkové vrstvě.",
+    "value": 0
+  },
+  {
+    "question": "Jak switch přeposílá rámce?",
+    "answer": "Podle MAC adres.",
+    "value": 0
+  },
+  {
+    "question": "Co je MAC tabulka switche?",
+    "answer": "Tabulka mapující MAC adresy na porty.",
+    "value": 0
+  },
+  {
+    "question": "Jak switch získává MAC adresy?",
+    "answer": "Učí se je z příchozích rámců.",
+    "value": 0
+  },
+  {
+    "question": "Co udělá switch při neznámé MAC adrese?",
+    "answer": "Rozpošle rámec na všechny porty kromě příchozího.",
+    "value": 0
+  },
+  {
+    "question": "Jaký je rozdíl mezi switchem a hubem?",
+    "answer": "Switch posílá data cíleně, hub všem.",
+    "value": 0
+  },
+  {
+    "question": "Co je hub?",
+    "answer": "Jednoduché zařízení opakující data na všechny porty.",
+    "value": 0
+  },
+  {
+    "question": "Proč switch zvyšuje výkon sítě?",
+    "answer": "Snižuje počet kolizí.",
+    "value": 0
+  },
+  {
+    "question": "Co je kolize v Ethernetu?",
+    "answer": "Současný přenos více zařízení po stejném médiu.",
+    "value": 0
+  },
+  {
+    "question": "Co je CSMA/CD?",
+    "answer": "Mechanismus detekce kolizí v klasickém Ethernetu.",
+    "value": 0
+  },
+  {
+    "question": "Co znamená CSMA/CD?",
+    "answer": "Carrier Sense Multiple Access with Collision Detection.",
+    "value": 0
+  },
+  {
+    "question": "Proč moderní switche téměř nepotřebují CSMA/CD?",
+    "answer": "Používají full duplex komunikaci.",
+    "value": 0
+  },
+  {
+    "question": "Co je half duplex?",
+    "answer": "Komunikace pouze jedním směrem v daný okamžik.",
+    "value": 0
+  },
+  {
+    "question": "Co je full duplex?",
+    "answer": "Současná komunikace oběma směry.",
+    "value": 0
+  },
+  {
+    "question": "Jaká média Ethernet používá?",
+    "answer": "Kroucenou dvojlinku, optická vlákna nebo koaxiální kabel.",
+    "value": 0
+  },
+  {
+    "question": "Co je kroucená dvojlinka?",
+    "answer": "Nejběžnější ethernetový kabel tvořený páry vodičů.",
+    "value": 0
+  },
+  {
+    "question": "Proč jsou vodiče kroucené?",
+    "answer": "Kvůli snížení elektromagnetického rušení.",
+    "value": 0
+  },
+  {
+    "question": "Co je optické vlákno?",
+    "answer": "Přenosové médium používající světlo.",
+    "value": 0
+  },
+  {
+    "question": "Jaká je výhoda optických vláken?",
+    "answer": "Vysoká rychlost a odolnost vůči rušení.",
+    "value": 0
+  },
+  {
+    "question": "Jaká je nevýhoda optických vláken?",
+    "answer": "Vyšší cena a složitější instalace.",
+    "value": 0
+  },
+  {
+    "question": "Co je koaxiální kabel?",
+    "answer": "Starší přenosové médium používané v prvních Ethernet sítích.",
+    "value": 0
+  },
+  {
+    "question": "Jaké rychlosti Ethernet podporuje?",
+    "answer": "Například 10 Mb/s, 100 Mb/s, 1 Gb/s nebo 10 Gb/s.",
+    "value": 0
+  },
+  {
+    "question": "Co znamená Fast Ethernet?",
+    "answer": "Ethernet o rychlosti 100 Mb/s.",
+    "value": 0
+  },
+  {
+    "question": "Co znamená Gigabit Ethernet?",
+    "answer": "Ethernet o rychlosti 1 Gb/s.",
+    "value": 0
+  },
+  {
+    "question": "Co je VLAN?",
+    "answer": "Virtuální oddělení logických sítí na jednom switchi.",
+    "value": 0
+  },
+  {
+    "question": "Proč se používají VLAN?",
+    "answer": "Kvůli bezpečnosti a segmentaci provozu.",
+    "value": 0
+  },
+  {
+    "question": "Co je broadcast v Ethernetu?",
+    "answer": "Rámec určený všem zařízením v síti.",
+    "value": 0
+  },
+  {
+    "question": "Jaká MAC adresa se používá pro broadcast?",
+    "answer": "FF:FF:FF:FF:FF:FF.",
+    "value": 0
+  },
+  {
+    "question": "Co je unicast?",
+    "answer": "Komunikace mezi dvěma konkrétními zařízeními.",
+    "value": 0
+  },
+  {
+    "question": "Co je multicast?",
+    "answer": "Komunikace pro skupinu zařízení.",
+    "value": 0
+  },
+  {
+    "question": "Jak souvisí Ethernet s LAN?",
+    "answer": "Ethernet je dominantní technologie lokálních sítí.",
+    "value": 0
+  },
+  {
+    "question": "Jak souvisí Ethernet s Internetem?",
+    "answer": "Ethernet často tvoří lokální část internetové komunikace.",
+    "value": 0
+  },
+  {
+    "question": "Jak souvisí Ethernet s TCP/IP?",
+    "answer": "Ethernet přenáší IP pakety uvnitř rámců.",
+    "value": 0
+  },
+  {
+    "question": "Jak souvisí Ethernet s bezpečností?",
+    "answer": "Ethernetové sítě mohou být segmentovány a filtrovány.",
+    "value": 0
+  },
+  {
+    "question": "Jak souvisí Ethernet s datovými centry?",
+    "answer": "Datová centra používají vysokorychlostní Ethernet.",
+    "value": 0
+  },
+  {
+    "question": "Jak souvisí Ethernet s cloudem?",
+    "answer": "Cloudová infrastruktura je propojena Ethernetovými sítěmi.",
+    "value": 0
+  },
+  {
+    "question": "Jak souvisí Ethernet s AI infrastrukturou?",
+    "answer": "AI clustery využívají vysokorychlostní síťové propojení.",
+    "value": 0
+  },
+  {
+    "question": "Jaký je hlavní princip switche?",
+    "answer": "Přeposílání rámců podle MAC adres.",
+    "value": 0
+  },
+  {
+    "question": "Jaký je hlavní princip Ethernetu?",
+    "answer": "Přenos rámců mezi zařízeními v lokální síti.",
+    "value": 0
+  },
+  {
+    "question": "Co je IP protokol?",
+    "answer": "Síťový protokol zajišťující adresaci a směrování paketů mezi sítěmi.",
+    "value": 0
+  },
+  {
+    "question": "Na jaké vrstvě OSI modelu pracuje IP?",
+    "answer": "Na síťové vrstvě.",
+    "value": 0
+  },
+  {
+    "question": "Co znamená IP?",
+    "answer": "Internet Protocol.",
+    "value": 0
+  },
+  {
+    "question": "Jaký je hlavní účel IP protokolu?",
+    "answer": "Doručení paketů mezi zařízeními v různých sítích.",
+    "value": 0
+  },
+  {
+    "question": "Co je IP paket?",
+    "answer": "Datová jednotka přenášená IP protokolem.",
+    "value": 0
+  },
+  {
+    "question": "Co obsahuje IP paket?",
+    "answer": "Hlavičku a uživatelská data.",
+    "value": 0
+  },
+  {
+    "question": "Co obsahuje IP hlavička?",
+    "answer": "Zdrojovou a cílovou IP adresu, TTL a další informace.",
+    "value": 0
+  },
+  {
+    "question": "Co je IP adresa?",
+    "answer": "Logická adresa zařízení v síti.",
+    "value": 0
+  },
+  {
+    "question": "K čemu slouží IP adresa?",
+    "answer": "K identifikaci zařízení a směrování paketů.",
+    "value": 0
+  },
+  {
+    "question": "Jaký je rozdíl mezi MAC a IP adresou?",
+    "answer": "MAC je hardwarová adresa, IP logická.",
+    "value": 0
+  },
+  {
+    "question": "Co je IPv4?",
+    "answer": "32bitová verze Internet Protocolu.",
+    "value": 0
+  },
+  {
+    "question": "Kolik adres nabízí IPv4?",
+    "answer": "Přibližně 4,3 miliardy.",
+    "value": 0
+  },
+  {
+    "question": "Jak se zapisuje IPv4 adresa?",
+    "answer": "Čtyřmi oktety oddělenými tečkami.",
+    "value": 0
+  },
+  {
+    "question": "Jaký je příklad IPv4 adresy?",
+    "answer": "192.168.1.1.",
+    "value": 0
+  },
+  {
+    "question": "Co je IPv6?",
+    "answer": "128bitová verze IP protokolu.",
+    "value": 0
+  },
+  {
+    "question": "Proč vzniklo IPv6?",
+    "answer": "Kvůli nedostatku IPv4 adres.",
+    "value": 0
+  },
+  {
+    "question": "Jak se zapisuje IPv6 adresa?",
+    "answer": "Hexadecimálně po skupinách oddělených dvojtečkami.",
+    "value": 0
+  },
+  {
+    "question": "Jaký je příklad IPv6 adresy?",
+    "answer": "2001:0db8::1.",
+    "value": 0
+  },
+  {
+    "question": "Co je veřejná IP adresa?",
+    "answer": "Adresa routovatelná na Internetu.",
+    "value": 0
+  },
+  {
+    "question": "Co je privátní IP adresa?",
+    "answer": "Adresa používaná pouze uvnitř lokálních sítí.",
+    "value": 0
+  },
+  {
+    "question": "Jaké rozsahy IPv4 adres jsou privátní?",
+    "answer": "10.0.0.0/8, 172.16.0.0/12 a 192.168.0.0/16.",
+    "value": 0
+  },
+  {
+    "question": "Co je loopback adresa?",
+    "answer": "Adresa odkazující na vlastní zařízení.",
+    "value": 0
+  },
+  {
+    "question": "Jaká je běžná loopback IPv4 adresa?",
+    "answer": "127.0.0.1.",
+    "value": 0
+  },
+  {
+    "question": "Co je podsíť?",
+    "answer": "Logické rozdělení IP sítě.",
+    "value": 0
+  },
+  {
+    "question": "Proč se používají podsítě?",
+    "answer": "Kvůli efektivnějšímu řízení sítí.",
+    "value": 0
+  },
+  {
+    "question": "Co je maska podsítě?",
+    "answer": "Hodnota určující síťovou a hostitelskou část adresy.",
+    "value": 0
+  },
+  {
+    "question": "Jaký je příklad masky podsítě?",
+    "answer": "255.255.255.0.",
+    "value": 0
+  },
+  {
+    "question": "Co znamená zápis /24?",
+    "answer": "24 bitů je určeno pro síťovou část adresy.",
+    "value": 0
+  },
+  {
+    "question": "Co je CIDR?",
+    "answer": "Classless Inter-Domain Routing — moderní způsob adresace sítí.",
+    "value": 0
+  },
+  {
+    "question": "Jaký je rozdíl mezi síťovou a hostitelskou částí adresy?",
+    "answer": "Síťová identifikuje síť, hostitelská zařízení.",
+    "value": 0
+  },
+  {
+    "question": "Co je broadcast adresa?",
+    "answer": "Adresa pro komunikaci se všemi zařízeními v podsíti.",
+    "value": 0
+  },
+  {
+    "question": "Co je gateway?",
+    "answer": "Výchozí router pro komunikaci mimo lokální síť.",
+    "value": 0
+  },
+  {
+    "question": "Co je směrování?",
+    "answer": "Proces určování cesty paketů sítí.",
+    "value": 0
+  },
+  {
+    "question": "Co je router?",
+    "answer": "Zařízení směrující IP pakety mezi sítěmi.",
+    "value": 0
+  },
+  {
+    "question": "Jak router rozhoduje o směrování?",
+    "answer": "Pomocí směrovací tabulky.",
+    "value": 0
+  },
+  {
+    "question": "Co je směrovací tabulka?",
+    "answer": "Seznam pravidel určujících cestu paketů.",
+    "value": 0
+  },
+  {
+    "question": "Co je statické směrování?",
+    "answer": "Ruční konfigurace směrovacích pravidel.",
+    "value": 0
+  },
+  {
+    "question": "Co je dynamické směrování?",
+    "answer": "Automatická výměna směrovacích informací mezi routery.",
+    "value": 0
+  },
+  {
+    "question": "Jaké dynamické směrovací protokoly existují?",
+    "answer": "Například RIP, OSPF nebo BGP.",
+    "value": 0
+  },
+  {
+    "question": "Co je TTL v IP paketu?",
+    "answer": "Time To Live — maximální počet průchodů routery.",
+    "value": 0
+  },
+  {
+    "question": "Proč existuje TTL?",
+    "answer": "Aby pakety nekroužily sítí nekonečně.",
+    "value": 0
+  },
+  {
+    "question": "Co se stane při TTL = 0?",
+    "answer": "Paket je zahozen.",
+    "value": 0
+  },
+  {
+    "question": "Co je fragmentace IP paketu?",
+    "answer": "Rozdělení velkého paketu na menší části.",
+    "value": 0
+  },
+  {
+    "question": "Proč dochází k fragmentaci?",
+    "answer": "Kvůli omezené MTU na síťových úsecích.",
+    "value": 0
+  },
+  {
+    "question": "Co je MTU?",
+    "answer": "Maximální velikost přenášeného rámce nebo paketu.",
+    "value": 0
+  },
+  {
+    "question": "Co je NAT?",
+    "answer": "Překlad síťových adres.",
+    "value": 0
+  },
+  {
+    "question": "Proč se používá NAT?",
+    "answer": "Kvůli úspoře veřejných IPv4 adres.",
+    "value": 0
+  },
+  {
+    "question": "Jaký je rozdíl mezi IPv4 a IPv6?",
+    "answer": "IPv6 používá delší adresy a větší adresní prostor.",
+    "value": 0
+  },
+  {
+    "question": "Co je ICMP?",
+    "answer": "Protokol pro diagnostiku a chybová hlášení.",
+    "value": 0
+  },
+  {
+    "question": "K čemu slouží ping?",
+    "answer": "Testuje dostupnost zařízení pomocí ICMP.",
+    "value": 0
+  },
+  {
+    "question": "Co je traceroute?",
+    "answer": "Nástroj zobrazující cestu paketů sítí.",
+    "value": 0
+  },
+  {
+    "question": "Jak souvisí IP s TCP a UDP?",
+    "answer": "IP přenáší segmenty TCP a UDP.",
+    "value": 0
+  },
+  {
+    "question": "Jak souvisí IP s DNS?",
+    "answer": "DNS převádí doménová jména na IP adresy.",
+    "value": 0
+  },
+  {
+    "question": "Jak souvisí IP s Internetem?",
+    "answer": "IP je základní protokol Internetu.",
+    "value": 0
+  },
+  {
+    "question": "Jak souvisí IP s cloudem?",
+    "answer": "Cloudové služby komunikují pomocí IP sítí.",
+    "value": 0
+  },
+  {
+    "question": "Jak souvisí IP s kyberbezpečností?",
+    "answer": "IP adresy jsou důležité při filtrování a monitorování provozu.",
+    "value": 0
+  },
+  {
+    "question": "Jak souvisí IP s AI infrastrukturou?",
+    "answer": "Distribuované AI systémy komunikují přes IP sítě.",
+    "value": 0
+  },
+  {
+    "question": "Jaký je hlavní princip IP protokolu?",
+    "answer": "Adresace a směrování paketů mezi sítěmi.",
+    "value": 0
+  },
+  {
+    "question": "Jaký je hlavní rozdíl mezi MAC a IP komunikací?",
+    "answer": "MAC funguje lokálně, IP mezi sítěmi.",
+    "value": 0
+  },
+  {
+    "question": "Co je TCP?",
+    "answer": "Transportní protokol zajišťující spolehlivý přenos dat.",
+    "value": 0
+  },
+  {
+    "question": "Co znamená TCP?",
+    "answer": "Transmission Control Protocol.",
+    "value": 0
+  },
+  {
+    "question": "Na jaké vrstvě OSI modelu pracuje TCP?",
+    "answer": "Na transportní vrstvě.",
+    "value": 0
+  },
+  {
+    "question": "Co je UDP?",
+    "answer": "Transportní protokol poskytující rychlý nespojovaný přenos.",
+    "value": 0
+  },
+  {
+    "question": "Co znamená UDP?",
+    "answer": "User Datagram Protocol.",
+    "value": 0
+  },
+  {
+    "question": "Jaký je hlavní rozdíl mezi TCP a UDP?",
+    "answer": "TCP je spojované a spolehlivé, UDP nespojované a rychlé.",
+    "value": 0
+  },
+  {
+    "question": "Co znamená spojovaný protokol?",
+    "answer": "Před přenosem se navazuje spojení.",
+    "value": 0
+  },
+  {
+    "question": "Co znamená nespojovaný protokol?",
+    "answer": "Data se posílají bez navázání spojení.",
+    "value": 0
+  },
+  {
+    "question": "Jaký je hlavní účel TCP?",
+    "answer": "Spolehlivý přenos dat mezi aplikacemi.",
+    "value": 0
+  },
+  {
+    "question": "Jaký je hlavní účel UDP?",
+    "answer": "Rychlý přenos dat s minimální režií.",
+    "value": 0
+  },
+  {
+    "question": "Co je TCP segment?",
+    "answer": "Datová jednotka TCP.",
+    "value": 0
+  },
+  {
+    "question": "Co je UDP datagram?",
+    "answer": "Datová jednotka UDP.",
+    "value": 0
+  },
+  {
+    "question": "Co je port?",
+    "answer": "Identifikátor aplikace nebo služby.",
+    "value": 0
+  },
+  {
+    "question": "Proč TCP a UDP používají porty?",
+    "answer": "Kvůli rozlišení komunikujících aplikací.",
+    "value": 0
+  },
+  {
+    "question": "Co je socket?",
+    "answer": "Kombinace IP adresy a portu.",
+    "value": 0
+  },
+  {
+    "question": "Jak TCP navazuje spojení?",
+    "answer": "Pomocí three-way handshake.",
+    "value": 0
+  },
+  {
+    "question": "Co je three-way handshake?",
+    "answer": "Proces navázání TCP spojení pomocí SYN, SYN-ACK a ACK.",
+    "value": 0
+  },
+  {
+    "question": "Jaký je první krok TCP handshake?",
+    "answer": "Klient odešle SYN.",
+    "value": 0
+  },
+  {
+    "question": "Jaký je druhý krok TCP handshake?",
+    "answer": "Server odpoví SYN-ACK.",
+    "value": 0
+  },
+  {
+    "question": "Jaký je třetí krok TCP handshake?",
+    "answer": "Klient odešle ACK.",
+    "value": 0
+  },
+  {
+    "question": "Proč TCP používá handshake?",
+    "answer": "Kvůli synchronizaci a potvrzení spojení.",
+    "value": 0
+  },
+  {
+    "question": "Co je ACK?",
+    "answer": "Potvrzení přijetí dat.",
+    "value": 0
+  },
+  {
+    "question": "Jak TCP zajišťuje spolehlivost?",
+    "answer": "Pomocí potvrzování, číslování segmentů a retransmisí.",
+    "value": 0
+  },
+  {
+    "question": "Co je retransmise?",
+    "answer": "Opětovné odeslání ztracených dat.",
+    "value": 0
+  },
+  {
+    "question": "Jak TCP pozná ztracený segment?",
+    "answer": "Nepřijde potvrzení ACK.",
+    "value": 0
+  },
+  {
+    "question": "Co je sekvenční číslo v TCP?",
+    "answer": "Číslo určující pořadí segmentů.",
+    "value": 0
+  },
+  {
+    "question": "Proč TCP používá sekvenční čísla?",
+    "answer": "Kvůli správnému skládání dat.",
+    "value": 0
+  },
+  {
+    "question": "Co je řízení toku dat?",
+    "answer": "Mechanismus zabraňující zahlcení příjemce.",
+    "value": 0
+  },
+  {
+    "question": "Jak TCP řídí tok dat?",
+    "answer": "Pomocí sliding window mechanismu.",
+    "value": 0
+  },
+  {
+    "question": "Co je sliding window?",
+    "answer": "Mechanismus určující množství nepotvrzených dat.",
+    "value": 0
+  },
+  {
+    "question": "Proč je sliding window důležitý?",
+    "answer": "Umožňuje efektivní přenos bez zahlcení.",
+    "value": 0
+  },
+  {
+    "question": "Co je congestion control?",
+    "answer": "Řízení zahlcení sítě.",
+    "value": 0
+  },
+  {
+    "question": "Proč TCP používá congestion control?",
+    "answer": "Aby zabránil přetížení sítě.",
+    "value": 0
+  },
+  {
+    "question": "Co je slow start?",
+    "answer": "Mechanismus postupného zvyšování rychlosti přenosu.",
+    "value": 0
+  },
+  {
+    "question": "Co je timeout v TCP?",
+    "answer": "Čas čekání na potvrzení segmentu.",
+    "value": 0
+  },
+  {
+    "question": "Co se stane při timeoutu?",
+    "answer": "Segment se znovu odešle.",
+    "value": 0
+  },
+  {
+    "question": "Jak TCP ukončuje spojení?",
+    "answer": "Pomocí FIN a ACK segmentů.",
+    "value": 0
+  },
+  {
+    "question": "Co je FIN v TCP?",
+    "answer": "Příznak ukončení spojení.",
+    "value": 0
+  },
+  {
+    "question": "Co je RST v TCP?",
+    "answer": "Reset spojení.",
+    "value": 0
+  },
+  {
+    "question": "Jaké výhody má TCP?",
+    "answer": "Spolehlivost a správné pořadí dat.",
+    "value": 0
+  },
+  {
+    "question": "Jaké nevýhody má TCP?",
+    "answer": "Vyšší režie a latence.",
+    "value": 0
+  },
+  {
+    "question": "Jaké výhody má UDP?",
+    "answer": "Nízká režie a rychlost.",
+    "value": 0
+  },
+  {
+    "question": "Jaké nevýhody má UDP?",
+    "answer": "Nezajišťuje spolehlivost ani pořadí.",
+    "value": 0
+  },
+  {
+    "question": "Kdy se používá TCP?",
+    "answer": "Například pro web, email nebo SSH.",
+    "value": 0
+  },
+  {
+    "question": "Kdy se používá UDP?",
+    "answer": "Například pro video streaming nebo online hry.",
+    "value": 0
+  },
+  {
+    "question": "Proč online hry často používají UDP?",
+    "answer": "Nízká latence je důležitější než absolutní spolehlivost.",
+    "value": 0
+  },
+  {
+    "question": "Proč HTTP používá TCP?",
+    "answer": "Webové stránky vyžadují spolehlivý přenos.",
+    "value": 0
+  },
+  {
+    "question": "Co je multiplexing v TCP/UDP?",
+    "answer": "Současná komunikace více aplikací pomocí portů.",
+    "value": 0
+  },
+  {
+    "question": "Co je checksum v TCP a UDP?",
+    "answer": "Kontrolní součet pro detekci chyb.",
+    "value": 0
+  },
+  {
+    "question": "Jaký je rozdíl mezi řízením toku a řízením zahlcení?",
+    "answer": "Řízení toku chrání příjemce, řízení zahlcení síť.",
+    "value": 0
+  },
+  {
+    "question": "Co je QoS ve vztahu k TCP a UDP?",
+    "answer": "Mechanismus prioritizace síťového provozu.",
+    "value": 0
+  },
+  {
+    "question": "Jak souvisí TCP a UDP s IP?",
+    "answer": "TCP a UDP běží nad IP protokolem.",
+    "value": 0
+  },
+  {
+    "question": "Jak souvisí TCP s HTTPS?",
+    "answer": "HTTPS používá TCP jako transportní protokol.",
+    "value": 0
+  },
+  {
+    "question": "Jak souvisí UDP s DNS?",
+    "answer": "DNS často používá UDP pro rychlé dotazy.",
+    "value": 0
+  },
+  {
+    "question": "Jak souvisí TCP s bezpečností?",
+    "answer": "TCP je základem protokolů jako TLS.",
+    "value": 0
+  },
+  {
+    "question": "Jak souvisí UDP s VoIP?",
+    "answer": "VoIP preferuje nízkou latenci před retransmisemi.",
+    "value": 0
+  },
+  {
+    "question": "Jak souvisí TCP a UDP s cloudem?",
+    "answer": "Cloudové služby používají oba transportní protokoly.",
+    "value": 0
+  },
+  {
+    "question": "Jak souvisí TCP a UDP s AI infrastrukturou?",
+    "answer": "Distribuované AI systémy komunikují přes TCP/IP sítě.",
+    "value": 0
+  },
+  {
+    "question": "Jaký je hlavní princip TCP?",
+    "answer": "Spolehlivý spojovaný přenos dat.",
+    "value": 0
+  },
+  {
+    "question": "Jaký je hlavní princip UDP?",
+    "answer": "Rychlý nespojovaný přenos dat.",
+    "value": 0
+  },
+  {
+    "question": "Co je DNS?",
+    "answer": "Systém překládající doménová jména na IP adresy.",
+    "value": 0
+  },
+  {
+    "question": "Co znamená DNS?",
+    "answer": "Domain Name System.",
+    "value": 0
+  },
+  {
+    "question": "Proč DNS existuje?",
+    "answer": "Lidé si lépe pamatují jména než IP adresy.",
+    "value": 0
+  },
+  {
+    "question": "Jaký je hlavní účel DNS?",
+    "answer": "Překlad doménových jmen na síťové adresy.",
+    "value": 0
+  },
+  {
+    "question": "Co je doménové jméno?",
+    "answer": "Textová identifikace zařízení nebo služby na Internetu.",
+    "value": 0
+  },
+  {
+    "question": "Jaký je příklad doménového jména?",
+    "answer": "example.com.",
+    "value": 0
+  },
+  {
+    "question": "Co je IP adresa?",
+    "answer": "Logická adresa zařízení v síti.",
+    "value": 0
+  },
+  {
+    "question": "Jak DNS souvisí s IP adresami?",
+    "answer": "DNS převádí jména na IP adresy.",
+    "value": 0
+  },
+  {
+    "question": "Jaký protokol DNS nejčastěji používá?",
+    "answer": "UDP.",
+    "value": 0
+  },
+  {
+    "question": "Na jakém portu běží DNS?",
+    "answer": "Na portu 53.",
+    "value": 0
+  },
+  {
+    "question": "Kdy DNS používá TCP?",
+    "answer": "Například při přenosu velkých odpovědí nebo zónových přenosů.",
+    "value": 0
+  },
+  {
+    "question": "Co je DNS server?",
+    "answer": "Server poskytující DNS překlady.",
+    "value": 0
+  },
+  {
+    "question": "Co je DNS klient?",
+    "answer": "Zařízení nebo program posílající DNS dotazy.",
+    "value": 0
+  },
+  {
+    "question": "Co je resolver?",
+    "answer": "Komponenta zajišťující DNS překlad pro klienta.",
+    "value": 0
+  },
+  {
+    "question": "Jak funguje DNS překlad?",
+    "answer": "Klient odešle dotaz a DNS server vrátí odpovídající IP adresu.",
+    "value": 0
+  },
+  {
+    "question": "Co je rekurzivní DNS server?",
+    "answer": "Server, který vyhledává odpovědi jménem klienta.",
+    "value": 0
+  },
+  {
+    "question": "Co je autoritativní DNS server?",
+    "answer": "Server obsahující oficiální záznamy domény.",
+    "value": 0
+  },
+  {
+    "question": "Co je root DNS server?",
+    "answer": "Nejvyšší úroveň DNS hierarchie.",
+    "value": 0
+  },
+  {
+    "question": "Jak funguje hierarchie DNS?",
+    "answer": "Dotazy se postupně delegují mezi úrovněmi domén.",
+    "value": 0
+  },
+  {
+    "question": "Co je TLD?",
+    "answer": "Top-Level Domain — nejvyšší doménová úroveň.",
+    "value": 0
+  },
+  {
+    "question": "Jaké příklady TLD existují?",
+    "answer": ".com, .org nebo .cz.",
+    "value": 0
+  },
+  {
+    "question": "Co je subdoména?",
+    "answer": "Podřízená část domény.",
+    "value": 0
+  },
+  {
+    "question": "Jaký je příklad subdomény?",
+    "answer": "www.example.com.",
+    "value": 0
+  },
+  {
+    "question": "Co je DNS záznam?",
+    "answer": "Informace uložená v DNS.",
+    "value": 0
+  },
+  {
+    "question": "Co je A záznam?",
+    "answer": "DNS záznam mapující doménu na IPv4 adresu.",
+    "value": 0
+  },
+  {
+    "question": "Co je AAAA záznam?",
+    "answer": "DNS záznam mapující doménu na IPv6 adresu.",
+    "value": 0
+  },
+  {
+    "question": "Co je MX záznam?",
+    "answer": "DNS záznam určující poštovní server domény.",
+    "value": 0
+  },
+  {
+    "question": "Co je CNAME záznam?",
+    "answer": "Alias jiného doménového jména.",
+    "value": 0
+  },
+  {
+    "question": "Co je NS záznam?",
+    "answer": "Záznam určující autoritativní DNS server.",
+    "value": 0
+  },
+  {
+    "question": "Co je PTR záznam?",
+    "answer": "Záznam pro reverzní DNS překlad.",
+    "value": 0
+  },
+  {
+    "question": "Co je reverzní DNS?",
+    "answer": "Překlad IP adresy na doménové jméno.",
+    "value": 0
+  },
+  {
+    "question": "Co je TTL v DNS?",
+    "answer": "Time To Live — doba platnosti DNS záznamu v cache.",
+    "value": 0
+  },
+  {
+    "question": "Proč DNS používá cache?",
+    "answer": "Kvůli zrychlení odpovědí a snížení provozu.",
+    "value": 0
+  },
+  {
+    "question": "Co je DNS cache poisoning?",
+    "answer": "Útok podvrhující falešné DNS odpovědi.",
+    "value": 0
+  },
+  {
+    "question": "Co je DNSSEC?",
+    "answer": "Rozšíření DNS poskytující kryptografické ověření odpovědí.",
+    "value": 0
+  },
+  {
+    "question": "Proč vznikl DNSSEC?",
+    "answer": "Kvůli ochraně proti podvrženým DNS odpovědím.",
+    "value": 0
+  },
+  {
+    "question": "Co je zónový přenos?",
+    "answer": "Synchronizace DNS záznamů mezi servery.",
+    "value": 0
+  },
+  {
+    "question": "Co je primární DNS server?",
+    "answer": "Hlavní autoritativní server domény.",
+    "value": 0
+  },
+  {
+    "question": "Co je sekundární DNS server?",
+    "answer": "Záložní server kopírující DNS zónu.",
+    "value": 0
+  },
+  {
+    "question": "Jaký je rozdíl mezi autoritativním a rekurzivním DNS serverem?",
+    "answer": "Autoritativní uchovává data, rekurzivní vyhledává odpovědi.",
+    "value": 0
+  },
+  {
+    "question": "Co je DNS lookup?",
+    "answer": "Proces vyhledání IP adresy podle domény.",
+    "value": 0
+  },
+  {
+    "question": "Co je forward lookup?",
+    "answer": "Překlad jména na IP adresu.",
+    "value": 0
+  },
+  {
+    "question": "Co je reverse lookup?",
+    "answer": "Překlad IP adresy na jméno.",
+    "value": 0
+  },
+  {
+    "question": "Jaké nástroje se používají pro DNS diagnostiku?",
+    "answer": "Například nslookup, dig nebo host.",
+    "value": 0
+  },
+  {
+    "question": "K čemu slouží příkaz nslookup?",
+    "answer": "K testování DNS překladů.",
+    "value": 0
+  },
+  {
+    "question": "K čemu slouží příkaz dig?",
+    "answer": "K detailní analýze DNS dotazů.",
+    "value": 0
+  },
+  {
+    "question": "Jak souvisí DNS s webem?",
+    "answer": "Webové prohlížeče používají DNS pro nalezení serverů.",
+    "value": 0
+  },
+  {
+    "question": "Jak souvisí DNS s emailem?",
+    "answer": "MX záznamy určují poštovní servery.",
+    "value": 0
+  },
+  {
+    "question": "Jak souvisí DNS s cloudem?",
+    "answer": "Cloudové služby využívají DNS pro směrování provozu.",
+    "value": 0
+  },
+  {
+    "question": "Jak souvisí DNS s load balancingem?",
+    "answer": "DNS může vracet více IP adres.",
+    "value": 0
+  },
+  {
+    "question": "Jak souvisí DNS s CDN?",
+    "answer": "CDN používají DNS k přesměrování klientů na nejbližší server.",
+    "value": 0
+  },
+  {
+    "question": "Jak souvisí DNS s kyberbezpečností?",
+    "answer": "DNS je častým cílem útoků a filtrování.",
+    "value": 0
+  },
+  {
+    "question": "Jak souvisí DNS s phishingem?",
+    "answer": "Útočníci mohou zneužívat podobná doménová jména.",
+    "value": 0
+  },
+  {
+    "question": "Jak souvisí DNS s NAT?",
+    "answer": "DNS umožňuje najít veřejné IP adresy služeb za NATem.",
+    "value": 0
+  },
+  {
+    "question": "Jak souvisí DNS s AI infrastrukturou?",
+    "answer": "AI služby a API jsou dostupné pomocí DNS jmen.",
+    "value": 0
+  },
+  {
+    "question": "Jaký je hlavní princip DNS?",
+    "answer": "Hierarchický překlad doménových jmen na IP adresy.",
+    "value": 0
+  },
+  {
+    "question": "Jaký je hlavní důvod existence DNS?",
+    "answer": "Jednodušší používání Internetu lidmi.",
+    "value": 0
+  },
+  {
+    "question": "Co jsou aplikační služby v počítačových sítích?",
+    "answer": "Síťové služby poskytované aplikacím uživatelů.",
+    "value": 0
+  },
+  {
+    "question": "Na jaké vrstvě OSI modelu pracují aplikační služby?",
+    "answer": "Na aplikační vrstvě.",
+    "value": 0
+  },
+  {
+    "question": "Jaký je hlavní účel aplikačních služeb?",
+    "answer": "Poskytování funkcí uživatelským aplikacím přes síť.",
+    "value": 0
+  },
+  {
+    "question": "Co je síťová aplikace?",
+    "answer": "Program komunikující přes počítačovou síť.",
+    "value": 0
+  },
+  {
+    "question": "Jaké aplikační služby známe?",
+    "answer": "Web, email, DNS, FTP nebo SSH.",
+    "value": 0
+  },
+  {
+    "question": "Co je klient-server architektura?",
+    "answer": "Model, kde server poskytuje služby klientům.",
+    "value": 0
+  },
+  {
+    "question": "Co je klient v síťové aplikaci?",
+    "answer": "Aplikace využívající síťovou službu.",
+    "value": 0
+  },
+  {
+    "question": "Co je server v síťové aplikaci?",
+    "answer": "Aplikace poskytující síťovou službu.",
+    "value": 0
+  },
+  {
+    "question": "Jaký je rozdíl mezi klientem a serverem?",
+    "answer": "Klient žádá službu, server ji poskytuje.",
+    "value": 0
+  },
+  {
+    "question": "Co je socket?",
+    "answer": "Komunikační rozhraní pro síťovou komunikaci.",
+    "value": 0
+  },
+  {
+    "question": "Co obsahuje socket?",
+    "answer": "IP adresu a port.",
+    "value": 0
+  },
+  {
+    "question": "Co je port?",
+    "answer": "Identifikátor síťové služby nebo aplikace.",
+    "value": 0
+  },
+  {
+    "question": "Proč síťové aplikace používají porty?",
+    "answer": "Kvůli rozlišení různých služeb na jednom zařízení.",
+    "value": 0
+  },
+  {
+    "question": "Co je TCP socket?",
+    "answer": "Socket používající spojovaný TCP přenos.",
+    "value": 0
+  },
+  {
+    "question": "Co je UDP socket?",
+    "answer": "Socket používající nespojovaný UDP přenos.",
+    "value": 0
+  },
+  {
+    "question": "Jaký je rozdíl mezi TCP a UDP aplikacemi?",
+    "answer": "TCP poskytuje spolehlivost, UDP nízkou latenci.",
+    "value": 0
+  },
+  {
+    "question": "Kdy se používá TCP?",
+    "answer": "Například pro web nebo email.",
+    "value": 0
+  },
+  {
+    "question": "Kdy se používá UDP?",
+    "answer": "Například pro streaming nebo online hry.",
+    "value": 0
+  },
+  {
+    "question": "Co je HTTP?",
+    "answer": "Protokol pro přenos webových stránek.",
+    "value": 0
+  },
+  {
+    "question": "Co znamená HTTP?",
+    "answer": "HyperText Transfer Protocol.",
+    "value": 0
+  },
+  {
+    "question": "Jaký port standardně používá HTTP?",
+    "answer": "80.",
+    "value": 0
+  },
+  {
+    "question": "Co je HTTPS?",
+    "answer": "Šifrovaná verze HTTP.",
+    "value": 0
+  },
+  {
+    "question": "Jaký port standardně používá HTTPS?",
+    "answer": "443.",
+    "value": 0
+  },
+  {
+    "question": "Co je FTP?",
+    "answer": "Protokol pro přenos souborů.",
+    "value": 0
+  },
+  {
+    "question": "Co je SMTP?",
+    "answer": "Protokol pro odesílání emailů.",
+    "value": 0
+  },
+  {
+    "question": "Co je IMAP?",
+    "answer": "Protokol pro práci s emaily uloženými na serveru.",
+    "value": 0
+  },
+  {
+    "question": "Co je POP3?",
+    "answer": "Protokol pro stahování emailů.",
+    "value": 0
+  },
+  {
+    "question": "Co je DNS?",
+    "answer": "Systém překladu doménových jmen na IP adresy.",
+    "value": 0
+  },
+  {
+    "question": "Co je DHCP?",
+    "answer": "Protokol pro automatické přidělování IP adres.",
+    "value": 0
+  },
+  {
+    "question": "Co je SSH?",
+    "answer": "Protokol pro bezpečný vzdálený přístup.",
+    "value": 0
+  },
+  {
+    "question": "Co je REST API?",
+    "answer": "Architektura webových služeb využívající HTTP.",
+    "value": 0
+  },
+  {
+    "question": "Co je API?",
+    "answer": "Application Programming Interface — rozhraní pro komunikaci aplikací.",
+    "value": 0
+  },
+  {
+    "question": "Co je JSON?",
+    "answer": "Textový formát pro výměnu dat.",
+    "value": 0
+  },
+  {
+    "question": "Proč se JSON používá v síťových aplikacích?",
+    "answer": "Je jednoduchý a snadno čitelný.",
+    "value": 0
+  },
+  {
+    "question": "Co je XML?",
+    "answer": "Značkovací jazyk pro strukturovaná data.",
+    "value": 0
+  },
+  {
+    "question": "Co je klientská část aplikace?",
+    "answer": "Část komunikující se serverem a uživatelem.",
+    "value": 0
+  },
+  {
+    "question": "Co je serverová část aplikace?",
+    "answer": "Část zpracovávající požadavky klientů.",
+    "value": 0
+  },
+  {
+    "question": "Co je request-response model?",
+    "answer": "Model komunikace založený na požadavcích a odpovědích.",
+    "value": 0
+  },
+  {
+    "question": "Jak funguje HTTP request?",
+    "answer": "Klient odešle požadavek serveru.",
+    "value": 0
+  },
+  {
+    "question": "Jak funguje HTTP response?",
+    "answer": "Server vrátí odpověď klientovi.",
+    "value": 0
+  },
+  {
+    "question": "Co je stateless protokol?",
+    "answer": "Protokol neuchovávající stav komunikace.",
+    "value": 0
+  },
+  {
+    "question": "Proč je HTTP považován za stateless?",
+    "answer": "Každý požadavek je nezávislý.",
+    "value": 0
+  },
+  {
+    "question": "Co jsou cookies?",
+    "answer": "Data ukládaná klientovi pro uchování stavu.",
+    "value": 0
+  },
+  {
+    "question": "Co je session?",
+    "answer": "Mechanismus uchování stavu uživatele.",
+    "value": 0
+  },
+  {
+    "question": "Co je websocket?",
+    "answer": "Protokol umožňující obousměrnou komunikaci v reálném čase.",
+    "value": 0
+  },
+  {
+    "question": "K čemu se používají websockety?",
+    "answer": "Například pro chat nebo online hry.",
+    "value": 0
+  },
+  {
+    "question": "Co je concurrency v síťových aplikacích?",
+    "answer": "Současná obsluha více klientů.",
+    "value": 0
+  },
+  {
+    "question": "Jak server obsluhuje více klientů?",
+    "answer": "Pomocí vláken, procesů nebo asynchronního I/O.",
+    "value": 0
+  },
+  {
+    "question": "Co je asynchronní komunikace?",
+    "answer": "Komunikace bez blokování programu čekáním na odpověď.",
+    "value": 0
+  },
+  {
+    "question": "Co je load balancing?",
+    "answer": "Rozdělování zátěže mezi více serverů.",
+    "value": 0
+  },
+  {
+    "question": "Proč se používá load balancing?",
+    "answer": "Kvůli vyšší dostupnosti a výkonu.",
+    "value": 0
+  },
+  {
+    "question": "Co je reverse proxy?",
+    "answer": "Server přeposílající požadavky backendovým serverům.",
+    "value": 0
+  },
+  {
+    "question": "Co je firewall ve vztahu k síťovým aplikacím?",
+    "answer": "Filtruje síťovou komunikaci aplikací.",
+    "value": 0
+  },
+  {
+    "question": "Co je TLS?",
+    "answer": "Protokol pro šifrovanou komunikaci.",
+    "value": 0
+  },
+  {
+    "question": "Proč síťové aplikace používají TLS?",
+    "answer": "Kvůli ochraně přenášených dat.",
+    "value": 0
+  },
+  {
+    "question": "Jak souvisí síťové aplikace s cloudem?",
+    "answer": "Mnoho aplikací běží jako cloudové služby.",
+    "value": 0
+  },
+  {
+    "question": "Jak souvisí síťové aplikace s databázemi?",
+    "answer": "Servery často ukládají data do databází.",
+    "value": 0
+  },
+  {
+    "question": "Jak souvisí síťové aplikace s mikroservisami?",
+    "answer": "Mikroservisy komunikují přes síťová API.",
+    "value": 0
+  },
+  {
+    "question": "Jak souvisí síťové aplikace s AI?",
+    "answer": "AI služby jsou často poskytovány přes API.",
+    "value": 0
+  },
+  {
+    "question": "Jak souvisí síťové aplikace s DevOps?",
+    "answer": "DevOps řeší deployment a monitoring síťových služeb.",
+    "value": 0
+  },
+  {
+    "question": "Jak souvisí síťové aplikace s kyberbezpečností?",
+    "answer": "Síťové aplikace musí chránit komunikaci a data.",
+    "value": 0
+  },
+  {
+    "question": "Jaký je hlavní princip síťových aplikací?",
+    "answer": "Komunikace mezi klientem a serverem přes síťové protokoly.",
+    "value": 0
+  },
+  {
+    "question": "Jaký je hlavní účel aplikačních služeb?",
+    "answer": "Poskytování síťových funkcí uživatelům a aplikacím.",
+    "value": 0
+  },
+  {
+    "question": "Co je bezpečnost počítačových sítí?",
+    "answer": "Ochrana síťové komunikace, zařízení a dat před útoky a zneužitím.",
+    "value": 0
+  },
+  {
+    "question": "Jaký je hlavní cíl síťové bezpečnosti?",
+    "answer": "Zajištění důvěrnosti, integrity a dostupnosti dat.",
+    "value": 0
+  },
+  {
+    "question": "Co znamená důvěrnost dat?",
+    "answer": "Data jsou přístupná pouze oprávněným osobám.",
+    "value": 0
+  },
+  {
+    "question": "Co znamená integrita dat?",
+    "answer": "Data nebyla neoprávněně změněna.",
+    "value": 0
+  },
+  {
+    "question": "Co znamená dostupnost dat?",
+    "answer": "Služby a data jsou dostupné oprávněným uživatelům.",
+    "value": 0
+  },
+  {
+    "question": "Co je autentizace?",
+    "answer": "Ověření identity uživatele nebo zařízení.",
+    "value": 0
+  },
+  {
+    "question": "Co je autorizace?",
+    "answer": "Určení oprávnění po úspěšné autentizaci.",
+    "value": 0
+  },
+  {
+    "question": "Co je šifrování?",
+    "answer": "Převod dat do nečitelné podoby.",
+    "value": 0
+  },
+  {
+    "question": "Proč se používá šifrování v sítích?",
+    "answer": "Kvůli ochraně dat před odposlechem.",
+    "value": 0
+  },
+  {
+    "question": "Co je symetrické šifrování?",
+    "answer": "Šifrování používající stejný klíč pro šifrování i dešifrování.",
+    "value": 0
+  },
+  {
+    "question": "Co je asymetrické šifrování?",
+    "answer": "Šifrování používající veřejný a soukromý klíč.",
+    "value": 0
+  },
+  {
+    "question": "Co je TLS?",
+    "answer": "Protokol pro zabezpečenou síťovou komunikaci.",
+    "value": 0
+  },
+  {
+    "question": "Co znamená TLS?",
+    "answer": "Transport Layer Security.",
+    "value": 0
+  },
+  {
+    "question": "Kde se TLS používá?",
+    "answer": "Například v HTTPS.",
+    "value": 0
+  },
+  {
+    "question": "Co je HTTPS?",
+    "answer": "Šifrovaná verze HTTP.",
+    "value": 0
+  },
+  {
+    "question": "Jaký je rozdíl mezi HTTP a HTTPS?",
+    "answer": "HTTPS používá šifrování pomocí TLS.",
+    "value": 0
+  },
+  {
+    "question": "Co je firewall?",
+    "answer": "Zařízení nebo software filtrující síťový provoz.",
+    "value": 0
+  },
+  {
+    "question": "Jaká je role firewallu?",
+    "answer": "Povolit nebo blokovat síťovou komunikaci.",
+    "value": 0
+  },
+  {
+    "question": "Co je packet filtering firewall?",
+    "answer": "Firewall filtrující pakety podle pravidel.",
+    "value": 0
+  },
+  {
+    "question": "Co je stateful firewall?",
+    "answer": "Firewall sledující stav spojení.",
+    "value": 0
+  },
+  {
+    "question": "Co je aplikační firewall?",
+    "answer": "Firewall analyzující aplikační provoz.",
+    "value": 0
+  },
+  {
+    "question": "Co je proxy server?",
+    "answer": "Server zprostředkující komunikaci klienta.",
+    "value": 0
+  },
+  {
+    "question": "K čemu slouží proxy?",
+    "answer": "Filtrování, anonymizace nebo cache komunikace.",
+    "value": 0
+  },
+  {
+    "question": "Co je VPN?",
+    "answer": "Virtual Private Network — šifrované síťové spojení.",
+    "value": 0
+  },
+  {
+    "question": "Proč se používá VPN?",
+    "answer": "Kvůli bezpečné komunikaci přes nedůvěryhodnou síť.",
+    "value": 0
+  },
+  {
+    "question": "Co je IPsec?",
+    "answer": "Soubor protokolů pro zabezpečení IP komunikace.",
+    "value": 0
+  },
+  {
+    "question": "Co je SSH?",
+    "answer": "Protokol pro bezpečný vzdálený přístup.",
+    "value": 0
+  },
+  {
+    "question": "Co je malware?",
+    "answer": "Škodlivý software.",
+    "value": 0
+  },
+  {
+    "question": "Jaké typy malware existují?",
+    "answer": "Viry, červi, trojské koně nebo ransomware.",
+    "value": 0
+  },
+  {
+    "question": "Co je virus?",
+    "answer": "Malware šířící se připojením k souborům.",
+    "value": 0
+  },
+  {
+    "question": "Co je červ?",
+    "answer": "Malware šířící se automaticky sítí.",
+    "value": 0
+  },
+  {
+    "question": "Co je ransomware?",
+    "answer": "Malware šifrující data a požadující výkupné.",
+    "value": 0
+  },
+  {
+    "question": "Co je phishing?",
+    "answer": "Podvodné získávání citlivých údajů.",
+    "value": 0
+  },
+  {
+    "question": "Co je spoofing?",
+    "answer": "Podvržení identity v síti.",
+    "value": 0
+  },
+  {
+    "question": "Co je sniffing?",
+    "answer": "Odposlech síťového provozu.",
+    "value": 0
+  },
+  {
+    "question": "Co je DoS útok?",
+    "answer": "Útok zahlcující službu požadavky.",
+    "value": 0
+  },
+  {
+    "question": "Co je DDoS útok?",
+    "answer": "Distribuovaný DoS útok z více zařízení.",
+    "value": 0
+  },
+  {
+    "question": "Co je MITM útok?",
+    "answer": "Man-In-The-Middle — útočník odposlouchává komunikaci mezi stranami.",
+    "value": 0
+  },
+  {
+    "question": "Co je ARP spoofing?",
+    "answer": "Podvržení ARP odpovědí v lokální síti.",
+    "value": 0
+  },
+  {
+    "question": "Co je DNS spoofing?",
+    "answer": "Podvržení DNS odpovědí.",
+    "value": 0
+  },
+  {
+    "question": "Co je IDS?",
+    "answer": "Intrusion Detection System — systém detekce útoků.",
+    "value": 0
+  },
+  {
+    "question": "Co je IPS?",
+    "answer": "Intrusion Prevention System — systém prevence útoků.",
+    "value": 0
+  },
+  {
+    "question": "Jaký je rozdíl mezi IDS a IPS?",
+    "answer": "IDS útok detekuje, IPS jej aktivně blokuje.",
+    "value": 0
+  },
+  {
+    "question": "Co je segmentace sítě?",
+    "answer": "Rozdělení sítě na oddělené části.",
+    "value": 0
+  },
+  {
+    "question": "Proč se používá segmentace sítě?",
+    "answer": "Kvůli bezpečnosti a omezení šíření útoků.",
+    "value": 0
+  },
+  {
+    "question": "Co je VLAN?",
+    "answer": "Virtuální oddělení sítí na switchi.",
+    "value": 0
+  },
+  {
+    "question": "Co je DMZ?",
+    "answer": "Demilitarized Zone — oddělená síť pro veřejné služby.",
+    "value": 0
+  },
+  {
+    "question": "Co je bezpečnostní politika?",
+    "answer": "Soubor pravidel pro ochranu systému a sítě.",
+    "value": 0
+  },
+  {
+    "question": "Co je principle of least privilege?",
+    "answer": "Uživatel má pouze nezbytná oprávnění.",
+    "value": 0
+  },
+  {
+    "question": "Co je vícefaktorová autentizace?",
+    "answer": "Ověření identity pomocí více faktorů.",
+    "value": 0
+  },
+  {
+    "question": "Jaké faktory používá MFA?",
+    "answer": "Například heslo, token nebo biometriku.",
+    "value": 0
+  },
+  {
+    "question": "Co je digitální certifikát?",
+    "answer": "Elektronický dokument potvrzující identitu.",
+    "value": 0
+  },
+  {
+    "question": "Co je PKI?",
+    "answer": "Public Key Infrastructure — infrastruktura veřejných klíčů.",
+    "value": 0
+  },
+  {
+    "question": "Jak souvisí PKI s TLS?",
+    "answer": "TLS používá certifikáty a veřejné klíče.",
+    "value": 0
+  },
+  {
+    "question": "Co je bezpečnost Wi-Fi?",
+    "answer": "Ochrana bezdrátové komunikace.",
+    "value": 0
+  },
+  {
+    "question": "Jaké standardy zabezpečení Wi-Fi existují?",
+    "answer": "WPA2 a WPA3.",
+    "value": 0
+  },
+  {
+    "question": "Proč je WPA3 bezpečnější než WPA2?",
+    "answer": "Používá silnější autentizaci a šifrování.",
+    "value": 0
+  },
+  {
+    "question": "Jak souvisí síťová bezpečnost s cloudem?",
+    "answer": "Cloudové služby musí chránit komunikaci a data.",
+    "value": 0
+  },
+  {
+    "question": "Jak souvisí síťová bezpečnost s AI?",
+    "answer": "AI se používá pro detekci útoků a anomálií.",
+    "value": 0
+  },
+  {
+    "question": "Jak souvisí síťová bezpečnost s DevOps?",
+    "answer": "Bezpečnost je součást automatizovaného nasazování systémů.",
+    "value": 0
+  },
+  {
+    "question": "Jaký je hlavní princip síťové bezpečnosti?",
+    "answer": "Ochrana komunikace, systémů a dat před útoky.",
+    "value": 0
+  },
+  {
+    "question": "Jaký je hlavní důvod použití šifrování v sítích?",
+    "answer": "Ochrana dat před odposlechem a manipulací.",
+    "value": 0
+  },
+  {
+    "question": "Co jsou bezdrátové sítě?",
+    "answer": "Počítačové sítě využívající rádiové vlny místo kabelů.",
+    "value": 0
+  },
+  {
+    "question": "Jaký je hlavní účel bezdrátových sítí?",
+    "answer": "Umožnit mobilní komunikaci bez fyzického propojení.",
+    "value": 0
+  },
+  {
+    "question": "Co je Wi-Fi?",
+    "answer": "Technologie bezdrátové lokální sítě založená na standardu IEEE 802.11.",
+    "value": 0
+  },
+  {
+    "question": "Co je IEEE 802.11?",
+    "answer": "Rodina standardů pro bezdrátové lokální sítě.",
+    "value": 0
+  },
+  {
+    "question": "Na jaké vrstvě OSI modelu pracuje Wi-Fi?",
+    "answer": "Na fyzické a linkové vrstvě.",
+    "value": 0
+  },
+  {
+    "question": "Jaké přenosové médium používá Wi-Fi?",
+    "answer": "Rádiové elektromagnetické vlny.",
+    "value": 0
+  },
+  {
+    "question": "Jaké frekvenční pásmo používá Wi-Fi?",
+    "answer": "Například 2,4 GHz, 5 GHz nebo 6 GHz.",
+    "value": 0
+  },
+  {
+    "question": "Jaký je rozdíl mezi pásmem 2,4 GHz a 5 GHz?",
+    "answer": "2,4 GHz má větší dosah, 5 GHz vyšší rychlost.",
+    "value": 0
+  },
+  {
+    "question": "Jaký je rozdíl mezi 5 GHz a 6 GHz?",
+    "answer": "6 GHz nabízí méně rušení a více kanálů.",
+    "value": 0
+  },
+  {
+    "question": "Co je přístupový bod (Access Point)?",
+    "answer": "Zařízení poskytující bezdrátový přístup do sítě.",
+    "value": 0
+  },
+  {
+    "question": "Co je SSID?",
+    "answer": "Název bezdrátové sítě.",
+    "value": 0
+  },
+  {
+    "question": "Co je BSSID?",
+    "answer": "MAC adresa konkrétního access pointu.",
+    "value": 0
+  },
+  {
+    "question": "Jaké režimy Wi-Fi existují?",
+    "answer": "Infrastructure mode a ad-hoc mode.",
+    "value": 0
+  },
+  {
+    "question": "Co je infrastructure mode?",
+    "answer": "Režim komunikace přes access point.",
+    "value": 0
+  },
+  {
+    "question": "Co je ad-hoc mode?",
+    "answer": "Přímá komunikace zařízení bez access pointu.",
+    "value": 0
+  },
+  {
+    "question": "Jaký je rozdíl mezi infrastructure a ad-hoc režimem?",
+    "answer": "Infrastructure používá AP, ad-hoc ne.",
+    "value": 0
+  },
+  {
+    "question": "Co je mesh síť?",
+    "answer": "Síť, kde zařízení spolupracují na přeposílání komunikace.",
+    "value": 0
+  },
+  {
+    "question": "Jaká je výhoda mesh sítí?",
+    "answer": "Lepší pokrytí a redundance.",
+    "value": 0
+  },
+  {
+    "question": "Co je roaming ve Wi-Fi?",
+    "answer": "Přepínání zařízení mezi access pointy.",
+    "value": 0
+  },
+  {
+    "question": "Co je kanál ve Wi-Fi?",
+    "answer": "Frekvenční rozsah používaný pro komunikaci.",
+    "value": 0
+  },
+  {
+    "question": "Proč je důležité správné nastavení kanálů?",
+    "answer": "Kvůli omezení rušení.",
+    "value": 0
+  },
+  {
+    "question": "Co je interference?",
+    "answer": "Rušení bezdrátového signálu.",
+    "value": 0
+  },
+  {
+    "question": "Jaké zdroje rušení Wi-Fi existují?",
+    "answer": "Jiné Wi-Fi sítě, mikrovlnky nebo Bluetooth.",
+    "value": 0
+  },
+  {
+    "question": "Proč jsou bezdrátové sítě náchylnější k rušení než kabelové?",
+    "answer": "Protože používají sdílené rádiové médium.",
+    "value": 0
+  },
+  {
+    "question": "Co je útlum signálu?",
+    "answer": "Slábnutí bezdrátového signálu.",
+    "value": 0
+  },
+  {
+    "question": "Co ovlivňuje dosah Wi-Fi?",
+    "answer": "Překážky, výkon vysílače a frekvenční pásmo.",
+    "value": 0
+  },
+  {
+    "question": "Jak zdi ovlivňují Wi-Fi signál?",
+    "answer": "Tlumi a odrážejí rádiové vlny.",
+    "value": 0
+  },
+  {
+    "question": "Co je half duplex komunikace?",
+    "answer": "Komunikace pouze jedním směrem v daný okamžik.",
+    "value": 0
+  },
+  {
+    "question": "Proč Wi-Fi používá half duplex?",
+    "answer": "Protože zařízení sdílejí stejné médium.",
+    "value": 0
+  },
+  {
+    "question": "Co je CSMA/CA?",
+    "answer": "Mechanismus předcházení kolizím v bezdrátových sítích.",
+    "value": 0
+  },
+  {
+    "question": "Co znamená CSMA/CA?",
+    "answer": "Carrier Sense Multiple Access with Collision Avoidance.",
+    "value": 0
+  },
+  {
+    "question": "Jaký je rozdíl mezi CSMA/CD a CSMA/CA?",
+    "answer": "Ethernet detekuje kolize, Wi-Fi se jim snaží předcházet.",
+    "value": 0
+  },
+  {
+    "question": "Proč Wi-Fi nemůže snadno detekovat kolize?",
+    "answer": "Zařízení během vysílání obtížně současně poslouchá médium.",
+    "value": 0
+  },
+  {
+    "question": "Co je hidden node problém?",
+    "answer": "Zařízení se navzájem neslyší, ale ruší komunikaci.",
+    "value": 0
+  },
+  {
+    "question": "Co je exposed node problém?",
+    "answer": "Zařízení zbytečně nekomunikuje kvůli detekci jiného vysílání.",
+    "value": 0
+  },
+  {
+    "question": "Co je RTS/CTS mechanismus?",
+    "answer": "Mechanismus rezervace média před vysíláním.",
+    "value": 0
+  },
+  {
+    "question": "K čemu slouží RTS/CTS?",
+    "answer": "Omezuje kolize v bezdrátových sítích.",
+    "value": 0
+  },
+  {
+    "question": "Co je zabezpečení Wi-Fi?",
+    "answer": "Ochrana bezdrátové komunikace před neoprávněným přístupem.",
+    "value": 0
+  },
+  {
+    "question": "Jaké bezpečnostní standardy Wi-Fi existují?",
+    "answer": "WEP, WPA, WPA2 a WPA3.",
+    "value": 0
+  },
+  {
+    "question": "Proč je WEP považován za nebezpečný?",
+    "answer": "Používá slabé šifrování.",
+    "value": 0
+  },
+  {
+    "question": "Co je WPA2?",
+    "answer": "Standard zabezpečení Wi-Fi používající AES šifrování.",
+    "value": 0
+  },
+  {
+    "question": "Co je WPA3?",
+    "answer": "Modernější a bezpečnější standard Wi-Fi zabezpečení.",
+    "value": 0
+  },
+  {
+    "question": "Jaký je rozdíl mezi WPA2 a WPA3?",
+    "answer": "WPA3 používá silnější autentizaci a ochranu hesel.",
+    "value": 0
+  },
+  {
+    "question": "Co je Wi-Fi heslo?",
+    "answer": "Sdílený klíč používaný k autentizaci klientů.",
+    "value": 0
+  },
+  {
+    "question": "Co je autentizace ve Wi-Fi?",
+    "answer": "Ověření oprávnění zařízení připojit se k síti.",
+    "value": 0
+  },
+  {
+    "question": "Co je MAC filtering?",
+    "answer": "Povolení přístupu pouze vybraným MAC adresám.",
+    "value": 0
+  },
+  {
+    "question": "Proč není MAC filtering dostatečně bezpečný?",
+    "answer": "MAC adresy lze podvrhnout.",
+    "value": 0
+  },
+  {
+    "question": "Co je captive portal?",
+    "answer": "Přihlašovací stránka při připojení do sítě.",
+    "value": 0
+  },
+  {
+    "question": "Co je hotspot?",
+    "answer": "Místo poskytující veřejný Wi-Fi přístup.",
+    "value": 0
+  },
+  {
+    "question": "Jaká rizika mají veřejné Wi-Fi sítě?",
+    "answer": "Odposlech komunikace nebo MITM útoky.",
+    "value": 0
+  },
+  {
+    "question": "Proč je vhodné používat VPN na veřejné Wi-Fi?",
+    "answer": "Kvůli šifrování komunikace.",
+    "value": 0
+  },
+  {
+    "question": "Jak souvisí Wi-Fi s IoT?",
+    "answer": "Mnoho IoT zařízení komunikuje přes Wi-Fi.",
+    "value": 0
+  },
+  {
+    "question": "Jak souvisí bezdrátové sítě s mobilitou?",
+    "answer": "Umožňují pohyb zařízení bez ztráty připojení.",
+    "value": 0
+  },
+  {
+    "question": "Jak souvisí bezdrátové sítě s cloudem?",
+    "answer": "Wi-Fi poskytuje přístup ke cloudovým službám.",
+    "value": 0
+  },
+  {
+    "question": "Jak souvisí bezdrátové sítě s AI?",
+    "answer": "AI systémy využívají bezdrátovou komunikaci pro IoT a edge zařízení.",
+    "value": 0
+  },
+  {
+    "question": "Jaký je hlavní princip Wi-Fi?",
+    "answer": "Bezdrátový přenos dat pomocí rádiových vln.",
+    "value": 0
+  },
+  {
+    "question": "Jaký je hlavní problém bezdrátových sítí?",
+    "answer": "Rušení a sdílené přenosové médium.",
+    "value": 0
+  },
+  {
+    "question": "Co je Wi-Fi?",
+    "answer": "Technologie bezdrátových lokálních sítí založená na standardech IEEE 802.11.",
+    "value": 0
+  },
+  {
+    "question": "Co je IEEE 802.11?",
+    "answer": "Rodina standardů pro bezdrátové lokální sítě.",
+    "value": 0
+  },
+  {
+    "question": "Na jaké vrstvě OSI modelu pracuje Wi-Fi?",
+    "answer": "Na fyzické a linkové vrstvě.",
+    "value": 0
+  },
+  {
+    "question": "Jaké přenosové médium používá Wi-Fi?",
+    "answer": "Rádiové elektromagnetické vlny.",
+    "value": 0
+  },
+  {
+    "question": "Jaký je hlavní účel Wi-Fi?",
+    "answer": "Bezdrátový přenos dat v lokální síti.",
+    "value": 0
+  },
+  {
+    "question": "Jaké frekvenční pásmo Wi-Fi používá?",
+    "answer": "2,4 GHz, 5 GHz nebo 6 GHz.",
+    "value": 0
+  },
+  {
+    "question": "Jaký je rozdíl mezi pásmem 2,4 GHz a 5 GHz?",
+    "answer": "2,4 GHz má větší dosah, 5 GHz vyšší rychlost.",
+    "value": 0
+  },
+  {
+    "question": "Jaká je výhoda pásma 6 GHz?",
+    "answer": "Méně rušení a více dostupných kanálů.",
+    "value": 0
+  },
+  {
+    "question": "Jaké standardy Wi-Fi existují?",
+    "answer": "Například 802.11a, b, g, n, ac, ax.",
+    "value": 0
+  },
+  {
+    "question": "Co je 802.11b?",
+    "answer": "Starší Wi-Fi standard v pásmu 2,4 GHz.",
+    "value": 0
+  },
+  {
+    "question": "Co je 802.11g?",
+    "answer": "Standard kombinující vyšší rychlost a kompatibilitu s 2,4 GHz.",
+    "value": 0
+  },
+  {
+    "question": "Co je 802.11n?",
+    "answer": "Standard podporující MIMO a vyšší rychlosti.",
+    "value": 0
+  },
+  {
+    "question": "Co je 802.11ac?",
+    "answer": "Wi-Fi standard využívající hlavně pásmo 5 GHz.",
+    "value": 0
+  },
+  {
+    "question": "Co je 802.11ax?",
+    "answer": "Moderní standard Wi-Fi 6 optimalizovaný pro vysokou hustotu zařízení.",
+    "value": 0
+  },
+  {
+    "question": "Co je Wi-Fi 6?",
+    "answer": "Marketingový název standardu 802.11ax.",
+    "value": 0
+  },
+  {
+    "question": "Jaká je hlavní výhoda Wi-Fi 6?",
+    "answer": "Vyšší efektivita a výkon při více zařízeních.",
+    "value": 0
+  },
+  {
+    "question": "Co je access point?",
+    "answer": "Zařízení poskytující bezdrátový přístup do sítě.",
+    "value": 0
+  },
+  {
+    "question": "Jaká je role access pointu?",
+    "answer": "Propojuje bezdrátová zařízení s kabelovou sítí.",
+    "value": 0
+  },
+  {
+    "question": "Co je SSID?",
+    "answer": "Název Wi-Fi sítě.",
+    "value": 0
+  },
+  {
+    "question": "Co je BSSID?",
+    "answer": "MAC adresa konkrétního access pointu.",
+    "value": 0
+  },
+  {
+    "question": "Co je roaming ve Wi-Fi?",
+    "answer": "Přepínání klienta mezi access pointy.",
+    "value": 0
+  },
+  {
+    "question": "Co je mesh Wi-Fi?",
+    "answer": "Síť více spolupracujících access pointů.",
+    "value": 0
+  },
+  {
+    "question": "Jaká je výhoda mesh Wi-Fi?",
+    "answer": "Lepší pokrytí a stabilita signálu.",
+    "value": 0
+  },
+  {
+    "question": "Co je kanál ve Wi-Fi?",
+    "answer": "Frekvenční rozsah používaný pro komunikaci.",
+    "value": 0
+  },
+  {
+    "question": "Proč je důležité správné nastavení kanálů?",
+    "answer": "Kvůli omezení rušení.",
+    "value": 0
+  },
+  {
+    "question": "Co je interference?",
+    "answer": "Rušení rádiového signálu.",
+    "value": 0
+  },
+  {
+    "question": "Jaké zdroje rušení Wi-Fi existují?",
+    "answer": "Jiné Wi-Fi sítě, Bluetooth nebo mikrovlnné trouby.",
+    "value": 0
+  },
+  {
+    "question": "Co je útlum signálu?",
+    "answer": "Slábnutí rádiového signálu.",
+    "value": 0
+  },
+  {
+    "question": "Co ovlivňuje dosah Wi-Fi?",
+    "answer": "Překážky, výkon vysílače a frekvenční pásmo.",
+    "value": 0
+  },
+  {
+    "question": "Co je half duplex komunikace?",
+    "answer": "Komunikace pouze jedním směrem v daný okamžik.",
+    "value": 0
+  },
+  {
+    "question": "Proč Wi-Fi používá half duplex?",
+    "answer": "Zařízení sdílejí stejné přenosové médium.",
+    "value": 0
+  },
+  {
+    "question": "Co je CSMA/CA?",
+    "answer": "Mechanismus předcházení kolizím v bezdrátových sítích.",
+    "value": 0
+  },
+  {
+    "question": "Co znamená CSMA/CA?",
+    "answer": "Carrier Sense Multiple Access with Collision Avoidance.",
+    "value": 0
+  },
+  {
+    "question": "Jaký je rozdíl mezi CSMA/CA a CSMA/CD?",
+    "answer": "Wi-Fi kolizím předchází, Ethernet je detekuje.",
+    "value": 0
+  },
+  {
+    "question": "Co je hidden node problém?",
+    "answer": "Zařízení se neslyší navzájem, ale ruší komunikaci.",
+    "value": 0
+  },
+  {
+    "question": "Co je RTS/CTS mechanismus?",
+    "answer": "Mechanismus rezervace média před přenosem.",
+    "value": 0
+  },
+  {
+    "question": "K čemu slouží RTS/CTS?",
+    "answer": "Snižuje riziko kolizí.",
+    "value": 0
+  },
+  {
+    "question": "Co je Wi-Fi rámec?",
+    "answer": "Datová jednotka přenášená na linkové vrstvě Wi-Fi.",
+    "value": 0
+  },
+  {
+    "question": "Co obsahuje Wi-Fi rámec?",
+    "answer": "Řídicí informace, adresy a uživatelská data.",
+    "value": 0
+  },
+  {
+    "question": "Kolik adres může obsahovat Wi-Fi rámec?",
+    "answer": "Až čtyři adresy.",
+    "value": 0
+  },
+  {
+    "question": "Proč Wi-Fi rámce obsahují více adres?",
+    "answer": "Kvůli komunikaci přes access pointy.",
+    "value": 0
+  },
+  {
+    "question": "Co je management frame?",
+    "answer": "Rámec pro správu a řízení Wi-Fi komunikace.",
+    "value": 0
+  },
+  {
+    "question": "Co je control frame?",
+    "answer": "Rámec pro řízení přenosu dat.",
+    "value": 0
+  },
+  {
+    "question": "Co je data frame?",
+    "answer": "Rámec přenášející uživatelská data.",
+    "value": 0,
+    "results": {
+      "alef": {
+        "value": 6,
+        "history": [
+          6
+        ],
+        "avg": 6.0
+      }
+    }
+  },
+  {
+    "question": "Co je beacon frame?",
+    "answer": "Rámec oznamující existenci Wi-Fi sítě.",
+    "value": 0
+  },
+  {
+    "question": "Co je probe request?",
+    "answer": "Dotaz klienta na dostupné Wi-Fi sítě.",
+    "value": 0
+  },
+  {
+    "question": "Co je autentizace ve Wi-Fi?",
+    "answer": "Ověření oprávnění zařízení připojit se k síti.",
+    "value": 0
+  },
+  {
+    "question": "Co je asociace ve Wi-Fi?",
+    "answer": "Proces připojení klienta k access pointu.",
+    "value": 0
+  },
+  {
+    "question": "Jaké bezpečnostní standardy Wi-Fi existují?",
+    "answer": "WEP, WPA, WPA2 a WPA3.",
+    "value": 0
+  },
+  {
+    "question": "Proč je WEP nebezpečný?",
+    "answer": "Používá slabé šifrování.",
+    "value": 0
+  },
+  {
+    "question": "Co je WPA?",
+    "answer": "Přechodový bezpečnostní standard pro Wi-Fi.",
+    "value": 0
+  },
+  {
+    "question": "Co je WPA2?",
+    "answer": "Standard používající AES šifrování.",
+    "value": 0
+  },
+  {
+    "question": "Co je WPA3?",
+    "answer": "Moderní bezpečnostní standard s lepší ochranou hesel.",
+    "value": 0
+  },
+  {
+    "question": "Jaký je rozdíl mezi WPA2 a WPA3?",
+    "answer": "WPA3 poskytuje silnější autentizaci a bezpečnost.",
+    "value": 0
+  },
+  {
+    "question": "Co je AES?",
+    "answer": "Moderní symetrický šifrovací algoritmus.",
+    "value": 0
+  },
+  {
+    "question": "Co je Wi-Fi heslo?",
+    "answer": "Sdílený klíč používaný pro autentizaci.",
+    "value": 0
+  },
+  {
+    "question": "Co je enterprise Wi-Fi?",
+    "answer": "Wi-Fi síť používající centrální autentizaci.",
+    "value": 0
+  },
+  {
+    "question": "Co je 802.1X?",
+    "answer": "Standard autentizace v enterprise sítích.",
+    "value": 0
+  },
+  {
+    "question": "Co je RADIUS server?",
+    "answer": "Server zajišťující centrální autentizaci uživatelů.",
+    "value": 0
+  },
+  {
+    "question": "Co je MAC filtering?",
+    "answer": "Povolení přístupu jen vybraným MAC adresám.",
+    "value": 0
+  },
+  {
+    "question": "Proč není MAC filtering dostatečně bezpečný?",
+    "answer": "MAC adresy lze podvrhnout.",
+    "value": 0
+  },
+  {
+    "question": "Jaká rizika mají veřejné Wi-Fi sítě?",
+    "answer": "Odposlech komunikace nebo MITM útoky.",
+    "value": 0
+  },
+  {
+    "question": "Proč je vhodné používat VPN na veřejné Wi-Fi?",
+    "answer": "Kvůli šifrování komunikace.",
+    "value": 0
+  },
+  {
+    "question": "Jak souvisí Wi-Fi s IoT?",
+    "answer": "Mnoho IoT zařízení komunikuje přes Wi-Fi.",
+    "value": 0
+  },
+  {
+    "question": "Jak souvisí Wi-Fi s cloudem?",
+    "answer": "Wi-Fi poskytuje přístup ke cloudovým službám.",
+    "value": 0
+  },
+  {
+    "question": "Jak souvisí Wi-Fi s mobilitou?",
+    "answer": "Umožňuje bezdrátové připojení mobilních zařízení.",
+    "value": 0
+  },
+  {
+    "question": "Jak souvisí Wi-Fi s AI?",
+    "answer": "AI zařízení a edge systémy často používají Wi-Fi komunikaci.",
+    "value": 0
+  },
+  {
+    "question": "Jaký je hlavní princip Wi-Fi?",
+    "answer": "Bezdrátový přenos dat pomocí rádiových vln.",
+    "value": 0
+  },
+  {
+    "question": "Jaký je hlavní problém Wi-Fi sítí?",
+    "answer": "Rušení a sdílené přenosové médium.",
+    "value": 0
+  },
+  {
+    "question": "Co je NAT?",
+    "answer": "Mechanismus překladu síťových adres.",
+    "value": 0
+  },
+  {
+    "question": "Co znamená NAT?",
+    "answer": "Network Address Translation.",
+    "value": 0
+  },
+  {
+    "question": "Jaký je hlavní účel NAT?",
+    "answer": "Překlad privátních IP adres na veřejné.",
+    "value": 0
+  },
+  {
+    "question": "Proč NAT vznikl?",
+    "answer": "Kvůli nedostatku veřejných IPv4 adres.",
+    "value": 0
+  },
+  {
+    "question": "Kde se NAT nejčastěji používá?",
+    "answer": "Na routerech mezi lokální sítí a Internetem.",
+    "value": 0
+  },
+  {
+    "question": "Jak NAT funguje?",
+    "answer": "Router mění IP adresy a porty paketů.",
+    "value": 0
+  },
+  {
+    "question": "Co je privátní IP adresa?",
+    "answer": "IP adresa používaná uvnitř lokální sítě.",
+    "value": 0
+  },
+  {
+    "question": "Co je veřejná IP adresa?",
+    "answer": "IP adresa routovatelná na Internetu.",
+    "value": 0
+  },
+  {
+    "question": "Jak NAT souvisí s IPv4?",
+    "answer": "NAT umožňuje sdílení jedné veřejné IPv4 adresy.",
+    "value": 0
+  },
+  {
+    "question": "Jaké typy NAT existují?",
+    "answer": "Statický NAT, dynamický NAT a PAT.",
+    "value": 0
+  },
+  {
+    "question": "Co je statický NAT?",
+    "answer": "Pevné mapování jedné privátní adresy na jednu veřejnou.",
+    "value": 0
+  },
+  {
+    "question": "Kdy se používá statický NAT?",
+    "answer": "Například pro veřejně dostupné servery.",
+    "value": 0
+  },
+  {
+    "question": "Co je dynamický NAT?",
+    "answer": "Dočasné mapování adres z veřejného poolu.",
+    "value": 0
+  },
+  {
+    "question": "Co je PAT?",
+    "answer": "Port Address Translation — překlad adres i portů.",
+    "value": 0
+  },
+  {
+    "question": "Jaký je jiný název pro PAT?",
+    "answer": "NAT overload.",
+    "value": 0
+  },
+  {
+    "question": "Proč je PAT nejpoužívanější typ NAT?",
+    "answer": "Umožňuje sdílet jednu veřejnou IP více zařízením.",
+    "value": 0
+  },
+  {
+    "question": "Jak NAT rozlišuje jednotlivá spojení?",
+    "answer": "Pomocí portových čísel.",
+    "value": 0
+  },
+  {
+    "question": "Co je NAT tabulka?",
+    "answer": "Tabulka mapující privátní a veřejné adresy a porty.",
+    "value": 0
+  },
+  {
+    "question": "Na jaké vrstvě pracuje NAT?",
+    "answer": "Hlavně na síťové a transportní vrstvě.",
+    "value": 0
+  },
+  {
+    "question": "Jak NAT mění IP paket?",
+    "answer": "Přepisuje IP adresy a často i porty.",
+    "value": 0
+  },
+  {
+    "question": "Co je source NAT?",
+    "answer": "Překlad zdrojové IP adresy.",
+    "value": 0
+  },
+  {
+    "question": "Co je destination NAT?",
+    "answer": "Překlad cílové IP adresy.",
+    "value": 0
+  },
+  {
+    "question": "Co je port forwarding?",
+    "answer": "Přesměrování provozu z veřejné adresy na interní zařízení.",
+    "value": 0
+  },
+  {
+    "question": "K čemu slouží port forwarding?",
+    "answer": "Umožňuje přístup k interním serverům.",
+    "value": 0
+  },
+  {
+    "question": "Jak NAT ovlivňuje příchozí spojení?",
+    "answer": "Bez konfigurace blokuje přímý přístup z Internetu.",
+    "value": 0
+  },
+  {
+    "question": "Jaké výhody má NAT?",
+    "answer": "Úspora IPv4 adres a částečné oddělení lokální sítě.",
+    "value": 0
+  },
+  {
+    "question": "Jaké nevýhody má NAT?",
+    "answer": "Komplikuje některé protokoly a end-to-end komunikaci.",
+    "value": 0
+  },
+  {
+    "question": "Proč NAT narušuje end-to-end princip Internetu?",
+    "answer": "Zařízení za NATem nejsou přímo adresovatelná.",
+    "value": 0
+  },
+  {
+    "question": "Jak NAT komplikuje VoIP nebo online hry?",
+    "answer": "Tyto služby potřebují příchozí spojení.",
+    "value": 0
+  },
+  {
+    "question": "Co je NAT traversal?",
+    "answer": "Techniky umožňující komunikaci přes NAT.",
+    "value": 0
+  },
+  {
+    "question": "Jaké technologie se používají pro NAT traversal?",
+    "answer": "Například STUN, TURN nebo ICE.",
+    "value": 0
+  },
+  {
+    "question": "Jak NAT ovlivňuje P2P komunikaci?",
+    "answer": "Přímé spojení mezi klienty je obtížnější.",
+    "value": 0
+  },
+  {
+    "question": "Jak NAT ovlivňuje IPsec?",
+    "answer": "Přepis paketů může narušit autentizaci.",
+    "value": 0
+  },
+  {
+    "question": "Co je NAT-T?",
+    "answer": "NAT Traversal pro IPsec.",
+    "value": 0
+  },
+  {
+    "question": "Jak NAT souvisí s firewallem?",
+    "answer": "NAT často omezuje příchozí komunikaci podobně jako firewall.",
+    "value": 0
+  },
+  {
+    "question": "Je NAT bezpečnostní mechanismus?",
+    "answer": "Ne přímo, ale částečně skrývá interní síť.",
+    "value": 0
+  },
+  {
+    "question": "Proč NAT nenahrazuje firewall?",
+    "answer": "Neposkytuje plnohodnotnou filtraci provozu.",
+    "value": 0
+  },
+  {
+    "question": "Jak NAT souvisí s DHCP?",
+    "answer": "DHCP přiděluje interní IP adresy používané za NATem.",
+    "value": 0
+  },
+  {
+    "question": "Jak NAT souvisí s DNS?",
+    "answer": "DNS překládá veřejná jména na veřejné IP adresy.",
+    "value": 0
+  },
+  {
+    "question": "Jak NAT souvisí s IPv6?",
+    "answer": "IPv6 teoreticky NAT nepotřebuje díky velkému adresnímu prostoru.",
+    "value": 0
+  },
+  {
+    "question": "Používá se NAT i v IPv6?",
+    "answer": "Obvykle ne, ale existují speciální případy.",
+    "value": 0
+  },
+  {
+    "question": "Co je CGNAT?",
+    "answer": "Carrier Grade NAT používaný poskytovateli Internetu.",
+    "value": 0
+  },
+  {
+    "question": "Proč ISP používají CGNAT?",
+    "answer": "Kvůli nedostatku veřejných IPv4 adres.",
+    "value": 0
+  },
+  {
+    "question": "Jaký problém způsobuje CGNAT?",
+    "answer": "Uživatelé nemají vlastní veřejnou IP adresu.",
+    "value": 0
+  },
+  {
+    "question": "Jak NAT souvisí s cloudem?",
+    "answer": "Cloudové sítě často používají NAT gateway.",
+    "value": 0
+  },
+  {
+    "question": "Jak NAT souvisí s kontejnery a Kubernetes?",
+    "answer": "Kontejnerové sítě používají překlad adres mezi sítěmi.",
+    "value": 0
+  },
+  {
+    "question": "Jak NAT souvisí s bezpečností?",
+    "answer": "Odděluje interní síť od veřejného Internetu.",
+    "value": 0
+  },
+  {
+    "question": "Jaký je hlavní princip NAT?",
+    "answer": "Přepis IP adres během průchodu routerem.",
+    "value": 0
+  },
+  {
+    "question": "Jaký je hlavní důvod použití NAT?",
+    "answer": "Úspora veřejných IPv4 adres.",
+    "value": 0
+  },
+  {
+    "question": "Co je IPv6?",
+    "answer": "Moderní verze Internet Protocolu používající 128bitové adresy.",
+    "value": 0
+  },
+  {
+    "question": "Proč vzniklo IPv6?",
+    "answer": "Kvůli nedostatku IPv4 adres.",
+    "value": 0
+  },
+  {
+    "question": "Jaký je hlavní účel IPv6?",
+    "answer": "Adresace a směrování zařízení v Internetu.",
+    "value": 0
+  },
+  {
+    "question": "Jaký je hlavní rozdíl mezi IPv4 a IPv6?",
+    "answer": "IPv6 používá delší adresy a větší adresní prostor.",
+    "value": 0
+  },
+  {
+    "question": "Jak dlouhá je IPv6 adresa?",
+    "answer": "128 bitů.",
+    "value": 0
+  },
+  {
+    "question": "Kolik adres nabízí IPv6?",
+    "answer": "Přibližně 3,4 × 10^38 adres.",
+    "value": 0
+  },
+  {
+    "question": "Jak se zapisuje IPv6 adresa?",
+    "answer": "Hexadecimálně po skupinách oddělených dvojtečkami.",
+    "value": 0
+  },
+  {
+    "question": "Jaký je příklad IPv6 adresy?",
+    "answer": "2001:0db8:85a3::8a2e:0370:7334.",
+    "value": 0
+  },
+  {
+    "question": "Jak lze zkrátit IPv6 adresu?",
+    "answer": "Vynecháním úvodních nul a sekvence nul pomocí ::.",
+    "value": 0
+  },
+  {
+    "question": "Kolikrát lze použít :: v jedné IPv6 adrese?",
+    "answer": "Pouze jednou.",
+    "value": 0
+  },
+  {
+    "question": "Proč IPv6 používá hexadecimální zápis?",
+    "answer": "Kvůli kompaktnějšímu zápisu dlouhých adres.",
+    "value": 0
+  },
+  {
+    "question": "Co je IPv6 paket?",
+    "answer": "Datová jednotka přenášená IPv6 protokolem.",
+    "value": 0
+  },
+  {
+    "question": "Co obsahuje IPv6 paket?",
+    "answer": "Hlavičku a uživatelská data.",
+    "value": 0
+  },
+  {
+    "question": "Jaký je rozdíl mezi IPv4 a IPv6 hlavičkou?",
+    "answer": "IPv6 hlavička je jednodušší a pevně dlouhá.",
+    "value": 0
+  },
+  {
+    "question": "Jak dlouhá je IPv6 hlavička?",
+    "answer": "40 bytů.",
+    "value": 0
+  },
+  {
+    "question": "Proč je IPv6 hlavička jednodušší?",
+    "answer": "Kvůli efektivnějšímu směrování.",
+    "value": 0
+  },
+  {
+    "question": "Obsahuje IPv6 checksum v hlavičce?",
+    "answer": "Ne.",
+    "value": 0
+  },
+  {
+    "question": "Proč IPv6 neobsahuje checksum v hlavičce?",
+    "answer": "Kvůli zrychlení zpracování paketů.",
+    "value": 0
+  },
+  {
+    "question": "Co je Hop Limit v IPv6?",
+    "answer": "Pole určující maximální počet průchodů routery.",
+    "value": 0
+  },
+  {
+    "question": "Jaký je ekvivalent Hop Limit v IPv4?",
+    "answer": "TTL.",
+    "value": 0
+  },
+  {
+    "question": "Co jsou extension headers v IPv6?",
+    "answer": "Rozšiřující hlavičky pro speciální funkce.",
+    "value": 0
+  },
+  {
+    "question": "Jak IPv6 řeší fragmentaci?",
+    "answer": "Fragmentaci provádí pouze odesílatel.",
+    "value": 0
+  },
+  {
+    "question": "Proč routery v IPv6 nefragmentují pakety?",
+    "answer": "Kvůli vyšší efektivitě směrování.",
+    "value": 0
+  },
+  {
+    "question": "Co je MTU v IPv6?",
+    "answer": "Maximální velikost přenášeného paketu.",
+    "value": 0
+  },
+  {
+    "question": "Co je unicast adresa?",
+    "answer": "Adresa jednoho konkrétního zařízení.",
+    "value": 0
+  },
+  {
+    "question": "Co je multicast adresa?",
+    "answer": "Adresa skupiny zařízení.",
+    "value": 0
+  },
+  {
+    "question": "Používá IPv6 broadcast?",
+    "answer": "Ne.",
+    "value": 0
+  },
+  {
+    "question": "Čím IPv6 nahrazuje broadcast?",
+    "answer": "Multicastem.",
+    "value": 0
+  },
+  {
+    "question": "Co je anycast adresa?",
+    "answer": "Adresa sdílená více zařízeními, doručená nejbližšímu.",
+    "value": 0
+  },
+  {
+    "question": "Co je link-local adresa?",
+    "answer": "Adresa použitelná pouze v lokální síti.",
+    "value": 0
+  },
+  {
+    "question": "Jaký prefix mají link-local adresy?",
+    "answer": "FE80::/10.",
+    "value": 0
+  },
+  {
+    "question": "Co je globální unicast adresa?",
+    "answer": "Veřejně routovatelná IPv6 adresa.",
+    "value": 0
+  },
+  {
+    "question": "Jaký prefix mají globální IPv6 adresy?",
+    "answer": "Typicky 2000::/3.",
+    "value": 0
+  },
+  {
+    "question": "Co je loopback IPv6 adresa?",
+    "answer": "::1.",
+    "value": 0
+  },
+  {
+    "question": "K čemu slouží loopback adresa?",
+    "answer": "Komunikace zařízení samo se sebou.",
+    "value": 0
+  },
+  {
+    "question": "Co je IPv6 prefix?",
+    "answer": "Síťová část IPv6 adresy.",
+    "value": 0
+  },
+  {
+    "question": "Co znamená zápis /64 v IPv6?",
+    "answer": "64 bitů je určeno pro síťovou část.",
+    "value": 0
+  },
+  {
+    "question": "Proč je /64 běžný prefix v IPv6?",
+    "answer": "Kvůli standardní velikosti podsítě.",
+    "value": 0
+  },
+  {
+    "question": "Co je SLAAC?",
+    "answer": "Stateless Address Autoconfiguration.",
+    "value": 0
+  },
+  {
+    "question": "Jak funguje SLAAC?",
+    "answer": "Zařízení si automaticky vytvoří IPv6 adresu.",
+    "value": 0
+  },
+  {
+    "question": "Jak IPv6 usnadňuje automatickou konfiguraci?",
+    "answer": "Podporuje SLAAC a Neighbor Discovery.",
+    "value": 0
+  },
+  {
+    "question": "Co je Neighbor Discovery Protocol?",
+    "answer": "IPv6 mechanismus nahrazující ARP.",
+    "value": 0
+  },
+  {
+    "question": "Jaký je rozdíl mezi ARP a Neighbor Discovery?",
+    "answer": "Neighbor Discovery používá ICMPv6.",
+    "value": 0
+  },
+  {
+    "question": "Co je ICMPv6?",
+    "answer": "Řídicí a diagnostický protokol IPv6.",
+    "value": 0
+  },
+  {
+    "question": "Jak IPv6 podporuje bezpečnost?",
+    "answer": "Podporuje IPsec jako standardní součást.",
+    "value": 0
+  },
+  {
+    "question": "Proč IPv6 omezuje potřebu NAT?",
+    "answer": "Má dostatek veřejných adres.",
+    "value": 0
+  },
+  {
+    "question": "Jaký je vztah mezi IPv6 a NAT?",
+    "answer": "IPv6 NAT obvykle nepotřebuje.",
+    "value": 0
+  },
+  {
+    "question": "Jak IPv6 zlepšuje směrování?",
+    "answer": "Jednodušší hlavičkou a hierarchickou adresací.",
+    "value": 0
+  },
+  {
+    "question": "Jak souvisí IPv6 s IoT?",
+    "answer": "IPv6 umožňuje adresovat obrovské množství zařízení.",
+    "value": 0
+  },
+  {
+    "question": "Jak souvisí IPv6 s cloudem?",
+    "answer": "Cloudové infrastruktury stále více podporují IPv6.",
+    "value": 0
+  },
+  {
+    "question": "Jak souvisí IPv6 s mobilními sítěmi?",
+    "answer": "Mobilní operátoři často používají IPv6 nativně.",
+    "value": 0
+  },
+  {
+    "question": "Jak souvisí IPv6 s bezpečností?",
+    "answer": "IPv6 mění způsob filtrování a monitoringu provozu.",
+    "value": 0
+  },
+  {
+    "question": "Jak souvisí IPv6 s AI infrastrukturou?",
+    "answer": "Velké distribuované systémy využívají rozsáhlou adresaci IPv6.",
+    "value": 0
+  },
+  {
+    "question": "Jaký je hlavní princip IPv6?",
+    "answer": "Globální adresace a efektivní směrování v Internetu.",
+    "value": 0
+  },
+  {
+    "question": "Jaký je hlavní důvod přechodu na IPv6?",
+    "answer": "Nedostatek IPv4 adres a růst Internetu.",
+    "value": 0
+  }
+]
