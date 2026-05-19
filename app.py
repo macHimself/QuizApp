@@ -35,7 +35,7 @@ def get_question_file(topic):
     return os.path.join(DATA_DIR, f"questions_{topic}.json")
 
 
-def load_questions(topic):
+def load_questions(topic, username=None):
     with get_db() as db:
         question_rows = db.execute("""
             SELECT id, question, answer, position
@@ -45,38 +45,44 @@ def load_questions(topic):
         """, (topic,)).fetchall()
 
         question_ids = [row["id"] for row in question_rows]
-
         results_by_question = {}
 
         if question_ids:
             placeholders = ",".join("?" * len(question_ids))
 
-            result_rows = db.execute(f"""
-                SELECT question_id, username, value, avg, history_json
-                FROM results
-                WHERE question_id IN ({placeholders})
-            """, question_ids).fetchall()
+            if username:
+                result_rows = db.execute(f"""
+                    SELECT question_id, username, value, avg, history_json
+                    FROM results
+                    WHERE question_id IN ({placeholders})
+                    AND username = ?
+                """, (*question_ids, username)).fetchall()
+            else:
+                result_rows = db.execute(f"""
+                    SELECT question_id, username, value, avg, history_json
+                    FROM results
+                    WHERE question_id IN ({placeholders})
+                """, question_ids).fetchall()
 
             for r in result_rows:
                 results_by_question.setdefault(r["question_id"], {})
                 results_by_question[r["question_id"]][r["username"]] = {
                     "value": r["value"],
                     "avg": r["avg"],
-                    "history": json.loads(r["history_json"])
+                    # "history": json.loads(r["history_json"] or "[]")
+                    "history": []
                 }
 
-        questions = []
-
-        for row in question_rows:
-            questions.append({
+        return [
+            {
                 "id": row["id"],
                 "question": row["question"],
                 "answer": row["answer"],
                 "value": 0,
                 "results": results_by_question.get(row["id"], {})
-            })
-
-    return questions
+            }
+            for row in question_rows
+        ]
 
 
 def save_questions(topic, questions):
@@ -362,7 +368,7 @@ def can_edit_topic(topic_name):
 def get_user_result(question, username):
     return question.get("results", {}).get(username, {
         "value": 0,
-        "history": [],
+        # "history": [],
         "avg": 0
     })
 
@@ -378,8 +384,13 @@ def set_user_result(question, username, rating):
     })
 
     result["value"] = rating
-    result.setdefault("history", []).append(rating)
-    result["avg"] = round(sum(result["history"]) / len(result["history"]), 2)
+    # result.setdefault("history", []).append(rating)
+    # result["avg"] = round(sum(result["history"]) / len(result["history"]), 2)
+    history = result.get("history", [])
+    history.append(rating)
+
+    result["history"] = history
+    result["avg"] = round(sum(history) / len(history), 2)
 
     question["results"][username] = result
     return result
@@ -753,37 +764,75 @@ def home():
     ensure_data_dir()
     username = current_user()
 
-    topics = load_topics()
+    with get_db() as db:
+        rows = db.execute("""
+            SELECT
+                t.name,
+                t.owner,
+                COUNT(q.id) AS total,
+                SUM(CASE WHEN r.value = 10 THEN 1 ELSE 0 END) AS done,
+                AVG(CASE WHEN r.value BETWEEN 0 AND 10 THEN r.value ELSE NULL END) AS average
+            FROM topics t
+            LEFT JOIN questions q
+                ON q.topic = t.name
+            LEFT JOIN results r
+                ON r.question_id = q.id
+               AND r.username = ?
+            GROUP BY t.name, t.owner
+            ORDER BY t.name
+        """, (username,)).fetchall()
+
     topic_summaries = []
 
-    for topic_item in topics:
-        topic = topic_item["name"]
-        questions = load_questions(topic)
-        total = len(questions)
-
-        done = sum(
-            1 for q in questions
-            if get_user_result(q, username).get("value", 0) == 10
-        )
-
-        answered_values = [
-            get_user_result(q, username).get("value", 0)
-            for q in questions
-            if 0 <= get_user_result(q, username).get("value", -1) <= 10
-        ]
-
-        average = round(sum(answered_values) / len(answered_values), 2) if answered_values else None
-
+    for row in rows:
         topic_summaries.append({
-            "name": topic,
-            "owner": topic_item.get("owner"),
-            "can_edit": current_role() == "admin" or topic_item.get("owner") == username,
-            "total": total,
-            "done": done,
-            "average": average
+            "name": row["name"],
+            "owner": row["owner"],
+            "can_edit": current_role() == "admin" or row["owner"] == username,
+            "total": row["total"] or 0,
+            "done": row["done"] or 0,
+            "average": round(row["average"], 2) if row["average"] is not None else None
         })
 
     return render_template("main.html", topics=topic_summaries)
+# @app.route("/")
+# @login_required
+# def home():
+#     ensure_data_dir()
+#     username = current_user()
+
+#     topics = load_topics()
+#     topic_summaries = []
+
+#     for topic_item in topics:
+#         topic = topic_item["name"]
+#         # questions = load_questions(topic)
+#         questions = load_questions(topic, username=username)
+#         total = len(questions)
+
+#         done = sum(
+#             1 for q in questions
+#             if get_user_result(q, username).get("value", 0) == 10
+#         )
+
+#         answered_values = [
+#             get_user_result(q, username).get("value", 0)
+#             for q in questions
+#             if 0 <= get_user_result(q, username).get("value", -1) <= 10
+#         ]
+
+#         average = round(sum(answered_values) / len(answered_values), 2) if answered_values else None
+
+#         topic_summaries.append({
+#             "name": topic,
+#             "owner": topic_item.get("owner"),
+#             "can_edit": current_role() == "admin" or topic_item.get("owner") == username,
+#             "total": total,
+#             "done": done,
+#             "average": average
+#         })
+
+#     return render_template("main.html", topics=topic_summaries)
 
 
 @app.route("/create_topic", methods=["POST"])
@@ -816,8 +865,10 @@ def create_topic():
 @app.route("/quiz/<topic>", methods=["GET", "POST"])
 @login_required
 def quiz(topic):
-    questions = load_questions(topic)
     username = current_user()
+    questions = load_questions(topic, username=username)
+    #questions = load_questions(topic)
+    #username = current_user()
 
     if request.method == "POST":
         idx = int(request.form["index"])
