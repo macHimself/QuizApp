@@ -776,6 +776,7 @@ def admin_reset_user_stats():
 def home():
     ensure_data_dir()
     username = current_user()
+    role = current_role()
 
     with get_db() as db:
         rows = db.execute("""
@@ -795,19 +796,80 @@ def home():
             ORDER BY t.name
         """, (username,)).fetchall()
 
-    topic_summaries = []
+        topic_summaries = []
 
-    for row in rows:
-        topic_summaries.append({
-            "name": row["name"],
-            "owner": row["owner"],
-            "can_edit": current_role() == "admin" or row["owner"] == username,
-            "total": row["total"] or 0,
-            "done": row["done"] or 0,
-            "average": round(row["average"], 2) if row["average"] is not None else None
-        })
+        for row in rows:
+            progress_rows = db.execute("""
+                SELECT
+                    q.position,
+                    COALESCE(r.value, 0) AS value
+                FROM questions q
+                LEFT JOIN results r
+                    ON r.question_id = q.id
+                   AND r.username = ?
+                WHERE q.topic = ?
+                ORDER BY q.position
+            """, (username, row["name"])).fetchall()
+
+            topic_summaries.append({
+                "name": row["name"],
+                "owner": row["owner"],
+                "can_edit": role == "admin" or row["owner"] == username,
+                "total": row["total"] or 0,
+                "done": row["done"] or 0,
+                "average": round(row["average"], 2) if row["average"] is not None else None,
+                "progress": [
+                    {
+                        "index": p["position"],
+                        "value": p["value"],
+                        "color": color_for_value(p["value"])
+                    }
+                    for p in progress_rows
+                ]
+            })
 
     return render_template("main.html", topics=topic_summaries)
+
+# @app.route("/")
+# @login_required
+# def home():
+#     ensure_data_dir()
+#     username = current_user()
+
+#     with get_db() as db:
+#         rows = db.execute("""
+#             SELECT
+#                 t.name,
+#                 t.owner,
+#                 COUNT(q.id) AS total,
+#                 SUM(CASE WHEN r.value = 10 THEN 1 ELSE 0 END) AS done,
+#                 AVG(CASE WHEN r.value BETWEEN 0 AND 10 THEN r.value ELSE NULL END) AS average
+#             FROM topics t
+#             LEFT JOIN questions q
+#                 ON q.topic = t.name
+#             LEFT JOIN results r
+#                 ON r.question_id = q.id
+#                AND r.username = ?
+#             GROUP BY t.name, t.owner
+#             ORDER BY t.name
+#         """, (username,)).fetchall()
+
+#     topic_summaries = []
+
+#     for row in rows:
+#         topic_summaries.append({
+#             "name": row["name"],
+#             "owner": row["owner"],
+#             "can_edit": current_role() == "admin" or row["owner"] == username,
+#             "total": row["total"] or 0,
+#             "done": row["done"] or 0,
+#             "average": round(row["average"], 2) if row["average"] is not None else None
+#         })
+
+#     return render_template("main.html", topics=topic_summaries)
+
+
+
 # @app.route("/")
 # @login_required
 # def home():
@@ -937,10 +999,12 @@ def api_quiz_answer(topic):
     random_mode = session.get("random_mode", True)
     session[f"last_index_{topic}"] = idx
 
+    questions = load_questions(topic, username=username)
+
     if random_mode:
-        next_idx = weighted_choice(load_questions(topic, username=username), username)
+        next_idx = weighted_choice(questions, username)
     else:
-        next_idx = sequential_choice(load_questions(topic, username=username), username, start_after=idx)
+        next_idx = sequential_choice(questions, username, start_after=idx)
 
     if next_idx is None:
         return jsonify({
@@ -948,15 +1012,44 @@ def api_quiz_answer(topic):
             "redirect": url_for("home")
         })
 
-    next_question = load_questions(topic, username=username)[next_idx]
+    next_question = questions[next_idx]
     next_result = get_user_result(next_question, username)
+
+    completed = sum(
+        1 for q in questions
+        if get_user_result(q, username).get("value", 0) == 10
+    )
+
+    excluded_count = sum(
+        1 for q in questions
+        if get_user_result(q, username).get("value", 0) == -1
+    )
+
+    pending_count = sum(
+        1 for q in questions
+        if get_user_result(q, username).get("value", 0) == 0
+    )
+
+    answered_values = [
+        get_user_result(q, username).get("value", 0)
+        for q in questions
+        if 0 <= get_user_result(q, username).get("value", -1) <= 10
+    ]
+
+    avg_score = round(sum(answered_values) / len(answered_values), 2) if answered_values else None
 
     return jsonify({
         "done_all": False,
         "next_index": next_idx,
         "question": next_question["question"],
         "answer": next_question["answer"],
-        "previous_rating": next_result.get("value") if next_result.get("value", 0) > 0 else None,
+        "previous_rating": next_result.get("value") if next_result.get("value", 0) != 0 else None,
+
+        "done": completed,
+        "excluded_count": excluded_count,
+        "pending_count": pending_count,
+        "avg_score": avg_score,
+
         "updated_cell": {
             "index": idx,
             "value": rating,
@@ -1144,7 +1237,7 @@ def quiz(topic):
         # })
 
     current_result = get_user_result(q, username)
-    previous_rating = current_result.get("value", 0) if current_result.get("value", 0) > 0 else None
+    previous_rating = current_result.get("value", 0) if current_result.get("value", 0) != 0 else None
 
     return render_template(
         "index.html",
@@ -1596,3 +1689,4 @@ if __name__ == "__main__":
 
 # kill 54274
 # nohup /opt/homebrew/bin/python3 -m gunicorn -w 2 --threads 8 -k gthread -b 0.0.0.0:5050 app:app > gunicorn.log 2>&1 &
+# pkill -f gunicorn

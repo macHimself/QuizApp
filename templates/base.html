@@ -1,474 +1,316 @@
-{% extends "base.html" %}
+<!doctype html>
+<html lang="cs">
+<head>
+    <meta charset="utf-8">
+    <title>{% block title %}Otázky a odpovědi{% endblock %}</title>
+<style>
+    body {
+        font-family: system-ui, sans-serif;
+        background-color: #f8f9fa;
+        margin: 0;
+        padding: 2em;
+        display: flex;
+        justify-content: center;
+    }
 
-{% block content %}
+    .container {
+        background: white;
+        padding: 2em;
+        border-radius: 12px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        max-width: 700px;
+        width: 100%;
+        text-align: center;
+    }
 
-  <h2 class="question">Otázka:</h2>
-  <p id="question-text">{{ question }}</p>
+    h2 {
+        margin-top: 0;
+    }
 
-  <p id="countdown" style="display: none;"></p>
+    .question {
+        font-size: 1.3em;
+        margin: 1em 0 0.5em;
+    }
 
-  {% if answer %}
-    <div id="reveal-button">
-      <button onclick="revealAnswer()">Zobrazit odpověď</button>
-    </div>
+    .answer {
+        font-weight: normal;
+        background: #e6ffe6;
+        padding: 1em;
+        border-radius: 8px;
+        color: #333;
+        margin-bottom: 1em;
+    }
 
-    <div id="answer-block" style="display: none;">
-      <h3 style="color: green;">Odpověď:</h3>
-      <div id="answer-text" class="answer">{{ answer }}</div>
-    </div>
-  {% endif %}
+    .score-buttons {
+        margin: 1em 0;
+        display: flex;
+        justify-content: center;
+        gap: 0.5em;
+        flex-wrap: wrap;
+    }
 
-  <div>
-    {% if previous_rating %}
-      <p class="text-muted">
-        Minule jsi svou znalost ohodnotil:
-        <strong>{{ previous_rating }}/10</strong>
-      </p>
-    {% endif %}
+    .score-buttons button {
+        width: 48px;
+        height: 48px;
+        font-size: 1.1em;
+        border: none;
+        border-radius: 8px;
+        background: #eee;
+        cursor: pointer;
+        transition: background 0.2s ease;
+    }
 
-    <label for="rating">Jak se ohodnotíš: Vyber číslo:</label>
+    .score-buttons button:hover {
+        background: #ccc;
+    }
 
-    <form id="rating-form" method="post">
-      <input type="hidden" name="index" value="{{ index }}">
+    .actions a {
+        margin: 0 0.5em;
+        display: inline-block;
+        text-decoration: none;
+        color: #007bff;
+    }
 
-      <div class="score-buttons">
-        <button name="rating" value="-1" style="background:#f8d7da; color:#721c24;">-1</button>
+    .actions a:hover {
+        text-decoration: underline;
+    }
 
-        {% for i in range(11) %}
-          <button name="rating" value="{{ i }}">{{ i }}</button>
-        {% endfor %}
+    .footer {
+        margin-top: 2em;
+        font-size: 0.9em;
+    }
+
+    .answer-textarea {
+        width: 100%;
+        min-width: 300px;
+        max-width: 900px;
+
+        min-height: 120px;
+        max-height: 240px;
+
+        resize: vertical;
+        padding: 0.5em;
+        font-family: inherit;
+        font-size: 0.95rem;
+        line-height: 1.4;
+    }
+
+    .progress-wrapper {
+        margin-top: 1.2em;
+    }
+
+    .progress-bar {
+        display: flex;
+        width: 100%;
+        height: 28px;
+        border-radius: 14px;
+        overflow: hidden;
+        background: #e9ecef;
+        box-shadow: inset 0 1px 3px rgba(0,0,0,0.15);
+    }
+
+    .progress-segment {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.75rem;
+        font-weight: 600;
+        color: rgba(0,0,0,0.7);
+        border-right: 1px solid rgba(255,255,255,0.5);
+        transition: opacity 0.2s ease;
+    }
+
+    .progress-segment:last-child {
+        border-right: none;
+    }
+
+    .progress-segment:hover {
+        opacity: 0.85;
+    }
+
+    .question-progress-bar {
+        display: flex;
+        width: 100%;
+        height: 30px;
+        border-radius: 14px;
+        overflow: visible;
+        background: #e9ecef;
+        margin-top: 0.5em;
+        position: relative;
+    }
+
+    .question-progress-segment {
+        flex: 1;
+        min-width: 2px;
+        height: 30px;
+        position: relative;
+        border-right: 1px solid rgba(255,255,255,0.45);
+    }
+
+    .question-progress-segment:last-child {
+        border-right: none;
+    }
+
+    .question-progress-segment.current-question::after {
+        content: "";
+        position: absolute;
+        top: -13px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 11px;
+        height: 11px;
+        border-radius: 50%;
+        background: #111;
+        border: 2px solid white;
+        box-shadow: 0 0 4px rgba(0,0,0,0.35);
+        z-index: 10;
+    }
+
+    .mode-toolbar {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        margin: 16px 0;
+        flex-wrap: wrap;
+    }
+
+.mode-button {
+    border: none;
+    border-radius: 8px;
+    padding: 6px 14px;
+    font-size: 0.55rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+    .mode-button:hover {
+        opacity: 0.92;
+    }
+
+.mode-on {
+    background: #d4edda;
+    color: #155724;
+}
+
+.mode-off {
+    background: #e9ecef;
+    color: #333;
+}
+.question-map-wrapper {
+    margin: 0.8em auto 1.4em;
+    max-height: 170px;
+    overflow-y: auto;
+    padding: 10px 0;
+}
+
+.question-progress-grid {
+    display: grid;
+    grid-template-columns: repeat(40, 5px);
+    gap: 2px;
+    justify-content: center;
+    width: fit-content;
+    margin: 0 auto;
+    background: transparent;
+}
+
+.question-progress-cell {
+    width: 5px;
+    height: 8px;
+    border-radius: 0;
+    position: relative;
+}
+
+.question-progress-cell.current-question::after {
+    content: "";
+    position: absolute;
+    top: -2px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    background: #e00b0b;
+    border: 1px solid rgb(205, 15, 15);
+    box-shadow: 0 0 3px rgba(165, 13, 23, 0.45);
+    z-index: 5;
+}
+
+.question-progress-cell {
+    display: block;
+    width: 5px;
+    height: 8px;
+    border-radius: 0;
+    position: relative;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.question-progress-cell:hover {
+
+    transform: scale(1.3);
+    z-index: 10;
+
+}
+
+.topic-mini-map {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(10px, 1fr));
+    gap: 2px;
+    margin-top: 10px;
+    width: 100%;
+}
+
+.mini-cell {
+    width: 100%;
+    aspect-ratio: 1;
+    border-radius: 2px;
+    display: block;
+    transition: transform 0.1s ease;
+}
+
+.mini-cell:hover {
+    transform: scale(1.4);
+}
+
+</style>
+    <script>
+      function showAnswer() {
+        document.getElementById("answer-block").style.display = "block";
+        document.getElementById("reveal-button").style.display = "none";
+      }
+    </script>
+    {% block head %}{% endblock %}
+</head>
+<body>
+    <div class="container">
+      <div class="actions">
+        <!--
+        <form method="post" action="{{ url_for('reset') }}" style="display:inline;">
+          <button type="submit">Reset všeho</button>
+        </form>
+        -->
+        <a href="{{ url_for('home') }}">Okruhy</a>
+        <a href="/stats">Statistiky</a>
+        <a href="/add">Přidat nové otázky</a>
       </div>
-    </form>
-  </div>
-<div class="mode-toolbar">
-
-  <button id="timer-toggle-button"
-          type="button"
-          class="mode-button mode-off">
-      TimeTrial: OFF
-  </button>
-
-<form id="random-mode-form"
-      method="post"
-      action="{{ url_for('toggle_random_mode', topic=topic) }}"
-      style="margin:0;">
-
-    <input type="hidden" name="current_index" value="{{ index }}">
-
-    <button type="submit"
-            class="mode-button {% if random_mode %}mode-on{% else %}mode-off{% endif %}">
-      🎲 Náhodný:
-      {% if random_mode %}
-        ON
-      {% else %}
-        OFF
-      {% endif %}
-    </button>
-
-  </form>
-
-</div>
-
-  <div class="footer">
-    <p>Celkem otázek: <strong>{{ total }}</strong></p>
-    <p>Dokončeno (hodnoceno 10): <strong>{{ done }}</strong></p>
-
-    <p>Průměrné skóre:
-      {% if avg_score is not none %}
-        <strong>{{ avg_score }}</strong>
-      {% else %}
-        <em>zatím žádné odpovědi</em>
-      {% endif %}
-    </p>
-
-    <p style="color: {% if pending_count > 0 %}#d9534f{% else %}#28a745{% endif %};">
-      Nezodpovězené: <strong>{{ pending_count }}</strong>
-    </p>
-
-    <p>Vyřazené otázky (hodnoceno -1): {{ excluded_count }}</p>
-
-    <div class="progress-wrapper">
-      <div class="progress-bar">
-        {% for segment in progress_segments %}
-          <div
-            class="progress-segment"
-            style="width: {{ segment.width }}%; background: {{ segment.color }};"
-            title="Hodnota {{ segment.value }}: {{ segment.count }} otázek"
-          >
-            {% if segment.width > 6 %}
-              <span>{{ segment.value }}</span>
-            {% endif %}
+  
+      {% with messages = get_flashed_messages() %}
+        {% if messages %}
+          <div style="background: #d4edda; color: #155724; padding: 1em; margin: 1em 0; border: 1px solid #c3e6cb; border-radius: 8px;">
+            {% for message in messages %}
+              <div>{{ message }}</div>
+            {% endfor %}
           </div>
-        {% endfor %}
-      </div>
+        {% endif %}
+      {% endwith %}
+  
+      {% block content %}{% endblock %}
+  
+      <footer class="footer">
+          <p><small>© {{ now.year }} macHimself</small></p>
+      </footer>
     </div>
-<p><small>Mapa otázek podle pořadí:</small></p>
-
-<div class="question-map-wrapper">
-  <div class="question-progress-grid">
-    {% for item in question_progress %}
-      <a
-        data-index="{{ item.index - 1 }}"
-        href="{{ url_for('quiz', topic=topic, index=item.index - 1) }}"
-        class="question-progress-cell {% if item.index - 1 == index %}current-question{% endif %}"
-        style="background: {{ item.color }};"
-        title="Otázka {{ item.index }}: hodnota {{ item.value }} — {{ item.question }}"
-      ></a>
-    {% endfor %}
-  </div>
-</div>
-    <p><small>Klávesy: 'space' = odpověď, 'c' = časovač, '0'–'9' = skóre, '=' = 10, '-'' = vyřadit</small></p>
-  </div>
-
-<script>
-  const PREVIOUS_RATING = {{ previous_rating|default(1, true)|tojson }};
-
-  let timerRunning = false;
-  let countdownInterval = null;
-
-  let secondsLeft = 10;
-  let submitSecondsLeft = 15;
-  let answerVisible = false;
-
-  let timerEnabled = localStorage.getItem("timerEnabled") === "true";
-
-function revealAnswer() {
-    const answerBlock = document.getElementById("answer-block");
-    const revealButtonWrapper = document.getElementById("reveal-button");
-
-    if (!answerBlock) {
-        return;
-    }
-
-    // odpověď JE vidět → schovej ji
-    if (answerVisible) {
-        answerBlock.style.display = "none";
-
-        if (revealButtonWrapper) {
-            revealButtonWrapper.style.display = "block";
-        }
-
-        answerVisible = false;
-
-        clearInterval(countdownInterval);
-
-        const countdown = document.getElementById("countdown");
-        if (countdown && timerEnabled) {
-            countdown.textContent = "Odpověď skryta";
-        }
-
-        return;
-    }
-
-    // odpověď NENÍ vidět → ukaž ji
-    answerBlock.style.display = "block";
-
-    if (revealButtonWrapper) {
-        revealButtonWrapper.style.display = "none";
-    }
-
-    answerVisible = true;
-
-    if (timerEnabled) {
-        startSubmitTimer();
-    }
-}
-
-  function submitAutoRating() {
-      let rating = PREVIOUS_RATING;
-
-      if (rating === null || rating === undefined || rating === false) {
-          rating = 1;
-      }
-
-      document.querySelector(
-          `.score-buttons button[name="rating"][value="${rating}"]`
-      )?.click();
-  }
-
-  function startSubmitTimer() {
-      clearInterval(countdownInterval);
-
-      timerRunning = true;
-      submitSecondsLeft = 15;
-
-      const countdown = document.getElementById("countdown");
-
-      if (countdown) {
-          countdown.style.display = "block";
-          countdown.textContent = `Automatické hodnocení za ${submitSecondsLeft} s`;
-      }
-
-      countdownInterval = setInterval(() => {
-          submitSecondsLeft--;
-
-          if (countdown) {
-              countdown.textContent = `Automatické hodnocení za ${submitSecondsLeft} s`;
-          }
-
-          if (submitSecondsLeft <= 0) {
-              clearInterval(countdownInterval);
-              timerRunning = false;
-              submitAutoRating();
-          }
-      }, 1000);
-  }
-
-  function resumeSubmitTimer() {
-      clearInterval(countdownInterval);
-
-      timerRunning = true;
-
-      const countdown = document.getElementById("countdown");
-
-      if (countdown) {
-          countdown.style.display = "block";
-          countdown.textContent = `Automatické hodnocení za ${submitSecondsLeft} s`;
-      }
-
-      countdownInterval = setInterval(() => {
-          submitSecondsLeft--;
-
-          if (countdown) {
-              countdown.textContent = `Automatické hodnocení za ${submitSecondsLeft} s`;
-          }
-
-          if (submitSecondsLeft <= 0) {
-              clearInterval(countdownInterval);
-              timerRunning = false;
-              submitAutoRating();
-          }
-      }, 1000);
-  }
-
-  function startTimer() {
-      clearInterval(countdownInterval);
-
-      timerRunning = true;
-      secondsLeft = 10;
-
-      const countdown = document.getElementById("countdown");
-
-      if (countdown) {
-          countdown.style.display = "block";
-          countdown.textContent = `Odpověď se zobrazí za ${secondsLeft} s`;
-      }
-
-      countdownInterval = setInterval(() => {
-          secondsLeft--;
-
-          if (countdown) {
-              countdown.textContent = `Odpověď se zobrazí za ${secondsLeft} s`;
-          }
-
-          if (secondsLeft <= 0) {
-              clearInterval(countdownInterval);
-              timerRunning = false;
-              revealAnswer();
-          }
-      }, 1000);
-  }
-
-  function resumeRevealTimer() {
-      clearInterval(countdownInterval);
-
-      timerRunning = true;
-
-      const countdown = document.getElementById("countdown");
-
-      if (countdown) {
-          countdown.style.display = "block";
-          countdown.textContent = `Odpověď se zobrazí za ${secondsLeft} s`;
-      }
-
-      countdownInterval = setInterval(() => {
-          secondsLeft--;
-
-          if (countdown) {
-              countdown.textContent = `Odpověď se zobrazí za ${secondsLeft} s`;
-          }
-
-          if (secondsLeft <= 0) {
-              clearInterval(countdownInterval);
-              timerRunning = false;
-              revealAnswer();
-          }
-      }, 1000);
-  }
-
-  function stopTimer(showPaused = true) {
-      clearInterval(countdownInterval);
-      countdownInterval = null;
-      timerRunning = false;
-
-      const countdown = document.getElementById("countdown");
-
-      if (countdown && showPaused) {
-          countdown.style.display = "block";
-          countdown.textContent = "Časovač pozastaven";
-      }
-  }
-
-function updateTimerButton() {
-    const button = document.getElementById("timer-toggle-button");
-
-    if (!button) {
-        return;
-    }
-
-    button.classList.remove("mode-on", "mode-off");
-
-    if (timerEnabled) {
-        button.textContent = "TimeTrial: ON";
-        button.classList.add("mode-on");
-    } else {
-        button.textContent = "TimeTrial: OFF";
-        button.classList.add("mode-off");
-    }
-}
-
-function toggleTimer() {
-    if (timerRunning) {
-        stopTimer(true);
-
-        timerEnabled = false;
-        localStorage.setItem("timerEnabled", "false");
-
-        updateTimerButton();
-        return;
-    }
-
-    timerEnabled = true;
-    localStorage.setItem("timerEnabled", "true");
-
-    updateTimerButton();
-
-    if (answerVisible) {
-        resumeSubmitTimer();
-    } else {
-        resumeRevealTimer();
-    }
-}
-
-
-  if (timerEnabled) {
-      timerEnabled = true;
-      localStorage.setItem("timerEnabled", "true");
-
-      if (answerVisible) {
-          startSubmitTimer();
-      } else {
-          startTimer();
-      }
-  }
-
-  document.addEventListener("keydown", function(event) {
-      const tag = document.activeElement.tagName.toLowerCase();
-
-      if (tag === "input" || tag === "textarea") {
-          return;
-      }
-
-      if (event.key.toLowerCase() === "c") {
-          event.preventDefault();
-          toggleTimer();
-      }
-      
-      if (event.key.toLowerCase() === "n") {
-          event.preventDefault();
-
-          document.getElementById("random-mode-form")?.submit();
-      }
-
-      if (event.code === "Space") {
-          event.preventDefault();
-          revealAnswer();
-      }
-
-      if (/^[0-9]$/.test(event.key)) {
-          document.querySelector(
-              `.score-buttons button[name="rating"][value="${event.key}"]`
-          )?.click();
-      }
-
-      if (event.key === "=") {
-          document.querySelector(
-              `.score-buttons button[name="rating"][value="10"]`
-          )?.click();
-      }
-
-      if (event.key === "-") {
-          document.querySelector(
-              `.score-buttons button[name="rating"][value="-1"]`
-          )?.click();
-      }
-  });
-
-  updateTimerButton();
-
-document.getElementById("timer-toggle-button")?.addEventListener("click", function() {
-    toggleTimer();
-});
-document.getElementById("rating-form")?.addEventListener("submit", async function(event) {
-    event.preventDefault();
-
-    const submitter = event.submitter;
-    const rating = submitter?.value;
-    const indexInput = document.querySelector('input[name="index"]');
-    const currentIndex = parseInt(indexInput.value);
-
-    if (rating === undefined) {
-        return;
-    }
-
-    const response = await fetch("{{ url_for('api_quiz_answer', topic=topic) }}", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-            index: currentIndex,
-            rating: parseInt(rating)
-        })
-    });
-
-    const data = await response.json();
-
-    if (data.redirect) {
-        window.location.href = data.redirect;
-        return;
-    }
-
-    const oldCell = document.querySelector(
-        `.question-progress-cell[data-index="${data.updated_cell.index}"]`
-    );
-
-    if (oldCell) {
-        oldCell.style.background = data.updated_cell.color;
-        oldCell.title = `Otázka ${data.updated_cell.index + 1}: ${data.updated_cell.value}`;
-    }
-
-    document.querySelectorAll(".question-progress-cell").forEach(cell => {
-        cell.classList.remove("current-question");
-    });
-
-    const newCell = document.querySelector(
-        `.question-progress-cell[data-index="${data.next_index}"]`
-    );
-
-    if (newCell) {
-        newCell.classList.add("current-question");
-    }
-
-    indexInput.value = data.next_index;
-
-    document.getElementById("question-text").textContent = data.question;
-    document.getElementById("answer-text").innerHTML = data.answer;
-
-    document.getElementById("answer-block").style.display = "none";
-    document.getElementById("reveal-button").style.display = "block";
-    answerVisible = false;
-});
-</script>
-
-{% endblock %}
+  </body>
+</html>

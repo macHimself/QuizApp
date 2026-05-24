@@ -23,15 +23,22 @@
         <li style="margin: 1em 0; border: 1px solid #ddd; border-radius: 8px; padding: 1em; background: #fefefe; text-align: left;">
           <strong style="font-size: 1.2em;">{{ topic.name }}</strong><br>
           <small>Otázek celkem: {{ topic.total }} &nbsp; Hotových: {{ topic.done }} &nbsp; Průměr: {{ topic.average }}</small><br><br>
+          <div class="topic-mini-map">
+  {% for item in topic.progress %}
+    <a
+      href="{{ url_for('quiz', topic=topic.name, index=item.index) }}"
+      class="mini-cell"
+      style="background: {{ item.color }};"
+      title="Otázka {{ item.index + 1 }}: {{ item.value }}"
+    ></a>
+  {% endfor %}
+</div>
           <a href="{{ url_for('quiz', topic=topic.name) }}">Začít test</a> 
             {% if topic.can_edit %}
 |
               <a href="{{ url_for('add_questions', topic=topic.name) }}">➕ Přidat otázky</a>
 |
-              <form method="post" action="{{ url_for('delete_topic') }}" style="display:inline;">
-                <input type="hidden" name="topic" value="{{ topic.name }}">
-                <button type="submit">Smazat</button>
-              </form>
+
             {% endif %}
           <a href="{{ url_for('export.export_topic_json', topic=topic['name']) }}" download>
             Export JSON

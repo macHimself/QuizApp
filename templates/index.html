@@ -3,7 +3,7 @@
 {% block content %}
 
   <h2 class="question">Otázka:</h2>
-  <p>{{ question }}</p>
+  <p id="question-text">{{ question }}</p>
 
   <p id="countdown" style="display: none;"></p>
 
@@ -14,21 +14,21 @@
 
     <div id="answer-block" style="display: none;">
       <h3 style="color: green;">Odpověď:</h3>
-      <div class="answer">{{ answer }}</div>
+      <div id="answer-text" class="answer">{{ answer }}</div>
     </div>
   {% endif %}
 
   <div>
     {% if previous_rating %}
-      <p class="text-muted">
-        Minule jsi svou znalost ohodnotil:
-        <strong>{{ previous_rating }}/10</strong>
-      </p>
+<p id="previous-rating-block" class="text-muted" style="{% if not previous_rating %}display:none;{% endif %}">
+  Minule jsi svou znalost ohodnotil:
+  <strong id="previous-rating-value">{{ previous_rating }}/10</strong>
+</p>
     {% endif %}
 
     <label for="rating">Jak se ohodnotíš: Vyber číslo:</label>
 
-    <form method="post">
+    <form id="rating-form" method="post">
       <input type="hidden" name="index" value="{{ index }}">
 
       <div class="score-buttons">
@@ -71,21 +71,21 @@
 
   <div class="footer">
     <p>Celkem otázek: <strong>{{ total }}</strong></p>
-    <p>Dokončeno (hodnoceno 10): <strong>{{ done }}</strong></p>
+    <p>Dokončeno (hodnoceno 10): <strong id="done-count">{{ done }}</strong></p>
 
     <p>Průměrné skóre:
       {% if avg_score is not none %}
-        <strong>{{ avg_score }}</strong>
+        <strong id="avg-score">{{ avg_score }}</strong>
       {% else %}
         <em>zatím žádné odpovědi</em>
       {% endif %}
     </p>
 
-    <p style="color: {% if pending_count > 0 %}#d9534f{% else %}#28a745{% endif %};">
-      Nezodpovězené: <strong>{{ pending_count }}</strong>
+    <p id="pending-wrapper" style="color: {% if pending_count > 0 %}#d9534f{% else %}#28a745{% endif %};">
+      Nezodpovězené: <strong id="pending-count">{{ pending_count }}</strong>
     </p>
 
-    <p>Vyřazené otázky (hodnoceno -1): {{ excluded_count }}</p>
+    <p>Vyřazené otázky (hodnoceno -1): <span id="excluded-count">{{ excluded_count }}</span></p>
 
     <div class="progress-wrapper">
       <div class="progress-bar">
@@ -108,6 +108,7 @@
   <div class="question-progress-grid">
     {% for item in question_progress %}
       <a
+        data-index="{{ item.index - 1 }}"
         href="{{ url_for('quiz', topic=topic, index=item.index - 1) }}"
         class="question-progress-cell {% if item.index - 1 == index %}current-question{% endif %}"
         style="background: {{ item.color }};"
@@ -120,7 +121,7 @@
   </div>
 
 <script>
-  const PREVIOUS_RATING = {{ previous_rating|default(1, true)|tojson }};
+  let PREVIOUS_RATING = {{ previous_rating|default(1, true)|tojson }};
 
   let timerRunning = false;
   let countdownInterval = null;
@@ -407,6 +408,90 @@ function toggleTimer() {
 
 document.getElementById("timer-toggle-button")?.addEventListener("click", function() {
     toggleTimer();
+});
+document.getElementById("rating-form")?.addEventListener("submit", async function(event) {
+    event.preventDefault();
+
+    const submitter = event.submitter;
+    const rating = submitter?.value;
+    const indexInput = document.querySelector('input[name="index"]');
+    const currentIndex = parseInt(indexInput.value);
+
+    if (rating === undefined) {
+        return;
+    }
+
+    const response = await fetch("{{ url_for('api_quiz_answer', topic=topic) }}", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            index: currentIndex,
+            rating: parseInt(rating)
+        })
+    });
+
+    const data = await response.json();
+
+    if (data.redirect) {
+        window.location.href = data.redirect;
+        return;
+    }
+
+    const oldCell = document.querySelector(
+        `.question-progress-cell[data-index="${data.updated_cell.index}"]`
+    );
+
+    if (oldCell) {
+        oldCell.style.background = data.updated_cell.color;
+        oldCell.title = `Otázka ${data.updated_cell.index + 1}: ${data.updated_cell.value}`;
+    }
+
+    document.querySelectorAll(".question-progress-cell").forEach(cell => {
+        cell.classList.remove("current-question");
+    });
+
+    const newCell = document.querySelector(
+        `.question-progress-cell[data-index="${data.next_index}"]`
+    );
+
+    if (newCell) {
+        newCell.classList.add("current-question");
+    }
+
+    indexInput.value = data.next_index;
+
+    document.getElementById("question-text").textContent = data.question;
+    
+    document.getElementById("answer-text").textContent = data.answer;
+
+    document.getElementById("answer-block").style.display = "none";
+    document.getElementById("reveal-button").style.display = "block";
+    answerVisible = false;
+
+    document.getElementById("done-count").textContent = data.done;
+    document.getElementById("pending-count").textContent = data.pending_count;
+    document.getElementById("excluded-count").textContent = data.excluded_count;
+    document.getElementById("avg-score").textContent = data.avg_score ?? "-";
+
+    const pendingWrapper = document.getElementById("pending-wrapper");
+
+    if (pendingWrapper) {
+        pendingWrapper.style.color =
+            data.pending_count > 0 ? "#d9534f" : "#28a745";
+    }
+    PREVIOUS_RATING = data.previous_rating ?? 1;
+
+    const previousBlock = document.getElementById("previous-rating-block");
+    const previousValue = document.getElementById("previous-rating-value");
+
+    if (data.previous_rating !== null && data.previous_rating !== undefined) {
+        previousBlock.style.display = "block";
+        previousValue.textContent = `${data.previous_rating}/10`;
+    } else {
+        previousBlock.style.display = "none";
+    }
 });
 </script>
 
