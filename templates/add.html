@@ -125,6 +125,51 @@ async function uploadImages() {
     <button type="submit">✅ Přidat otázku</button>
   </form>
 
+  <details style="margin:1em 0;">
+  <summary><strong>Jak používat formátování</strong></summary>
+
+  <div style="padding:1em; background:#f7f7f7; border-radius:8px; margin-top:.5em;">
+    <pre><code># Nadpis
+## Menší nadpis
+
+**tučný text**
+*kurzíva*
+
+- položka seznamu
+- další položka
+
+`inline code`
+
+```python
+print("Hello")
+```
+
+Matematika inline:
+$begin:math:text$ a\^2 \+ b\^2 \= c\^2 $end:math:text$
+
+Matematika blok:
+$$
+\int_0^1 x^2 dx
+$$
+
+Obrázek:
+![popis](/static/uploads/topic/image.png)
+
+Klikací obrázek:
+[![náhled](/static/uploads/topic/image.png)](/static/uploads/topic/image.png)
+
+Odkaz:
+[Google](https://google.com)
+
+Tabulka:
+
+| Sloupec | Hodnota |
+|---------|---------|
+| A       | 10      |
+| B       | 20      |</code></pre>
+  </div>
+</details>
+
   <p>
     <a href="{{ url_for('quiz', topic=topic) }}">⬅️ Zpět na testování</a> |
     <a href="{{ url_for('home') }}">🏠 Hlavní stránka</a>

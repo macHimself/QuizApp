@@ -117,9 +117,10 @@ def render_markdown(text):
             "img", "a"
         ],
         attributes={
-            "a": ["href", "title"],
+            "a": ["href", "title", "target"],
             "img": ["src", "alt", "title"]
-        }
+        },
+        protocols=["http", "https", "mailto"]
     )
 
 
@@ -1014,11 +1015,11 @@ def rename_topic(topic):
             WHERE name = ?
         """, (new_name, topic))
 
-        db.execute("""
-            UPDATE questions
-            SET topic = ?
-            WHERE topic = ?
-        """, (new_name, topic))
+        # db.execute("""
+        #     UPDATE questions
+        #     SET topic = ?
+        #     WHERE topic = ?
+        # """, (new_name, topic))
 
         db.execute("""
             UPDATE history

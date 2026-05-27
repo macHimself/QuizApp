@@ -462,9 +462,8 @@ document.getElementById("rating-form")?.addEventListener("submit", async functio
 
     indexInput.value = data.next_index;
 
-    document.getElementById("question-text").textContent = data.question;
-    
-    document.getElementById("answer-text").textContent = data.answer;
+    document.getElementById("question-text").innerHTML = data.question;
+    document.getElementById("answer-text").innerHTML = data.answer;
 
     if (window.MathJax) {
         MathJax.typesetPromise();
