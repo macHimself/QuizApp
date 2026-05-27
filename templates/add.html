@@ -17,7 +17,19 @@
 
   <hr>
 
-  <p><strong>Aktuální okruh:</strong> {{ topic }}</p>
+  <p><strong>Aktuální okruh:
+
+<form method="post" action="{{ url_for('rename_topic', topic=topic) }}">
+  <input
+    type="text"
+    name="new_topic_name"
+    value="{{ topic }}"
+    required
+  >
+  <button type="submit">Přejmenovat</button>
+</form>
+
+<hr>
 
   {% if message %}
     <p style="color: {% if '✅' in message %}green{% else %}red{% endif %};">{{ message }}</p>

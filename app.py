@@ -937,6 +937,74 @@ def create_topic():
     return redirect(url_for("home"))
 
 
+@app.route("/rename_topic/<topic>", methods=["POST"])
+@login_required
+def rename_topic(topic):
+    if not can_edit_topic(topic):
+        flash("❌ Tento okruh nemůžeš upravovat.")
+        return redirect(url_for("home"))
+
+    new_name = request.form.get("new_topic_name", "").strip()
+
+    if not new_name:
+        flash("❌ Nový název okruhu nesmí být prázdný.")
+        return redirect(url_for("add_questions", topic=topic))
+
+    if new_name == topic:
+        flash("ℹ️ Název okruhu se nezměnil.")
+        return redirect(url_for("add_questions", topic=topic))
+
+    with get_db() as db:
+        existing = db.execute("""
+            SELECT 1 FROM topics
+            WHERE name = ?
+        """, (new_name,)).fetchone()
+
+        if existing:
+            flash("❌ Okruh s tímto názvem už existuje.")
+            return redirect(url_for("add_questions", topic=topic))
+
+        db.execute("PRAGMA foreign_keys = OFF")
+
+        db.execute("""
+            UPDATE topics
+            SET name = ?
+            WHERE name = ?
+        """, (new_name, topic))
+
+        db.execute("""
+            UPDATE questions
+            SET topic = ?
+            WHERE topic = ?
+        """, (new_name, topic))
+
+        db.execute("""
+            UPDATE history
+            SET topic = ?
+            WHERE topic = ?
+        """, (new_name, topic))
+
+        db.execute("PRAGMA foreign_keys = ON")
+        db.commit()
+
+        db.execute("""
+            UPDATE questions
+            SET topic = ?
+            WHERE topic = ?
+        """, (new_name, topic))
+
+        db.execute("""
+            UPDATE history
+            SET topic = ?
+            WHERE topic = ?
+        """, (new_name, topic))
+
+        db.commit()
+
+    flash(f"✅ Okruh byl přejmenován na '{new_name}'.")
+    return redirect(url_for("add_questions", topic=new_name))
+
+
 @app.route("/api/quiz/<topic>/answer", methods=["POST"])
 @login_required
 def api_quiz_answer(topic):
@@ -1685,7 +1753,7 @@ app.register_blueprint(export_bp)
 
 if __name__ == "__main__":
     ensure_data_dir()
-    app.run(host="0.0.0.0", port=5050, debug=False)
+    app.run(host="0.0.0.0", port=5555, debug=False)
 
 # kill 54274
 # nohup /opt/homebrew/bin/python3 -m gunicorn -w 2 --threads 8 -k gthread -b 0.0.0.0:5050 app:app > gunicorn.log 2>&1 &
