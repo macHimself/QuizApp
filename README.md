@@ -23,6 +23,7 @@ Aplikace poběží na `http://127.0.0.1:5000`.
 
 ```bash
 pip install flask
+pip install markdown bleach
 ```
 
 ## 📁 Struktura

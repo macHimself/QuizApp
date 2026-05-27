@@ -37,18 +37,91 @@
 
   <h3>📝 Hromadné přidání (JSON)</h3>
   <form method="post">
-    <textarea name="questions_json" rows="10" cols="80" placeholder='[{"question": "...", "answer": "..."}, ...]'></textarea><br>
+    <textarea name="questions_json" rows="10" cols="80" placeholder='[{"question": "...", "answer": "..."}, ...]'>{{ questions_json_value }}</textarea><br>
     <button type="submit">💾 Přidat hromadně</button>
   </form>
 
   <hr>
 
+
+<h3>Nahrát obrázek</h3>
+
+<input type="file" id="image-upload" accept="image/*" multiple>
+<button type="button" onclick="uploadImages()">Nahrát obrázek</button>
+
+<div id="uploaded-list"></div>
+
+<script>
+async function uploadImages() {
+    const input = document.getElementById("image-upload");
+    const list = document.getElementById("uploaded-list");
+
+    if (!input.files.length) {
+        alert("Vyber obrázek.");
+        return;
+    }
+
+    for (const file of input.files) {
+        const formData = new FormData();
+        formData.append("image", file);
+        formData.append("topic", "{{ topic }}");
+
+        const response = await fetch("{{ url_for('upload_image') }}", {
+            method: "POST",
+            body: formData
+        });
+
+        const data = await response.json();
+
+        if (data.error) {
+            alert(data.error);
+            continue;
+        }
+
+        const item = document.createElement("div");
+        item.style.margin = "0.7em 0";
+
+        item.innerHTML = `
+            <div><strong>${file.name}</strong> → ${data.filename}</div>
+            <textarea class="uploaded-markdown"
+          readonly
+          style="width:100%; height:38px; resize:none; font-size:13px;"></textarea>
+            <button type="button">Kopírovat</button>
+        `;
+
+        const textarea = item.querySelector(".uploaded-markdown");
+        const button = item.querySelector("button");
+
+        textarea.value = data.markdown;
+
+        button.addEventListener("click", () => {
+            textarea.focus();
+            textarea.select();
+            textarea.setSelectionRange(0, textarea.value.length);
+
+            document.execCommand("copy");
+
+            button.textContent = "Zkopírováno";
+        });
+
+        list.prepend(item);
+    }
+
+    input.value = "";
+}
+</script>
+
+
   <h3>➕ Přidání jedné otázky</h3>
   <form method="post">
     <label>Otázka:</label><br>
-    <input type="text" name="single_question" size="80"><br><br>
+<textarea name="single_question"
+          rows="3"
+          style="width:100%;">{{ single_question_value }}</textarea>
     <label>Odpověď:</label><br>
-    <input type="text" name="single_answer" size="80"><br><br>
+<textarea name="single_answer"
+          rows="8"
+          style="width:100%; font-family:monospace;">{{ single_answer_value }}</textarea>
     <button type="submit">✅ Přidat otázku</button>
   </form>
 

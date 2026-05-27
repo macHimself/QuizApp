@@ -3,7 +3,7 @@
 {% block content %}
 
   <h2 class="question">Otázka:</h2>
-  <p id="question-text">{{ question }}</p>
+  <div id="question-text">{{ question|safe }}</div>
 
   <p id="countdown" style="display: none;"></p>
 
@@ -14,7 +14,7 @@
 
     <div id="answer-block" style="display: none;">
       <h3 style="color: green;">Odpověď:</h3>
-      <div id="answer-text" class="answer">{{ answer }}</div>
+      <div id="answer-text" class="answer">{{ answer|safe }}</div>
     </div>
   {% endif %}
 
@@ -465,6 +465,10 @@ document.getElementById("rating-form")?.addEventListener("submit", async functio
     document.getElementById("question-text").textContent = data.question;
     
     document.getElementById("answer-text").textContent = data.answer;
+
+    if (window.MathJax) {
+        MathJax.typesetPromise();
+    }
 
     document.getElementById("answer-block").style.display = "none";
     document.getElementById("reveal-button").style.display = "block";

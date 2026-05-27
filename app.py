@@ -5,6 +5,11 @@ import json, random, os
 from datetime import datetime
 from collections import Counter
 from db import get_db, init_db
+import markdown
+import bleach
+from werkzeug.utils import secure_filename
+from uuid import uuid4
+
 
 app = Flask(__name__)
 app.secret_key = "tajneheslo"
@@ -15,6 +20,9 @@ TOPICS_FILE = os.path.join(DATA_DIR, "topics.json")
 USERS_FILE = os.path.join(DATA_DIR, "users.json")
 
 DEFAULT_OWNER_FOR_OLD_TOPICS = "macHimself"
+
+UPLOAD_DIR = os.path.join("static", "uploads")
+ALLOWED_EXTENSIONS = {"png", "jpg", "jpeg", "gif", "webp", "svg"}
 
 
 def ensure_data_dir():
@@ -83,6 +91,40 @@ def load_questions(topic, username=None):
             }
             for row in question_rows
         ]
+
+
+def ensure_upload_dir():
+    os.makedirs(UPLOAD_DIR, exist_ok=True)
+
+
+def allowed_file(filename):
+    return "." in filename and filename.rsplit(".", 1)[1].lower() in ALLOWED_EXTENSIONS
+
+
+def render_markdown(text):
+    html = markdown.markdown(
+        text or "",
+        extensions=["fenced_code", "tables", "nl2br"]
+    )
+
+    return bleach.clean(
+        html,
+        tags=[
+            "p", "br", "strong", "em", "ul", "ol", "li",
+            "code", "pre", "blockquote",
+            "h1", "h2", "h3", "h4",
+            "table", "thead", "tbody", "tr", "th", "td",
+            "img", "a"
+        ],
+        attributes={
+            "a": ["href", "title"],
+            "img": ["src", "alt", "title"]
+        }
+    )
+
+
+def safe_topic_slug(topic):
+    return secure_filename(topic).lower() or "default"
 
 
 def save_questions(topic, questions):
@@ -1109,8 +1151,10 @@ def api_quiz_answer(topic):
     return jsonify({
         "done_all": False,
         "next_index": next_idx,
-        "question": next_question["question"],
-        "answer": next_question["answer"],
+        # "question": next_question["question"],
+        # "answer": next_question["answer"],
+        "question": render_markdown(next_question["question"]),
+        "answer": render_markdown(next_question["answer"]),
         "previous_rating": next_result.get("value") if next_result.get("value", 0) != 0 else None,
 
         "done": completed,
@@ -1310,8 +1354,10 @@ def quiz(topic):
     return render_template(
         "index.html",
         previous_rating=previous_rating,
-        question=q["question"],
-        answer=q["answer"],
+        # question=q["question"],
+        # answer=q["answer"],
+        question=render_markdown(q["question"]),
+        answer=render_markdown(q["answer"]),
         index=idx,
         total=total_questions,
         done=completed,
@@ -1399,9 +1445,14 @@ def add_questions(topic):
     message = None
     questions = load_questions(topic)
 
+    single_question_value = ""
+    single_answer_value = ""
+    questions_json_value = ""
+
     if request.method == "POST":
         if "questions_json" in request.form:
             raw = request.form.get("questions_json", "")
+            questions_json_value = raw
 
             try:
                 new_questions = json.loads(raw)
@@ -1419,13 +1470,17 @@ def add_questions(topic):
                 save_questions(topic, questions)
 
                 message = f"✅ Přidáno {len(new_questions)} otázek."
+                questions_json_value = ""
 
             except Exception as e:
                 message = f"❌ Chyba při načítání JSON: {str(e)}"
 
         elif "single_question" in request.form and "single_answer" in request.form:
-            question = request.form["single_question"].strip()
-            answer = request.form["single_answer"].strip()
+            single_question_value = request.form.get("single_question", "")
+            single_answer_value = request.form.get("single_answer", "")
+
+            question = single_question_value.strip()
+            answer = single_answer_value.strip()
 
             if question and answer:
                 questions.append({
@@ -1433,8 +1488,12 @@ def add_questions(topic):
                     "answer": answer,
                     "value": 0
                 })
+
                 save_questions(topic, questions)
+
                 message = "✅ Otázka úspěšně přidána."
+                single_question_value = ""
+                single_answer_value = ""
             else:
                 message = "❌ Obě pole musí být vyplněna."
 
@@ -1443,7 +1502,10 @@ def add_questions(topic):
         message=message,
         topic=topic,
         all_topics=topic_names(),
-        questions=questions
+        questions=questions,
+        single_question_value=single_question_value,
+        single_answer_value=single_answer_value,
+        questions_json_value=questions_json_value
     )
 
 
@@ -1750,6 +1812,74 @@ def export_topic_json(topic):
 #         mimetype="application/json; charset=utf-8"
 #     )
 app.register_blueprint(export_bp)
+
+# @app.route("/upload_image", methods=["POST"])
+# @login_required
+# def upload_image():
+#     ensure_upload_dir()
+
+#     file = request.files.get("image")
+
+#     if not file or file.filename == "":
+#         return jsonify({"error": "Soubor nebyl vybrán"}), 400
+
+#     if not allowed_file(file.filename):
+#         return jsonify({"error": "Nepovolený typ souboru"}), 400
+
+
+
+#     ext = file.filename.rsplit(".", 1)[1].lower()
+#     filename = f"{uuid4().hex}.{ext}"
+#     path = os.path.join(UPLOAD_DIR, filename)
+#     file.save(path)
+
+#     url = f"/static/uploads/{filename}"
+#     markdown_link = f"[![{filename}]({url})]({url})"
+
+#     # filename = secure_filename(file.filename)
+#     # path = os.path.join(UPLOAD_DIR, filename)
+#     # file.save(path)
+
+#     # markdown_link = f"![{filename}](/static/uploads/{filename})"
+
+#     return jsonify({
+#         "markdown": markdown_link,
+#         "url": f"/static/uploads/{filename}"
+#     })
+
+@app.route("/upload_image", methods=["POST"])
+@login_required
+def upload_image():
+    topic = request.form.get("topic", "default")
+    topic_dir = os.path.join(UPLOAD_DIR, safe_topic_slug(topic))
+    os.makedirs(topic_dir, exist_ok=True)
+
+    file = request.files.get("image")
+
+    if not file or file.filename == "":
+        return jsonify({"error": "Soubor nebyl vybrán"}), 400
+
+    if not allowed_file(file.filename):
+        return jsonify({"error": "Nepovolený typ souboru"}), 400
+
+    ext = file.filename.rsplit(".", 1)[1].lower()
+    filename = f"img_{uuid4().hex[:8]}.{ext}"
+
+    path = os.path.join(topic_dir, filename)
+    file.save(path)
+
+    url = f"/static/uploads/{safe_topic_slug(topic)}/{filename}"
+    markdown_link = f"[![{filename}]({url})]({url})"
+
+    return jsonify({
+        "markdown": markdown_link,
+        "url": url,
+        "filename": filename
+    })
+
+
+
+
 
 if __name__ == "__main__":
     ensure_data_dir()
