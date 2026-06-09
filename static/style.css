@@ -336,3 +336,10 @@ hr {
     text-align: center;
     margin-top: 28px;
 }
+
+.topic-stats {
+    display: flex;
+    gap: 18px;
+    color: #6b7280;
+    font-size: 0.95rem;
+}

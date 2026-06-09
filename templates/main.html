@@ -21,11 +21,17 @@
     <h3>{{ topic.name }}</h3>
 
     <div class="topic-stats">
+    <span>📚 6</span>
+    <span>✅ 0</span>
+    <span>📈 —</span>
+</div>
+
+<!--    <div class="topic-stats">
       <span>Otázek celkem: {{ topic.total }}</span>
       <span>Hotových: {{ topic.done }}</span>
       <span>Průměr: {{ topic.average if topic.average is not none else "—" }}</span>
     </div>
-
+-->
     <div class="topic-mini-map">
       {% for item in topic.progress %}
         <a
