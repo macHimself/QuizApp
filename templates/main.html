@@ -20,7 +20,8 @@
   {% if topics %}
     <ul style="list-style-type: none; padding: 0;">
       {% for topic in topics %}
-        <li style="margin: 1em 0; border: 1px solid #ddd; border-radius: 8px; padding: 1em; background: #fefefe; text-align: left;">
+        <!--<li style="margin: 1em 0; border: 1px solid #ddd; border-radius: 8px; padding: 1em; background: #fefefe; text-align: left;">-->
+        <li class="card"></li>
           <strong style="font-size: 1.2em;">{{ topic.name }}</strong><br>
           <small>Otázek celkem: {{ topic.total }} &nbsp; Hotových: {{ topic.done }} &nbsp; Průměr: {{ topic.average }}</small><br><br>
           <div class="topic-mini-map">
