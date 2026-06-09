@@ -3,79 +3,71 @@
 {% block title %}Správa okruhů{% endblock %}
 
 {% block content %}
-  <h2>Tematické okruhy</h2>
+<h2>Tematické okruhy</h2>
 
-    <div style="margin-bottom: 20px;">
-      Přihlášen:
-      <strong>{{ session.username }}</strong>
-        {% if session.role == "admin" %}
-          <a href="{{ url_for('admin_panel') }}">Admin</a>
-|
-        {% endif %}
-|
-      <a href="{{ url_for('change_password') }}">Změnit heslo</a>
-|
-      <a href="{{ url_for('logout') }}">Odhlásit</a>
+<div style="margin-bottom: 20px;">
+  Přihlášen: <strong>{{ session.username }}</strong>
+  {% if session.role == "admin" %}
+    | <a href="{{ url_for('admin_panel') }}">Admin</a>
+  {% endif %}
+  | <a href="{{ url_for('change_password') }}">Změnit heslo</a>
+  | <a href="{{ url_for('logout') }}">Odhlásit</a>
+</div>
+
+{% if topics %}
+<div class="topics-list">
+  {% for topic in topics %}
+  <div class="card">
+    <h3>{{ topic.name }}</h3>
+
+    <div class="topic-stats">
+      <span>Otázek celkem: {{ topic.total }}</span>
+      <span>Hotových: {{ topic.done }}</span>
+      <span>Průměr: {{ topic.average if topic.average is not none else "—" }}</span>
     </div>
-  {% if topics %}
-    <ul style="list-style-type: none; padding: 0;">
-      {% for topic in topics %}
-        <!--<li style="margin: 1em 0; border: 1px solid #ddd; border-radius: 8px; padding: 1em; background: #fefefe; text-align: left;">-->
-        <li class="card"></li>
-          <strong style="font-size: 1.2em;">{{ topic.name }}</strong><br>
-          <small>Otázek celkem: {{ topic.total }} &nbsp; Hotových: {{ topic.done }} &nbsp; Průměr: {{ topic.average }}</small><br><br>
-          <div class="topic-mini-map">
-  {% for item in topic.progress %}
-    <a
-      href="{{ url_for('quiz', topic=topic.name, index=item.index) }}"
-      class="mini-cell"
-      style="background: {{ item.color }};"
-      title="Otázka {{ item.index + 1 }}: {{ item.value }}"
-    ></a>
+
+    <div class="topic-mini-map">
+      {% for item in topic.progress %}
+        <a
+          href="{{ url_for('quiz', topic=topic.name, index=item.index) }}"
+          class="mini-cell"
+          style="background: {{ item.color }};"
+          title="Otázka {{ item.index + 1 }}: {{ item.value }}"
+        ></a>
+      {% endfor %}
+    </div>
+
+    <div class="topic-actions">
+      <a href="{{ url_for('quiz', topic=topic.name) }}">Začít test</a>
+
+      {% if topic.can_edit %}
+        <a href="{{ url_for('add_questions', topic=topic.name) }}">Přidat otázky</a>
+      {% endif %}
+
+      <a href="{{ url_for('export.export_topic_json', topic=topic.name) }}" download>Export JSON</a>
+
+      <form method="post" action="{{ url_for('reset_topic') }}" onsubmit="return confirm('Resetovat otázky v okruhu {{ topic.name }}?');">
+        <input type="hidden" name="topic" value="{{ topic.name }}">
+        <button type="submit">Reset</button>
+      </form>
+
+      <form method="post" action="{{ url_for('delete_topic') }}" onsubmit="return confirm('Opravdu smazat okruh {{ topic.name }}?');">
+        <input type="hidden" name="topic" value="{{ topic.name }}">
+        <button type="submit" class="danger-button">Smazat</button>
+      </form>
+    </div>
+  </div>
   {% endfor %}
 </div>
-          <a href="{{ url_for('quiz', topic=topic.name) }}">Začít test</a> 
-            {% if topic.can_edit %}
-|
-              <a href="{{ url_for('add_questions', topic=topic.name) }}">➕ Přidat otázky</a>
-|
+{% else %}
+<p>Zatím nejsou vytvořeny žádné okruhy.</p>
+{% endif %}
 
-            {% endif %}
-          <a href="{{ url_for('export.export_topic_json', topic=topic['name']) }}" download>
-            Export JSON
-          </a> |
-          <form method="post" action="{{ url_for('reset_topic') }}" style="display:inline;" onsubmit="return confirm('Resetovat otázky v okruhu {{ topic.name }}?');">
-            <input type="hidden" name="topic" value="{{ topic.name }}">
-            <button type="submit" style="background:none; border:none; color:#0066cc; cursor:pointer;" title="Reset okruhu">
-              Reset
-            </button>
-          </form>
-
-          <form method="post" action="{{ url_for('delete_topic') }}" style="display:inline;" onsubmit="return confirm('Opravdu smazat okruh \'{{ topic.name }}\'?');">
-            <input type="hidden" name="topic" value="{{ topic.name }}">
-            <button type="submit" title="Smazat" style="background:none; border:none; color:#d00; cursor:pointer;">Smazat</button>
-          </form>
-        </li>
-      {% endfor %}
-    </ul>
-  {% else %}
-    <p>Zatím nejsou vytvořeny žádné okruhy.</p>
-  {% endif %}
-
-  <hr>
+<div class="card create-topic-card">
   <h3>Vytvořit nový okruh</h3>
   <form method="post" action="{{ url_for('create_topic') }}">
     <input type="text" name="topic" placeholder="Např. Anglická slovíčka" required>
     <button type="submit">Vytvořit</button>
   </form>
-
-  {% with messages = get_flashed_messages() %}
-    {% if messages %}
-      <ul style="margin-top: 1em; color: #007700;">
-        {% for message in messages %}
-          <li>{{ message }}</li>
-        {% endfor %}
-      </ul>
-    {% endif %}
-  {% endwith %}
+</div>
 {% endblock %}

@@ -1,5 +1,5 @@
 .DS_Store
 /data
 quiz.sqlite3
-/static
+/static/uploads
 quiz.sqlite3
