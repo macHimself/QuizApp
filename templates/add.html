@@ -1,55 +1,75 @@
 {% extends "base.html" %}
 
-{% block title %}➕ Přidání otázek do okruhu {{ topic }}{% endblock %}
+{% block title %}Přidání otázek do okruhu {{ topic }}{% endblock %}
 
 {% block content %}
-  <h2>➕ Přidat nové otázky</h2>
 
-  <form method="get" action="{{ url_for('add_questions', topic='__placeholder__') }}" onsubmit="event.preventDefault(); location.href=this.action.replace('__placeholder__', this.topic.value);">
-    <label for="topic">Vyber okruh:</label>
-    <select name="topic" id="topic">
-      {% for t in all_topics %}
-        <option value="{{ t }}" {% if t == topic %}selected{% endif %}>{{ t }}</option>
-      {% endfor %}
-    </select>
-    <button type="submit">🔁 Přepnout</button>
+<h2>Přidat nové otázky</h2>
+
+<div class="card">
+  <form method="get"
+        action="{{ url_for('add_questions', topic='__placeholder__') }}"
+        onsubmit="event.preventDefault(); location.href=this.action.replace('__placeholder__', this.topic.value);">
+
+    <label for="topic"><strong>Vyber okruh:</strong></label>
+
+    <div class="topic-actions">
+      <select name="topic" id="topic">
+        {% for t in all_topics %}
+          <option value="{{ t }}" {% if t == topic %}selected{% endif %}>{{ t }}</option>
+        {% endfor %}
+      </select>
+
+      <button type="submit">Přepnout</button>
+    </div>
   </form>
+</div>
 
-  <hr>
+<div class="card">
+  <h3>Aktuální okruh</h3>
 
-  <p><strong>Aktuální okruh:
+  <form method="post" action="{{ url_for('rename_topic', topic=topic) }}">
+    <div class="topic-actions">
+      <input type="text"
+             name="new_topic_name"
+             value="{{ topic }}"
+             required>
 
-<form method="post" action="{{ url_for('rename_topic', topic=topic) }}">
-  <input
-    type="text"
-    name="new_topic_name"
-    value="{{ topic }}"
-    required
-  >
-  <button type="submit">Přejmenovat</button>
-</form>
+      <button type="submit">Přejmenovat</button>
+    </div>
+  </form>
+</div>
 
-<hr>
+{% if message %}
+  <div class="card">
+    <p style="color: {% if '✅' in message %}green{% else %}red{% endif %};">
+      {{ message }}
+    </p>
+  </div>
+{% endif %}
 
-  {% if message %}
-    <p style="color: {% if '✅' in message %}green{% else %}red{% endif %};">{{ message }}</p>
-  {% endif %}
+<div class="card">
+  <h3>Hromadné přidání (JSON)</h3>
 
-  <h3>📝 Hromadné přidání (JSON)</h3>
   <form method="post">
-    <textarea name="questions_json" rows="10" cols="80" placeholder='[{"question": "...", "answer": "..."}, ...]'>{{ questions_json_value }}</textarea><br>
-    <button type="submit">💾 Přidat hromadně</button>
+    <textarea name="questions_json"
+              rows="10"
+              placeholder='[{"question": "...", "answer": "..."}]'>{{ questions_json_value }}</textarea>
+
+    <br><br>
+
+    <button type="submit">Přidat hromadně</button>
   </form>
+</div>
 
-  <hr>
+<div class="card">
+  <h3>Nahrát obrázek</h3>
 
+  <input type="file" id="image-upload" accept="image/*" multiple>
+  <button type="button" onclick="uploadImages()">Nahrát obrázek</button>
 
-<h3>Nahrát obrázek</h3>
-
-<input type="file" id="image-upload" accept="image/*" multiple>
-<button type="button" onclick="uploadImages()">Nahrát obrázek</button>
-
-<div id="uploaded-list"></div>
+  <div id="uploaded-list"></div>
+</div>
 
 <script>
 async function uploadImages() {
@@ -84,8 +104,8 @@ async function uploadImages() {
         item.innerHTML = `
             <div><strong>${file.name}</strong> → ${data.filename}</div>
             <textarea class="uploaded-markdown"
-          readonly
-          style="width:100%; height:38px; resize:none; font-size:13px;"></textarea>
+                      readonly
+                      style="width:100%; height:38px; resize:none; font-size:13px;"></textarea>
             <button type="button">Kopírovat</button>
         `;
 
@@ -98,9 +118,7 @@ async function uploadImages() {
             textarea.focus();
             textarea.select();
             textarea.setSelectionRange(0, textarea.value.length);
-
             document.execCommand("copy");
-
             button.textContent = "Zkopírováno";
         });
 
@@ -111,25 +129,34 @@ async function uploadImages() {
 }
 </script>
 
+<div class="card">
+  <h3>Přidání jedné otázky</h3>
 
-  <h3>➕ Přidání jedné otázky</h3>
   <form method="post">
-    <label>Otázka:</label><br>
-<textarea name="single_question"
-          rows="3"
-          style="width:100%;">{{ single_question_value }}</textarea>
-    <label>Odpověď:</label><br>
-<textarea name="single_answer"
-          rows="8"
-          style="width:100%; font-family:monospace;">{{ single_answer_value }}</textarea>
-    <button type="submit">✅ Přidat otázku</button>
+    <label><strong>Otázka</strong></label><br>
+    <textarea name="single_question"
+              rows="3"
+              style="width:100%;">{{ single_question_value }}</textarea>
+
+    <br><br>
+
+    <label><strong>Odpověď</strong></label><br>
+    <textarea name="single_answer"
+              rows="8"
+              style="width:100%; font-family:monospace;">{{ single_answer_value }}</textarea>
+
+    <br><br>
+
+    <button type="submit">Přidat otázku</button>
   </form>
+</div>
 
-  <details style="margin:1em 0;">
-  <summary><strong>Jak používat formátování</strong></summary>
+<div class="card">
+  <details>
+    <summary><strong>Jak používat formátování</strong></summary>
 
-  <div style="padding:1em; background:#f7f7f7; border-radius:8px; margin-top:.5em;">
-    <pre><code># Nadpis
+    <div style="padding:1em; background:#f7f7f7; border-radius:8px; margin-top:.5em;">
+<pre><code># Nadpis
 ## Menší nadpis
 
 **tučný text**
@@ -167,22 +194,27 @@ Tabulka:
 |---------|---------|
 | A       | 10      |
 | B       | 20      |</code></pre>
-  </div>
-</details>
+    </div>
+  </details>
+</div>
 
+<div class="card">
   <p>
-    <a href="{{ url_for('quiz', topic=topic) }}">⬅️ Zpět na testování</a> |
-    <a href="{{ url_for('home') }}">🏠 Hlavní stránka</a>
+    <a href="{{ url_for('quiz', topic=topic) }}">Zpět na testování</a>
+    |
+    <a href="{{ url_for('home') }}">Hlavní stránka</a>
   </p>
+</div>
 
+<div class="card q-list">
+  <h3>Existující otázky (editace)</h3>
 
-  <hr>
-
-<div class="q-list">
-  <h3>🗂️ Existující otázky (editace)</h3>
   <div class="q-tools">
-    <input id="qSearch" class="q-search" type="text"
-           placeholder="Hledej v otázkách/odpovědích… (např. entropie, dropout, PCA)">
+    <input id="qSearch"
+           class="q-search"
+           type="text"
+           placeholder="Hledej v otázkách/odpovědích…">
+
     <span class="q-meta">Celkem: {{ questions|length }}</span>
   </div>
 
@@ -196,7 +228,10 @@ Tabulka:
           <span class="q-meta">&nbsp;| value: {{ q.value if q.value is defined else 0 }}</span>
         </summary>
 
-        <form method="post" action="{{ url_for('edit_question', topic=topic, idx=loop.index0) }}" style="margin-top: .8em;">
+        <form method="post"
+              action="{{ url_for('edit_question', topic=topic, idx=loop.index0) }}"
+              style="margin-top: .8em;">
+
           <label><strong>Otázka</strong></label>
           <input type="text" name="question" value="{{ q.question }}">
 
@@ -204,13 +239,16 @@ Tabulka:
           <textarea name="answer">{{ q.answer }}</textarea>
 
           <div class="q-actions">
-            <button class="btn btn-save" type="submit">💾 Uložit změny</button>
+            <button class="btn btn-save" type="submit">Uložit změny</button>
           </div>
         </form>
 
-        <form method="post" action="{{ url_for('delete_question', topic=topic, idx=loop.index0) }}"
-              onsubmit="return confirm('Opravdu smazat tuto otázku?');" style="margin-top:.6em;">
-          <button class="btn btn-del" type="submit">🗑️ Smazat otázku</button>
+        <form method="post"
+              action="{{ url_for('delete_question', topic=topic, idx=loop.index0) }}"
+              onsubmit="return confirm('Opravdu smazat tuto otázku?');"
+              style="margin-top:.6em;">
+
+          <button class="btn btn-del" type="submit">Smazat otázku</button>
         </form>
       </details>
     {% endfor %}
@@ -218,21 +256,27 @@ Tabulka:
 </div>
 
 <script>
-  (function () {
-    const input = document.getElementById('qSearch');
-    if (!input) return;
-    const items = Array.from(document.querySelectorAll('.q-item'));
+(function () {
+    const input = document.getElementById("qSearch");
 
-    function applyFilter() {
-      const q = (input.value || '').trim().toLowerCase();
-      for (const el of items) {
-        const hay = el.getAttribute('data-search') || '';
-        const show = q === '' || hay.includes(q);
-        el.style.display = show ? '' : 'none';
-      }
+    if (!input) {
+        return;
     }
 
-    input.addEventListener('input', applyFilter);
-  })();
+    const items = Array.from(document.querySelectorAll(".q-item"));
+
+    function applyFilter() {
+        const q = (input.value || "").trim().toLowerCase();
+
+        for (const el of items) {
+            const hay = el.getAttribute("data-search") || "";
+            const show = q === "" || hay.includes(q);
+            el.style.display = show ? "" : "none";
+        }
+    }
+
+    input.addEventListener("input", applyFilter);
+})();
 </script>
+
 {% endblock %}

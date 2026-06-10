@@ -385,3 +385,40 @@ hr {
     background: #f3f4f6;
     font-weight: 700;
 }
+
+.card textarea {
+    width: 100%;
+}
+
+.card h3 {
+    margin-top: 0;
+}
+
+.q-tools {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+}
+
+.q-search {
+    max-width: 420px;
+}
+
+.q-item {
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 12px 14px;
+    margin: 10px 0;
+    background: #fff;
+}
+
+.q-item summary {
+    cursor: pointer;
+    font-weight: 700;
+}
+
+.btn-del {
+    background: #ff3b30;
+}
