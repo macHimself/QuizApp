@@ -4,102 +4,119 @@
 
 {% block content %}
 
-<h1>📊 Přehled uživatelů podle okruhů</h3>
+<h2>📊 Statistiky</h2>
 
-<table border="1"
-       cellpadding="5"
-       cellspacing="0"
-       style="margin: 0 auto 2em auto; text-align: center;">
+<div class="card">
+  <h3>Přehled uživatelů podle okruhů</h3>
 
-  <thead>
-    <tr>
-      <th>Okruh</th>
-
-      {% for user_row in user_topic_stats %}
-        <th>{{ user_row.username }}</th>
-      {% endfor %}
-    </tr>
-  </thead>
-
-  <tbody>
-    {% for topic in topics %}
-      <tr>
-        <td><strong>{{ topic }}</strong></td>
-
-        {% for user_row in user_topic_stats %}
-          {% set found = namespace(avg=None) %}
-
-          {% for topic_stat in user_row.topics %}
-            {% if topic_stat.name == topic %}
-              {% set found.avg = topic_stat.average %}
-            {% endif %}
+  <div class="table-wrapper">
+    <table class="stats-table">
+      <thead>
+        <tr>
+          <th>Okruh</th>
+          {% for user_row in user_topic_stats %}
+            <th>{{ user_row.username }}</th>
           {% endfor %}
+        </tr>
+      </thead>
 
-          <td>
-            {% if found.avg is not none %}
-              {{ found.avg }}
-            {% else %}
-              -
-            {% endif %}
-          </td>
-        {% endfor %}
-      </tr>
-    {% endfor %}
-  </tbody>
-</table>
-
-  <h2>Statistiky odpovědí podle okruhů</h2>
-  <p>Průměrné hodnocení: <strong>{{ average }}</strong></p>
-
-  {% if entries %}
-    {% set grouped = {} %}
-    {% for entry in entries %}
-      {% set t = entry.topic or "Neznámý" %}
-      {% if t not in grouped %}
-        {% set _ = grouped.update({t: []}) %}
-      {% endif %}
-      {% set _ = grouped[t].append(entry) %}
-    {% endfor %}
-
-    {% for topic, group in grouped.items() %}
-      <h3> {{ topic }}</h3>
-          <form method="post" action="{{ url_for('clear_history_topic') }}" style="display:inline;"
-            onsubmit="return confirm('Opravdu smazat historii okruhu {{ topic }}?');">
-          <input type="hidden" name="topic" value="{{ topic }}">
-          <button type="submit" style="font-size:0.8em; margin-left: 1em;">🧹 Smazat historii</button>
-        </form>
-      <table border="1" cellpadding="5" cellspacing="0" style="margin: 0 auto 2em auto; text-align: left;">
-        <thead>
+      <tbody>
+        {% for topic in topics %}
           <tr>
-            <th>🕒 Čas</th>
-            <th>🧠 Otázka</th>
-            <th>🎯 Hodnocení</th>
-            <th>🎯🎯🎯 Prúměr</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for entry in group %}
-            {% if entry.type == "reset" %}
-              <tr>
-                <td colspan="3" style="background:#eee; font-weight:bold; text-align:center;">
-                  {{ entry.timestamp }} – {{ entry.message }}
-                </td>
-              </tr>
-            {% else %}
-              <tr>
-                <td>{{ entry.timestamp }}</td>
-                <td>{{ entry.question }}</td>
-                <td>{{ entry.rating }}</td>
-                <td>{{ entry.average_rating }} </td>
-              </tr>
-            {% endif %}
-          {% endfor %}
-        </tbody>
-      </table>
-    {% endfor %}
-  {% else %}
-    <p>Žádné záznamy zatím nejsou.</p>
-  {% endif %}
+            <td><strong>{{ topic }}</strong></td>
 
-  <p><a href="{{ url_for('home') }}">⬅️ Zpět na hlavní stránku</a></p>
+            {% for user_row in user_topic_stats %}
+              {% set found = namespace(avg=None) %}
+
+              {% for topic_stat in user_row.topics %}
+                {% if topic_stat.name == topic %}
+                  {% set found.avg = topic_stat.average %}
+                {% endif %}
+              {% endfor %}
+
+              <td>
+                {% if found.avg is not none %}
+                  {{ found.avg }}
+                {% else %}
+                  —
+                {% endif %}
+              </td>
+            {% endfor %}
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="card">
+  <h3>Tvé statistiky odpovědí podle okruhů</h3>
+  <p>Průměrné hodnocení: <strong>{{ average }}</strong></p>
+</div>
+
+{% if entries %}
+  {% set grouped = {} %}
+
+  {% for entry in entries %}
+    {% set t = entry.topic or "Neznámý" %}
+    {% if t not in grouped %}
+      {% set _ = grouped.update({t: []}) %}
+    {% endif %}
+    {% set _ = grouped[t].append(entry) %}
+  {% endfor %}
+
+  {% for topic, group in grouped.items() %}
+    <div class="card">
+      <div class="section-header">
+        <h3>{{ topic }}</h3>
+
+        <form method="post"
+              action="{{ url_for('clear_history_topic') }}"
+              onsubmit="return confirm('Opravdu smazat historii okruhu {{ topic }}?');">
+          <input type="hidden" name="topic" value="{{ topic }}">
+          <button type="submit" class="danger-button">Smazat historii</button>
+        </form>
+      </div>
+
+      <div class="table-wrapper">
+        <table class="stats-table">
+          <thead>
+            <tr>
+              <th>Čas</th>
+              <th>Otázka</th>
+              <th>Hodnocení</th>
+              <th>Průměr</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            {% for entry in group %}
+              {% if entry.type == "reset" %}
+                <tr>
+                  <td colspan="4" class="reset-row">
+                    {{ entry.timestamp }} – {{ entry.message }}
+                  </td>
+                </tr>
+              {% else %}
+                <tr>
+                  <td>{{ entry.timestamp }}</td>
+                  <td>{{ entry.question }}</td>
+                  <td>{{ entry.rating }}</td>
+                  <td>{{ entry.average_rating }}</td>
+                </tr>
+              {% endif %}
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  {% endfor %}
+{% else %}
+  <div class="card">
+    <p>Žádné záznamy zatím nejsou.</p>
+  </div>
+{% endif %}
+
+<p><a href="{{ url_for('home') }}">← Zpět na hlavní stránku</a></p>
+
 {% endblock %}
