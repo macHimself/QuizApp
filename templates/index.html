@@ -2,7 +2,8 @@
 
 {% block content %}
 
-  <h2 class="question">Otázka:</h2>
+  <h2 class="question">Otázka</h2>
+
   <div id="question-text">{{ question|safe }}</div>
 
   <p id="countdown" style="display: none;"></p>
@@ -13,7 +14,7 @@
     </div>
 
     <div id="answer-block" style="display: none;">
-      <h3 style="color: green;">Odpověď:</h3>
+      <h3 style="color: green;">Odpověď</h3>
       <div id="answer-text" class="answer">{{ answer|safe }}</div>
     </div>
   {% endif %}

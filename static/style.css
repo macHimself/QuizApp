@@ -422,3 +422,54 @@ hr {
 .btn-del {
     background: #ff3b30;
 }
+
+#question-text {
+    font-size: 1.45rem;
+    font-weight: 600;
+    line-height: 1.6;
+    margin: 18px 0 22px;
+}
+
+#reveal-button {
+    margin: 18px 0;
+}
+
+.answer {
+    background: #ffffff;
+    border: 1px solid #dce8dc;
+    border-radius: 18px;
+    padding: 24px;
+    box-shadow: 0 6px 22px rgba(0,0,0,.04);
+}
+
+.answer img {
+    max-height: 460px;
+}
+
+.progress-bar {
+    height: 16px;
+}
+
+.footer p {
+    margin: 10px 0;
+}
+
+.score-buttons button {
+    width: 56px;
+    height: 56px;
+    border-radius: 14px;
+    font-weight: 700;
+}
+
+.mode-button {
+    font-size: 0.9rem;
+    padding: 8px 16px;
+}
+
+.answer-title {
+
+    color: #1f7a1f;
+
+    margin-top: 24px;
+
+}
