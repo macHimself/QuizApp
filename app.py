@@ -1885,6 +1885,7 @@ def upload_image():
 if __name__ == "__main__":
     ensure_data_dir()
     app.run(host="0.0.0.0", port=5555, debug=False)
+    #app.run(host="0.0.0.0", port=5050, debug=False)
 
 # kill 54274
 # nohup /opt/homebrew/bin/python3 -m gunicorn -w 2 --threads 8 -k gthread -b 0.0.0.0:5050 app:app > gunicorn.log 2>&1 &
